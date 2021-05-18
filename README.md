@@ -1,2 +1,2 @@
 # sistersite
-Site creat for my sister
+Site created for my sister
