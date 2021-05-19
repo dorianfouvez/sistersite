@@ -36,7 +36,7 @@ CREATE TABLE ambre_fouvez.photographers (
 CREATE TABLE ambre_fouvez.photos (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NULL UNIQUE CHECK(name <> ''),
-    picture VARCHAR NOT NULL CHECK(pictures <> ''),
+    picture VARCHAR NOT NULL CHECK(picture <> ''),
     photographer INTEGER REFERENCES ambre_fouvez.photographers(id) NOT NULL
 );
 
@@ -58,10 +58,10 @@ CREATE TABLE ambre_fouvez.users (
 	first_name VARCHAR(100) NOT NULL CHECK(first_name <> ''),
 	email VARCHAR(100) NOT NULL UNIQUE CHECK(email SIMILAR TO '[\w\.\/\\$é~#èà&=+*-]+@[\w\.]+\.[a-zA-Z]{2,4}'),
 	is_boss BOOLEAN NOT NULL DEFAULT FALSE,
-	registration_date TIMESTAMP NOT NULL CHECK(registration_date <> ''),
+	registration_date TIMESTAMP NOT NULL CHECK(registration_date < current_timestamp),
 	password VARCHAR(60) NOT NULL CHECK(password <> ''),
     profile_picture INTEGER REFERENCES ambre_fouvez.photos(id) NOT NULL,
-    adress INTEGER REFERENCES ambre_fouvez.addresses(id) NOT NULL,
+    adress INTEGER REFERENCES ambre_fouvez.addresses(id) NULL,
     phone_number VARCHAR(20) NULL CHECK(phone_number <> ''),
     facebook VARCHAR(50) NULL CHECK(facebook SIMILAR TO 'https:\/\/www\.facebook\.com\/[\w\.\/\\$é~#èà&=+*-]+'),
     instagram VARCHAR(50) NULL CHECK(instagram SIMILAR TO 'https:\/\/www\.instagram\.com\/[\w\.\/\\$é~#èà&=+*-]+\/'),
@@ -93,16 +93,16 @@ CREATE TABLE ambre_fouvez.professions (
 CREATE TABLE ambre_fouvez.curriculum_vitae (
 	id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL CHECK(title <> ''),
-    user INTEGER REFERENCES ambre_fouvez.users(id) NOT NULL,
-    profession VARCHAR(50) REFERENCES ambre_fouvez.professions(id) NOT NULL,
+    user_id INTEGER REFERENCES ambre_fouvez.users(id) NOT NULL,
+    profession INTEGER REFERENCES ambre_fouvez.professions(id) NOT NULL,
     playing_age VARCHAR(50) NOT NULL CHECK(playing_age SIMILAR TO '[0-9]{2,3} - [0-9]{2,3}'),
-    background_picture REFERENCES ambre_fouvez.photos(id) NOT NULL
+    background_picture INTEGER REFERENCES ambre_fouvez.photos(id) NOT NULL
 );
 
 CREATE TABLE ambre_fouvez.trainings (
 	id SERIAL PRIMARY KEY,
-    start_year INTEGER NOT NULL CHECK(start_year BETWEEN YEAR(GETDATE())-120 AND YEAR(GETDATE())+1),
-    end_year INTEGER NOT NULL CHECK(end_year = 0 OR (end_year BETWEEN YEAR(GETDATE())-120 AND YEAR(GETDATE())+1)),
+    start_year INTEGER NOT NULL CHECK(start_year BETWEEN date_part('year', current_timestamp)-120 AND date_part('year', current_timestamp)+1),
+    end_year INTEGER NOT NULL CHECK(end_year = 0 OR (end_year BETWEEN date_part('year', current_timestamp)-120 AND date_part('year', current_timestamp)+1)),
     label VARCHAR(100) NOT NULL CHECK(label <> ''),
     explanations VARCHAR(200) NOT NULL CHECK(explanations <> '')
 );
@@ -110,9 +110,9 @@ CREATE TABLE ambre_fouvez.trainings (
 CREATE TABLE ambre_fouvez.trainings_curriculum_vitae (
 	curriculum_vitae INTEGER REFERENCES ambre_fouvez.curriculum_vitae(id) NOT NULL,
 	training INTEGER REFERENCES ambre_fouvez.trainings(id) NOT NULL,
-    order INTEGER NOT NULL CHECK(order > 0),
-    UNIQUE(order, curriculum_vitae, training),
-    CONSTRAINT id PRIMARY KEY(curriculum_vitae, training)
+    order_number INTEGER NOT NULL CHECK(order_number > 0),
+    UNIQUE(order_number, curriculum_vitae, training),
+    CONSTRAINT tc_pkey PRIMARY KEY(curriculum_vitae, training)
 );
 
 CREATE TABLE ambre_fouvez.roles (
@@ -124,15 +124,15 @@ CREATE TABLE ambre_fouvez.short_films (
 	id SERIAL PRIMARY KEY,
     title VARCHAR(100) NOT NULL CHECK(title <> ''),
     role INTEGER REFERENCES ambre_fouvez.roles(id) NOT NULL,
-    year INTEGER NOT NULL CHECK(year BETWEEN YEAR(GETDATE())-120 AND YEAR(GETDATE())+1)
+    year INTEGER NOT NULL CHECK(year BETWEEN date_part('year', current_timestamp)-120 AND date_part('year', current_timestamp)+1)
 );
 
 CREATE TABLE ambre_fouvez.short_films_curriculum_vitae (
 	curriculum_vitae INTEGER REFERENCES ambre_fouvez.curriculum_vitae(id) NOT NULL,
 	short_film INTEGER REFERENCES ambre_fouvez.short_films(id) NOT NULL,
-    order INTEGER NOT NULL CHECK(order > 0),
-    UNIQUE(order, curriculum_vitae, short_film),
-    CONSTRAINT id PRIMARY KEY(curriculum_vitae, short_film)
+    order_number INTEGER NOT NULL CHECK(order_number > 0),
+    UNIQUE(order_number, curriculum_vitae, short_film),
+    CONSTRAINT sc_pkey PRIMARY KEY(curriculum_vitae, short_film)
 );
 
 CREATE TABLE ambre_fouvez.companies (
@@ -143,22 +143,22 @@ CREATE TABLE ambre_fouvez.companies (
 CREATE TABLE ambre_fouvez.companies_short_film (
 	short_film_id INTEGER REFERENCES ambre_fouvez.short_films(id) NOT NULL,
 	company_id INTEGER REFERENCES ambre_fouvez.companies(id) NOT NULL,
-	CONSTRAINT id PRIMARY KEY(short_film_id, company_id)
+	CONSTRAINT cs_pkey PRIMARY KEY(short_film_id, company_id)
 );
 
 CREATE TABLE ambre_fouvez.cinemas (
 	id SERIAL PRIMARY KEY,
     title VARCHAR(100) NOT NULL CHECK(title <> ''),
     role INTEGER REFERENCES ambre_fouvez.roles(id) NOT NULL,
-    year INTEGER NOT NULL CHECK(year BETWEEN YEAR(GETDATE())-120 AND YEAR(GETDATE())+1)
+    year INTEGER NOT NULL CHECK(year BETWEEN date_part('year', current_timestamp)-120 AND date_part('year', current_timestamp)+1)
 );
 
 CREATE TABLE ambre_fouvez.cinemas_curriculum_vitae (
 	curriculum_vitae INTEGER REFERENCES ambre_fouvez.curriculum_vitae(id) NOT NULL,
 	cinema INTEGER REFERENCES ambre_fouvez.cinemas(id) NOT NULL,
-    order INTEGER NOT NULL CHECK(order > 0),
-    UNIQUE(order, curriculum_vitae, cinema),
-    CONSTRAINT id PRIMARY KEY(curriculum_vitae, cinema)
+    order_number INTEGER NOT NULL CHECK(order_number > 0),
+    UNIQUE(order_number, curriculum_vitae, cinema),
+    CONSTRAINT cc_pkey PRIMARY KEY(curriculum_vitae, cinema)
 );
 
 CREATE TABLE ambre_fouvez.distinctions (
@@ -169,7 +169,7 @@ CREATE TABLE ambre_fouvez.distinctions (
 CREATE TABLE ambre_fouvez.distinctions_cinema (
 	cinema_id INTEGER REFERENCES ambre_fouvez.cinemas(id) NOT NULL,
 	distinction_id INTEGER REFERENCES ambre_fouvez.distinctions(id) NOT NULL,
-	CONSTRAINT id PRIMARY KEY(cinema_id, distinction_id)
+	CONSTRAINT dc_pkey PRIMARY KEY(cinema_id, distinction_id)
 );
 
 CREATE TABLE ambre_fouvez.directors (
@@ -180,26 +180,26 @@ CREATE TABLE ambre_fouvez.directors (
 CREATE TABLE ambre_fouvez.directors_short_film (
 	short_film_id INTEGER REFERENCES ambre_fouvez.short_films(id) NOT NULL,
 	director_id INTEGER REFERENCES ambre_fouvez.directors(id) NOT NULL,
-	CONSTRAINT id PRIMARY KEY(short_film_id, director_id)
+	CONSTRAINT ds_pkey PRIMARY KEY(short_film_id, director_id)
 );
 
 CREATE TABLE ambre_fouvez.directors_cinema (
 	cinema_id INTEGER REFERENCES ambre_fouvez.cinemas(id) NOT NULL,
 	director_id INTEGER REFERENCES ambre_fouvez.directors(id) NOT NULL,
-	CONSTRAINT id PRIMARY KEY(short_film_id, cinema_id)
+	CONSTRAINT drc_pkey PRIMARY KEY(cinema_id, director_id)
 );
 
 CREATE TABLE ambre_fouvez.strengths (
 	id SERIAL PRIMARY KEY,
-    label VARCHAR(50) NULL UNIQUE CHECK(label <> ''),
+    label VARCHAR(50) NULL UNIQUE CHECK(label <> '')
 );
 
 CREATE TABLE ambre_fouvez.strengths_curriculum_vitae (
 	curriculum_vitae INTEGER REFERENCES ambre_fouvez.curriculum_vitae(id) NOT NULL,
 	strength INTEGER REFERENCES ambre_fouvez.strengths(id) NOT NULL,
-    order INTEGER NOT NULL CHECK(order > 0),
-    UNIQUE(order, curriculum_vitae, strength),
-    CONSTRAINT id PRIMARY KEY(curriculum_vitae, strength)
+    order_number INTEGER NOT NULL CHECK(order_number > 0),
+    UNIQUE(order_number, curriculum_vitae, strength),
+    CONSTRAINT scv_pkey PRIMARY KEY(curriculum_vitae, strength)
 );
 
 
@@ -326,7 +326,7 @@ INSERT INTO ambre_fouvez.professions(
 ---------------------------------
 
 INSERT INTO ambre_fouvez.curriculum_vitae(
-	id, title, user, profession, playing_age, background_picture)
+	id, title, user_id, profession, playing_age, background_picture)
 	VALUES (DEFAULT, 'CV ARTISTIQUE', 1, 1, '18 - 25', 0);
 
 --------------------------
@@ -335,7 +335,7 @@ INSERT INTO ambre_fouvez.curriculum_vitae(
 
 INSERT INTO ambre_fouvez.trainings(
 	id, start_year, end_year, label, explanations)
-	VALUES (DEFAULT, 2017, 2020, `Formation de l'auteur au Cours Florent`, 
+	VALUES (DEFAULT, 2017, 2020, 'Formation de l`auteur au Cours Florent', 
     'avec Frédéric Haddou, Hugues Boucher, Christophe Reymond, Laurent Bellambe, Nâzim Boudjenah et Félicien Juttner');
 
 -------------------------------------------
@@ -343,7 +343,7 @@ INSERT INTO ambre_fouvez.trainings(
 -------------------------------------------
 
 INSERT INTO ambre_fouvez.trainings_curriculum_vitae(
-	curriculum_vitae, training, order)
+	curriculum_vitae, training, order_number)
 	VALUES (1, 1, 1);
 
 ----------------------
@@ -383,15 +383,15 @@ INSERT INTO ambre_fouvez.short_films(
 ---------------------------------------------
 
 INSERT INTO ambre_fouvez.short_films_curriculum_vitae(
-	curriculum_vitae, short_film, order)
+	curriculum_vitae, short_film, order_number)
 	VALUES (1, 1, 1);
 
 INSERT INTO ambre_fouvez.short_films_curriculum_vitae(
-	curriculum_vitae, short_film, order)
+	curriculum_vitae, short_film, order_number)
 	VALUES (1, 2, 2);
 
 INSERT INTO ambre_fouvez.short_films_curriculum_vitae(
-	curriculum_vitae, short_film, order)
+	curriculum_vitae, short_film, order_number)
 	VALUES (1, 3, 3);
 
 ------------------------------
@@ -427,11 +427,11 @@ INSERT INTO ambre_fouvez.cinemas(
 -----------------------------------------
 
 INSERT INTO ambre_fouvez.cinemas_curriculum_vitae(
-	curriculum_vitae, cinema, order)
+	curriculum_vitae, cinema, order_number)
 	VALUES (1, 1, 1);
 
 INSERT INTO ambre_fouvez.cinemas_curriculum_vitae(
-	curriculum_vitae, cinema, order)
+	curriculum_vitae, cinema, order_number)
 	VALUES (1, 2, 2);
 
 -----------------------------
@@ -440,7 +440,7 @@ INSERT INTO ambre_fouvez.cinemas_curriculum_vitae(
 
 INSERT INTO ambre_fouvez.distinctions(
 	id, name)
-	VALUES (DEFAULT, `Sélectionné pour l'ACID à Cannes 2020(annulé)`);
+	VALUES (DEFAULT, 'Sélectionné pour l`ACID à Cannes 2020(annulé)');
 
 -------------------------------------
 -----INSERT distinctions_cinema-----
@@ -519,13 +519,13 @@ INSERT INTO ambre_fouvez.strengths(
 -------------------------------------------
 
 INSERT INTO ambre_fouvez.strengths_curriculum_vitae(
-	curriculum_vitae, strength, order)
+	curriculum_vitae, strength, order_number)
 	VALUES (1, 1, 1);
 
 INSERT INTO ambre_fouvez.strengths_curriculum_vitae(
-	curriculum_vitae, strength, order)
+	curriculum_vitae, strength, order_number)
 	VALUES (1, 2, 2);
 
 INSERT INTO ambre_fouvez.strengths_curriculum_vitae(
-	curriculum_vitae, strength, order)
+	curriculum_vitae, strength, order_number)
 	VALUES (1, 3, 3);
