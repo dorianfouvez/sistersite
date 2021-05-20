@@ -9,6 +9,7 @@ import domaine.user.UserDTO;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.Provider;
 
@@ -29,6 +30,10 @@ public class AuthorizationBossRequestFilter extends AuthorizeAbstract
       } else {
         throw new PresentationException("You are not a boss.", Status.UNAUTHORIZED);
       }
+    } else {
+      requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+          .entity("Can't find a user from this token.").build());
+      return;
     }
   }
 }

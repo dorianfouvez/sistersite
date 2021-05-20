@@ -41,7 +41,7 @@ public class UserResource {
   /**
    * Login the user if exists or send error message.
    * 
-   * @param json object containing an username and a password.
+   * @param json object containing a username and a password.
    * @return a response with a token who contains the user if it exists in the database and matches the password.
    */
   @POST
@@ -65,6 +65,20 @@ public class UserResource {
   }
 
   /**
+   * Get the user from an id in a token in header.
+   * 
+   * @param request header with the token.
+   * @return a new token and the user.
+   */
+  @GET
+  @Path("/me")
+  @Authorize
+  public Response getUser(@Context ContainerRequest request) {
+    UserDTO currentUser = (UserDTO) request.getProperty("user");
+    return ResponseMaker.createResponseWithToken(currentUser);
+  }
+
+  /**
    * Get the user with an ID if exists or send error message.
    * 
    * @param id id of the user.
@@ -82,24 +96,6 @@ public class UserResource {
     UserDTO user = this.userUcc.findById(id);
 
     return ResponseMaker.createResponseWithToken(user);
-  }
-
-  /**
-   * Get the user from an id in a token in header.
-   * 
-   * @param request header with the token.
-   * @return a new token and the user.
-   */
-  @GET
-  @Path("/me")
-  @Authorize
-  public Response getUser(@Context ContainerRequest request) {
-    UserDTO currentUser = (UserDTO) request.getProperty("user");
-
-    if (currentUser == null) {
-      throw new PresentationException("User not found", Status.BAD_REQUEST);
-    }
-    return ResponseMaker.createResponseWithToken(currentUser);
   }
 
   /**

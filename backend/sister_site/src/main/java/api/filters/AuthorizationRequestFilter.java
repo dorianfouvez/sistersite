@@ -8,6 +8,7 @@ import domaine.user.UserDTO;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
 
@@ -22,6 +23,10 @@ public class AuthorizationRequestFilter extends AuthorizeAbstract
     UserDTO user = decodedToken(requestContext);
     if (user != null) {
       requestContext.setProperty("user", user);
+    } else {
+      requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+          .entity("Can't find a user from this token.").build());
+      return;
     }
   }
 
