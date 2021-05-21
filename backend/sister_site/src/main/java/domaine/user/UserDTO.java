@@ -55,7 +55,119 @@ public interface UserDTO {
 
   Timestamp getRegistrationDate();
 
+  /**
+   * Change the regitration date.
+   * 
+   * @param timestamp has to be Not Null.
+   */
   void setRegistrationDate(Timestamp timestamp);
+
+  int getProfilePicture();
+
+  /**
+   * Change the profile picture.
+   * 
+   * @param profilePicture the id of the picture and has to be more then 0.
+   */
+  void setProfilePicture(int profilePicture);
+
+  int getAdress();
+
+  /**
+   * Change the adress.
+   * 
+   * @param adress the id of the adress and has to be more than 0.
+   */
+  void setAdress(int adress);
+
+  String getPhoneNumber();
+
+  /**
+   * Change the phone number.
+   * 
+   * @param phoneNumber has to be Not Null.
+   */
+  void setPhoneNumber(String phoneNumber);
+
+  String getFacebook();
+
+  void setFacebook(String facebook);
+
+  String getInstagram();
+
+  void setInstagram(String instagram);
+
+  String getTwitter();
+
+  void setTwitter(String twitter);
+
+  String getYoutube();
+
+  void setYoutube(String youtube);
+
+  int getHairColor();
+
+  void setHairColor(int hairColor);
+
+  int getHairSize();
+
+  void setHairSize(int hairSize);
+
+  int getEye();
+
+  void setEye(int eye);
+
+  int getHeight();
+
+  void setHeight(int height);
+
+  int getWeight();
+
+  void setWeight(int weight);
+
+  int getFirstNationality();
+
+  void setFirstNationality(int firstNationality);
+
+  int getSecondNationality();
+
+  void setSecondNationality(int secondNationality);
+
+  int getShoeSize();
+
+  void setShoeSize(int shoeSize);
+
+  int getJacketSize();
+
+  void setJacketSize(int jacketSize);
+
+  int getPantSize();
+
+  void setPantSize(int pantSize);
+
+  int getChest();
+
+  void setChest(int chest);
+
+  char getBraCup();
+
+  void setBraCup(char braCup);
+
+  int getWaistSize();
+
+  void setWaistSize(int waistSize);
+
+  int getHipSize();
+
+  void setHipSize(int hipSize);
+
+  int getNeckSize();
+
+  void setNeckSize(int neckSize);
+
+  int getHeadSize();
+
+  void setHeadSize(int headSize);
 
   String getPassword();
 

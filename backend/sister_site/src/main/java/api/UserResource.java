@@ -5,6 +5,8 @@ package api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.glassfish.jersey.server.ContainerRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import api.filters.Authorize;
@@ -112,4 +114,18 @@ public class UserResource {
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("list", listUsers);
   }
 
+
+
+  // ******************** Private's Methods ********************
+
+  private void checkTimestampPattern(String name, String toVerify) {
+    toVerify = toVerify.replaceFirst("T", " ");
+    String timestampPattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$";
+    Pattern pattern = Pattern.compile(timestampPattern, Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(toVerify);
+    if (!matcher.find()) {
+      throw new PresentationException(name + " is not matching a Timestamp pattern.",
+          Status.BAD_REQUEST);
+    }
+  }
 }

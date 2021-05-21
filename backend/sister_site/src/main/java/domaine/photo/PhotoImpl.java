@@ -11,7 +11,7 @@ public class PhotoImpl implements PhotoDTO {
   private int id;
   private String picture;
   private String name;
-  private String photographerName;
+  private int photographer;
 
   @Override
   public int getId() {
@@ -44,19 +44,19 @@ public class PhotoImpl implements PhotoDTO {
   }
 
   @Override
-  public String getPhotographerName() {
-    return photographerName;
+  public int getPhotographer() {
+    return photographer;
   }
 
   @Override
-  public void setPhotographerName(String photographername) {
-    this.photographerName = photographername;
+  public void setPhotographer(int photographer) {
+    this.photographer = photographer;
   }
 
   @Override
   public String toString() {
-    return "PhotoImpl [id=" + id + ", picture=" + picture + ", name=" + name + ", photographerName="
-        + photographerName + "]";
+    return "PhotoImpl [id=" + id + ", picture=" + picture + ", name=" + name + ", photographer="
+        + photographer + "]";
   }
 
   @Override

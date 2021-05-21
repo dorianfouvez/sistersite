@@ -20,8 +20,8 @@ public interface PhotoDTO {
 
   void setName(String name);
 
-  String getPhotographerName();
+  int getPhotographer();
 
-  void setPhotographerName(String photographername);
+  void setPhotographer(int photographer);
 
 }
