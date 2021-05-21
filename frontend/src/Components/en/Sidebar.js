@@ -7,7 +7,7 @@ const SidebarPage = () => {
     let sidebarPage = `<div id="mySidenav" class="sidenav">
         <a id="closeSidebar" class="closebtn">&times;</a>
         <a id="/" href="#">Home</a>
-        <a id="comedienne" href="#" value="comedienne" class>Actress</a>
+        <a id="comedienne" href="#" data-toggle="collapse" data-target="#comedienne_c" class>Actress</a>
         <div id="comedienne_c" class="collapse ml-2">
             <a id="/ArtisticCV" href="#">Artistic CV</a>
             <a id="/demotape" href="#">Demo Tape</a>
@@ -28,23 +28,31 @@ const SidebarPage = () => {
 
     // Add admin link.
     let user = getUserSessionData();
-    if (user && user.isBoss) {
+    if(!user){
+        sidebarPage += `<a id="/login" class="nav-item nav-link" href="#" data-uri="/login">Login</a>`;
+    }else {
         sidebarPage += `<a id="/myprofile" class="nav-item nav-link" href="#" data-uri="/myprofile">${user.username}</a>
         <a id="/logout" class="nav-item nav-link" href="#" data-uri="/logout">Logout</a>`;
-    }else{
-        sidebarPage += `<a id="/login" class="nav-item nav-link" href="#" data-uri="/login">Login</a>`;
+    }
+    if (user && user.isBoss) {
+        sidebarPage += `<a id="/Boss" class="nav-item nav-link" href="#" data-uri="/myprofile">Boss</a>
+        <a id="/Boss2" class="nav-item nav-link" href="#" data-uri="/logout">Boss 2</a>`;
     }
 
     sidebarPage += `</div>`;
 
+    // Add open button.
     document.getElementById("openSidebar").innerHTML = `<span id="openSidebar" style="font-size:30px;cursor:pointer">&#9776;</span>`;
 
     sideBar.innerHTML = sidebarPage;
 
+    // SideBar open and close.
     document.getElementById("openSidebar").addEventListener("click", openSidebar);
     document.getElementById("closeSidebar").addEventListener("click", closeSidebar);
-    document.getElementById("comedienne").addEventListener("click", showCollapse);
-    document.getElementById("book").addEventListener("click", test);
+
+    // Collapse.
+    document.getElementById("comedienne").addEventListener("click", closeCollapse);
+    document.getElementById("book").addEventListener("click", closeCollapse);
 
     // Lisen all the navigation link.
     document.getElementById("/").addEventListener("click", onNavigate);
@@ -78,7 +86,7 @@ const showCollapse = (e) => {
     }else document.getElementById(document.activeElement.id + "_c").className += ` show`;
 };
 
-const test = (e) => {
+const closeCollapse = (e) => {
     e.preventDefault();
     if(document.getElementById(document.activeElement.id + "_c").classList.contains("show")) {
         setTimeout(() => {  
