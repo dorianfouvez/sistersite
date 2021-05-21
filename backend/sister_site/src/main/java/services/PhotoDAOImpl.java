@@ -25,13 +25,13 @@ public class PhotoDAOImpl implements PhotoDAO {
   @Override
   public PhotoDTO findById(int id) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT photo_id," + " pictures, name" + " FROM projet.photos WHERE photo_id = ?");
+        "SELECT id," + " name, picture, photographer" + " FROM ambre_fouvez.photos WHERE id = ?");
     PhotoDTO photo = null;
     try {
       ps.setInt(1, id);
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          photo = fullFillPhoto(rs);
+          photo = createFullFillPhoto(rs);
         }
       }
     } catch (SQLException e) {
@@ -44,18 +44,18 @@ public class PhotoDAOImpl implements PhotoDAO {
   @Override
   public PhotoDTO findByName(String name) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT photo_id," + " pictures, name" + " FROM projet.photos WHERE name = ?");
+        "SELECT id," + " name, picture, photographer" + " FROM ambre_fouvez.photos WHERE name = ?");
     PhotoDTO photo = domaineFactory.getPhotoDTO();
     try {
       ps.setString(1, name);
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          photo = fullFillPhoto(rs);
+          photo = createFullFillPhoto(rs);
         }
       }
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error findById", e);
+      throw new FatalException("Error findByName", e);
     }
     if (photo.getName() == null) {
       return null;
@@ -72,7 +72,7 @@ public class PhotoDAOImpl implements PhotoDAO {
   @Override
   public PhotoDTO add(PhotoDTO photo) {
     PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("INSERT INTO projet.photos" + " VALUES(DEFAULT,?,?)");
+        .getPreparedStatement("INSERT INTO ambre_fouvez.photos" + " VALUES(DEFAULT,?,?,?)");
 
     try {
       setAllPsAttributNotNull(ps, photo);
@@ -88,7 +88,7 @@ public class PhotoDAOImpl implements PhotoDAO {
   @Override
   public PhotoDTO delete(int id) {
     PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("DELETE FROM projet.photos" + " WHERE photo_id = ?");
+        .getPreparedStatement("DELETE FROM ambre_fouvez.photos" + " WHERE id = ?");
 
     try {
       ps.setInt(1, id);
@@ -103,13 +103,22 @@ public class PhotoDAOImpl implements PhotoDAO {
 
 
 
-  private PhotoDTO fullFillPhoto(ResultSet rs) {
+  // ******************** Private's Methods ********************
+
+  /**
+   * Create and fully fill a photo from the ResultSet.
+   * 
+   * @param rs ResultSet who contains the photo.
+   * @return the created and fully filled photo.
+   */
+  private PhotoDTO createFullFillPhoto(ResultSet rs) {
     PhotoDTO photo = domaineFactory.getPhotoDTO();
 
     try {
       photo.setId(rs.getInt(1));
-      photo.setPicture(rs.getString(2));
-      photo.setName(rs.getString(3));
+      photo.setName(rs.getString(2));
+      photo.setPicture(rs.getString(3));
+      photo.setPhotographer(rs.getInt(4));
 
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
@@ -119,10 +128,19 @@ public class PhotoDAOImpl implements PhotoDAO {
     return photo;
   }
 
+  /**
+   * Set all the value not null for a photo in the PreparedStatement without the id.
+   * 
+   * @param ps PreparedStatement who contains a INSERT of a photo.
+   * @param photo the photo to insert in the db.
+   * @return PreparedStatement fully set with the photo'sattributes.
+   * @throws SQLException if a error comes when set the PreparedStatement.
+   */
   private PreparedStatement setAllPsAttributNotNull(PreparedStatement ps, PhotoDTO photo)
       throws SQLException {
-    ps.setString(1, photo.getPicture());
-    ps.setString(2, photo.getName());
+    ps.setString(1, photo.getName());
+    ps.setString(2, photo.getPicture());
+    ps.setInt(3, photo.getPhotographer());
 
     return ps;
   }
