@@ -11,8 +11,8 @@ const SidebarPage = () => {
             <a href="#">CV Artistique</a>
             <a href="#">Bande démo</a>
         </div>
-        <a id="book" href="#" data-toggle="collapse" data-target="#book_c" class>Book</a>
-        <div id="book_c" class="collapse ml-2">
+        <a id="books" href="#" data-toggle="collapse" data-target="#books_c" class>Book</a>
+        <div id="books_c" class="collapse ml-2">
             <a href="#">Portraits</a>
             <a href="#">Artistique</a>
             <a href="#">Couple</a>

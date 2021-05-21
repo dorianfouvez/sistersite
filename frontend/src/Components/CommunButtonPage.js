@@ -1,6 +1,11 @@
 import { RedirectUrl } from "./Router.js";
 import { setLangSessionData } from "../utils/session";
 
+let routes = {
+    "en": [ "/", "/about", "/book", "/contactme", "/ArtisticCV", "/demotape", "/errornavigation", "/login", "/logout", "/myprofile" ],
+    "fr": [ "/", "/apropos", "/books", "/contact", "/cv", "/bandedemo", "/erreurnavigation", "/connection", "/deconnection", "/moncompte" ],
+};
+
 const LanguagePage = () => {
     let languagePage = `<div class="float-left">
         <a id="home" class="navbar-brand" href="#" data-uri="/">
@@ -26,8 +31,32 @@ const changeLang = (e) => {
     let lang = document.activeElement.id;
     console.log(lang);
     setLangSessionData(lang);
-    // Via un tableau 2 dimenstion avec les données au même indice ?
-    RedirectUrl(window.location.pathname); //TODO si le chemin est /login, il va remetre lang ="fr" à "en" !!!!!!!!!!!!!!!!!!!!!
+    
+    let path = null;
+    let index = -1;
+    for (let i = 0; i < routes.en.length; i++) {
+        if(routes.en[i] === window.location.pathname){
+            index = i;
+        }
+    }
+
+    if(index > -1){
+        path = routes.fr[index];
+    }else{
+        for (let i = 0; i < routes.fr.length; i++) {
+            if(routes.fr[i] === window.location.pathname){
+                index = i;
+            }
+        }
+
+        if(index > -1){
+            path = routes.en[index];
+        }else{
+            path = "/";
+        }
+    } 
+
+    RedirectUrl(path);
 };
 
 const onNavigate = (e) => {

@@ -9,7 +9,7 @@ const SidebarPage = () => {
         <a id="/" href="#">Home</a>
         <a id="comedienne" href="#" value="comedienne" class>Actress</a>
         <div id="comedienne_c" class="collapse ml-2">
-            <a id="/cv" href="#">Artistic CV</a>
+            <a id="/ArtisticCV" href="#">Artistic CV</a>
             <a id="/demotape" href="#">Demo Tape</a>
         </div>
         <a id="book" href="#" data-toggle="collapse" data-target="#book_c" class>Book</a>
@@ -19,7 +19,7 @@ const SidebarPage = () => {
             <a id="/book" href="#">Couple</a>
         </div>
         <a id="/about" href="#">About Me</a>
-        <a id="/contact" href="#">Contact</a>
+        <a id="/contactme" href="#">Contact</a>
         
         <div class="d-flex justify-content-center mt-3">
             <a href="https://www.facebook.com/ambre.fouvez" class="fa fa-facebook"></a>
@@ -50,8 +50,8 @@ const SidebarPage = () => {
     document.getElementById("/").addEventListener("click", onNavigate);
     document.getElementById("/about").addEventListener("click", onNavigate);
     document.getElementById("/book").addEventListener("click", onNavigate);
-    document.getElementById("/contact").addEventListener("click", onNavigate);
-    document.getElementById("/cv").addEventListener("click", onNavigate);
+    document.getElementById("/contactme").addEventListener("click", onNavigate);
+    document.getElementById("/ArtisticCV").addEventListener("click", onNavigate);
     document.getElementById("/demotape").addEventListener("click", onNavigate);
     if (user && user.isBoss) {
         document.getElementById("/logout").addEventListener("click", onNavigate);
