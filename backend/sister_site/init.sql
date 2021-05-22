@@ -95,7 +95,7 @@ CREATE TABLE ambre_fouvez.curriculum_vitae (
     title VARCHAR(50) NOT NULL CHECK(title <> ''),
     user_id INTEGER REFERENCES ambre_fouvez.users(id) NOT NULL,
     profession INTEGER REFERENCES ambre_fouvez.professions(id) NOT NULL,
-    playing_age VARCHAR(50) NOT NULL CHECK(playing_age SIMILAR TO '[0-9]{2,3} - [0-9]{2,3}'),
+    playing_age VARCHAR(9) NOT NULL CHECK(playing_age SIMILAR TO '[0-9]{2,3} - [0-9]{2,3}'),
     background_picture INTEGER REFERENCES ambre_fouvez.photos(id) NOT NULL
 );
 
