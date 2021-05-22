@@ -400,7 +400,7 @@ INSERT INTO ambre_fouvez.short_films_curriculum_vitae(
 
 INSERT INTO ambre_fouvez.companies(
 	id, name)
-	VALUES (DEFAULT, 'ORES');
+	VALUES (DEFAULT, 'DMA');
 
 -------------------------------------
 -----INSERT companies_short_film-----
