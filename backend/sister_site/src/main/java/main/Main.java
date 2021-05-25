@@ -5,7 +5,6 @@ package main;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Calendar;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -49,7 +48,6 @@ public class Main {
     System.out.println("Jersey app started at " + Config.getProperty("BaseUri"));
     // Listen to key press and shutdown server
     System.out.println("Hit enter to stop it...");
-    System.out.println(Calendar.getInstance().get(Calendar.YEAR));////////////////////////////////////
     // BasicConfigurator.configure();
     System.in.read();
     server.shutdownNow();
