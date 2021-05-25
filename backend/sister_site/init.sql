@@ -58,7 +58,7 @@ CREATE TABLE ambre_fouvez.users (
 	first_name VARCHAR(100) NOT NULL CHECK(first_name <> ''),
 	email VARCHAR(100) NOT NULL UNIQUE CHECK(email SIMILAR TO '[\w\.\/\\$é~#èà&=+*-]+@[\w\.]+\.[a-zA-Z]{2,4}'),
 	is_boss BOOLEAN NOT NULL DEFAULT FALSE,
-	registration_date TIMESTAMP NOT NULL CHECK(registration_date < current_timestamp),
+	registration_date TIMESTAMP NOT NULL CHECK(registration_date <= current_timestamp),
 	password VARCHAR(60) NOT NULL CHECK(password <> ''),
     profile_picture INTEGER REFERENCES ambre_fouvez.photos(id) NOT NULL,
     adress INTEGER REFERENCES ambre_fouvez.addresses(id) NULL,

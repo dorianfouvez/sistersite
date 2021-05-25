@@ -3,7 +3,10 @@
  */
 package domaine.short_film;
 
+import java.util.Calendar;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import api.utils.BusinessException;
+import jakarta.ws.rs.core.Response.Status;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShortFilmImpl implements ShortFilmDTO {
@@ -50,6 +53,14 @@ public class ShortFilmImpl implements ShortFilmDTO {
 
   @Override
   public void setYear(int year) {
+    if (year <= (Calendar.getInstance().get(Calendar.YEAR) - 120)) {
+      throw new BusinessException("The year is to old, you aren't born at this date normaly.",
+          Status.BAD_REQUEST);
+    }
+    if (year >= (Calendar.getInstance().get(Calendar.YEAR) + 1)) {
+      throw new BusinessException("The year is in the future, you haven't work on it till now.",
+          Status.BAD_REQUEST);
+    }
     this.year = year;
   }
 

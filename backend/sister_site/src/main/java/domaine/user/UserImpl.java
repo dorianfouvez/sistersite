@@ -154,6 +154,9 @@ public class UserImpl implements User {
 
   @Override
   public void setRegistrationDate(Timestamp registrationDate) {
+    if (registrationDate.after(new Timestamp(System.currentTimeMillis()))) {
+      throw new BusinessException("The registration date can't be after now.", Status.BAD_REQUEST);
+    }
     this.registrationDate = registrationDate;
   }
 
