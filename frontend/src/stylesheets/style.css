@@ -4,13 +4,7 @@
   cursor: help;
 }
 
-.max_wight_400px {
-  max-width: 400px;
-}
 
-.top_delay {
-  margin-top: 100px;
-}
 
 /*************** Images resizing ***************/
 .logo_size {
@@ -59,7 +53,7 @@
 
 
 /*************** Social Logo ***************/
-.fa {
+.fa_logo {
   padding: 10px !important;
   font-size: 30px;
   width: 50px;
@@ -131,6 +125,8 @@
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 @media screen and (max-height: 450px) {

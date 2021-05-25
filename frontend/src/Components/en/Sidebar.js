@@ -22,8 +22,8 @@ const SidebarPage = () => {
         <a id="/contactme" href="#">Contact</a>
         
         <div class="d-flex justify-content-center mt-3">
-            <a href="https://www.facebook.com/ambre.fouvez" class="fa fa-facebook"></a>
-            <a href="https://www.instagram.com/ambre.fouvez/" class="fa fa-instagram"></a>
+            <a href="https://www.facebook.com/ambre.fouvez" class="fa fa_logo fa-facebook"></a>
+            <a href="https://www.instagram.com/ambre.fouvez/" class="fa fa_logo fa-instagram"></a>
         </div>`;
 
     // Add admin link.
