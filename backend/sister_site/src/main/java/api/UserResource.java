@@ -3,14 +3,12 @@
  */
 package api;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+/*
+ * import java.util.regex.Matcher; import java.util.regex.Pattern;
+ */
 import org.glassfish.jersey.server.ContainerRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import api.filters.Authorize;
-import api.filters.AuthorizeBoss;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
 import domaine.DomaineFactory;
@@ -22,7 +20,6 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -86,46 +83,40 @@ public class UserResource {
    * @param id id of the user.
    * @return a user if user exists in database and matches the id.
    */
-  @GET
-  @Path("/{id}")
-  @AuthorizeBoss
-  public Response getUserById(@PathParam("id") int id) {
-    // Check credentials.
-    if (id < 1) {
-      throw new PresentationException("Id cannot be under 1", Status.BAD_REQUEST);
-    }
-
-    UserDTO user = this.userUcc.findById(id);
-
-    return ResponseMaker.createResponseWithToken(user);
-  }
+  /*
+   * @GET
+   * 
+   * @Path("/{id}")
+   * 
+   * @AuthorizeBoss public Response getUserById(@PathParam("id") int id) { // Check credentials. if (id < 1) { throw new
+   * PresentationException("Id cannot be under 1", Status.BAD_REQUEST); }
+   * 
+   * UserDTO user = this.userUcc.findById(id);
+   * 
+   * return ResponseMaker.createResponseWithToken(user); }
+   */
 
   /**
    * get all users.
    * 
    * @return list of all users.
    */
-  @GET
-  @AuthorizeBoss
-  public Response allUsers() {
-    List<UserDTO> listUsers = new ArrayList<UserDTO>();
-    listUsers = userUcc.getAll();
-
-    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("list", listUsers);
-  }
+  /*
+   * @GET
+   * 
+   * @AuthorizeBoss public Response allUsers() { List<UserDTO> listUsers = new ArrayList<UserDTO>(); listUsers = userUcc.getAll();
+   * 
+   * return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("list", listUsers); }
+   */
 
 
 
   // ******************** Private's Methods ********************
 
-  private void checkTimestampPattern(String name, String toVerify) {
-    toVerify = toVerify.replaceFirst("T", " ");
-    String timestampPattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$";
-    Pattern pattern = Pattern.compile(timestampPattern, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(toVerify);
-    if (!matcher.find()) {
-      throw new PresentationException(name + " is not matching a Timestamp pattern.",
-          Status.BAD_REQUEST);
-    }
-  }
+  /*
+   * private void checkTimestampPattern(String name, String toVerify) { toVerify = toVerify.replaceFirst("T", " "); String timestampPattern =
+   * "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$"; Pattern pattern = Pattern.compile(timestampPattern, Pattern.CASE_INSENSITIVE); Matcher
+   * matcher = pattern.matcher(toVerify); if (!matcher.find()) { throw new PresentationException(name + " is not matching a Timestamp pattern.",
+   * Status.BAD_REQUEST); } }
+   */
 }
