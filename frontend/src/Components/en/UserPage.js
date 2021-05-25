@@ -20,12 +20,10 @@ const UserPage = () => {
 };
 
 const onUser = (data) => {
-    console.log(data);
     let user = data.user;
-    console.log(user);
     let userPage = `<div class="text-center">`;
     userPage += `<h4 class="mt-2">My profile</h4>
-    <p>Id : ${user.id}</p>
+    <input type="hidden" id="id_user" value="${user.id}">
     <p>userName : ${user.userName}</p>
     <p>lastName : ${user.lastName}</p>
     <p>firstName : ${user.firstName}</p>
