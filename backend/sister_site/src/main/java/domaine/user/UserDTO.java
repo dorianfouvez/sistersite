@@ -16,11 +16,11 @@ public interface UserDTO {
   String getUserName();
 
   /**
-   * Change the username of the user if is not already use in the DB.
+   * Change the userName of the user if is not already use in the DB.
    * 
-   * @param username : not already use in the DB and has to be Not Null.
+   * @param userName : not already use in the DB and has to be Not Null.
    */
-  void setUserName(String username);
+  void setUserName(String userName);
 
   String getLastName();
 

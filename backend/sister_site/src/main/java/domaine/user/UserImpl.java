@@ -19,7 +19,7 @@ public class UserImpl implements User {
   @JsonView(Views.Public.class)
   private int id;
   @JsonView(Views.Public.class)
-  private String username;
+  private String userName;
   @JsonView(Views.Public.class)
   private String lastName;
   @JsonView(Views.Public.class)
@@ -92,12 +92,12 @@ public class UserImpl implements User {
 
   @Override
   public String getUserName() {
-    return username;
+    return userName;
   }
 
   @Override
-  public void setUserName(String username) {
-    this.username = username;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   @Override
@@ -127,12 +127,16 @@ public class UserImpl implements User {
 
   @Override
   public void setEmail(String email) {
+    if (email == null) {
+      throw new BusinessException("The email can't be null.", Status.BAD_REQUEST);
+    }
+
     String regex = "^[\\w\\.\\/\\\\$é~#èà&=+*-]+@[\\w\\.]+\\.[a-zA-Z]{2,4}$";
     Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(twitter);
+    Matcher matcher = pattern.matcher(email);
     if (!matcher.find()) {
-      throw new BusinessException(
-          "The facebook link is not matching a the pattern of facebook link.", Status.BAD_REQUEST);
+      throw new BusinessException("The gived email is not matching a the pattern of an email.",
+          Status.BAD_REQUEST);
     }
     this.email = email;
   }
@@ -154,6 +158,9 @@ public class UserImpl implements User {
 
   @Override
   public void setRegistrationDate(Timestamp registrationDate) {
+    if (registrationDate == null) {
+      throw new BusinessException("The registration date can't be null.", Status.BAD_REQUEST);
+    }
     if (registrationDate.after(new Timestamp(System.currentTimeMillis()))) {
       throw new BusinessException("The registration date can't be after now.", Status.BAD_REQUEST);
     }
@@ -189,12 +196,15 @@ public class UserImpl implements User {
   }
 
   public void setFacebook(String facebook) {
-    String regex = "^https:\\/\\/www\\.facebook\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
-    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(facebook);
-    if (!matcher.find()) {
-      throw new BusinessException(
-          "The facebook link is not matching a the pattern of facebook link.", Status.BAD_REQUEST);
+    if (facebook != null) {
+      String regex = "^https:\\/\\/www\\.facebook\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
+      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+      Matcher matcher = pattern.matcher(facebook);
+      if (!matcher.find()) {
+        throw new BusinessException(
+            "The facebook link is not matching a the pattern of facebook link.",
+            Status.BAD_REQUEST);
+      }
     }
     this.facebook = facebook;
   }
@@ -204,12 +214,15 @@ public class UserImpl implements User {
   }
 
   public void setInstagram(String instagram) {
-    String regex = "^https:\\/\\/www\\.instagram\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+\\/$";
-    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(instagram);
-    if (!matcher.find()) {
-      throw new BusinessException(
-          "The facebook link is not matching a the pattern of facebook link.", Status.BAD_REQUEST);
+    if (instagram != null) {
+      String regex = "^https:\\/\\/www\\.instagram\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+\\/$";
+      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+      Matcher matcher = pattern.matcher(instagram);
+      if (!matcher.find()) {
+        throw new BusinessException(
+            "The instagram link is not matching a the pattern of instagram link.",
+            Status.BAD_REQUEST);
+      }
     }
     this.instagram = instagram;
   }
@@ -219,12 +232,14 @@ public class UserImpl implements User {
   }
 
   public void setTwitter(String twitter) {
-    String regex = "^https:\\/\\/www\\.twitter\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
-    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(twitter);
-    if (!matcher.find()) {
-      throw new BusinessException(
-          "The facebook link is not matching a the pattern of facebook link.", Status.BAD_REQUEST);
+    if (twitter != null) {
+      String regex = "^https:\\/\\/www\\.twitter\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
+      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+      Matcher matcher = pattern.matcher(twitter);
+      if (!matcher.find()) {
+        throw new BusinessException(
+            "The twitter link is not matching a the pattern of twitter link.", Status.BAD_REQUEST);
+      }
     }
     this.twitter = twitter;
   }
@@ -234,12 +249,14 @@ public class UserImpl implements User {
   }
 
   public void setYoutube(String youtube) {
-    String regex = "^https:\\/\\/www\\.youtube\\.com\\/channel\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
-    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(youtube);
-    if (!matcher.find()) {
-      throw new BusinessException(
-          "The facebook link is not matching a the pattern of facebook link.", Status.BAD_REQUEST);
+    if (youtube != null) {
+      String regex = "^https:\\/\\/www\\.youtube\\.com\\/channel\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
+      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+      Matcher matcher = pattern.matcher(youtube);
+      if (!matcher.find()) {
+        throw new BusinessException(
+            "The youtube link is not matching a the pattern of youtube link.", Status.BAD_REQUEST);
+      }
     }
     this.youtube = youtube;
   }
@@ -394,7 +411,7 @@ public class UserImpl implements User {
 
   @Override
   public String toString() {
-    return "UserImpl [id=" + id + ", username=" + username + ", lastName=" + lastName
+    return "UserImpl [id=" + id + ", userName=" + userName + ", lastName=" + lastName
         + ", firstName=" + firstName + ", email=" + email + ", isBoss=" + isBoss
         + ", registrationDate=" + registrationDate + ", profilePicture=" + profilePicture
         + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", facebook=" + facebook

@@ -14,10 +14,10 @@ function setLayout(headerTitle, footerText) {
 function setFooter(){
   let footerDiv = document.querySelector("#footerText");
 
-  let footerText = `<a href="https://www.facebook.com/ambre.fouvez" class="fa fa-facebook"></a>
-  <a href="https://www.instagram.com/ambre.fouvez/" class="fa fa-instagram"></a>
-  <!--<a href="https://www.youtube.com/channel/UCEdtOcwxGX9viDs4G9AAHeg" class="fa fa-youtube"></a>
-  <a href="https://www.twitter.com/barackobama" class="fa fa-twitter"></a>-->`;
+  let footerText = `<a href="https://www.facebook.com/ambre.fouvez" class="fa fa_logo fa-facebook"></a>
+  <a href="https://www.instagram.com/ambre.fouvez/" class="fa fa_logo fa-instagram"></a>
+  <!--<a href="https://www.youtube.com/channel/UCEdtOcwxGX9viDs4G9AAHeg" class="fa fa_logo fa-youtube"></a>
+  <a href="https://www.twitter.com/barackobama" class="fa fa_logo fa-twitter"></a>-->`;
 
   footerDiv.innerHTML = footerText;
 }

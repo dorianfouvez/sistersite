@@ -28,7 +28,7 @@ const SidebarPage = () => {
     // Add admin link.
     let user = getUserSessionData();
     if (user && user.isBoss) {
-        sidebarPage += `<a class="nav-item nav-link" href="#" data-uri="/moncompte">${user.username}</a>
+        sidebarPage += `<a class="nav-item nav-link" href="#" data-uri="/moncompte">${user.userName}</a>
         <a class="nav-item nav-link" href="#" data-uri="/deconnection">Se déconnecter</a>`;
     }else{
         sidebarPage += `<a class="nav-item nav-link" href="#" data-uri="/connection">Se connecter</a>`;

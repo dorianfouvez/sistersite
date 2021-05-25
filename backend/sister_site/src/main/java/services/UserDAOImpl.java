@@ -129,7 +129,10 @@ public class UserDAOImpl implements UserDAO {
       user.setJacketSize(rs.getInt(24));
       user.setPantSize(rs.getInt(25));
       user.setChest(rs.getInt(26));
-      user.setBraCup(rs.getString(27).charAt(0));
+      String bracup = rs.getString(27);
+      if (bracup != null) {
+        user.setBraCup(bracup.charAt(0));
+      }
       user.setWaistSize(rs.getInt(28));
       user.setHipSize(rs.getInt(29));
       user.setNeckSize(rs.getInt(30));
@@ -137,6 +140,8 @@ public class UserDAOImpl implements UserDAO {
 
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error when create and fully fill a users from ResultSet.", e);
+    } catch (NullPointerException e) {
       throw new FatalException("Error when create and fully fill a users from ResultSet.", e);
     }
     return user;

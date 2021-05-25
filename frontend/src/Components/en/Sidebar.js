@@ -31,7 +31,7 @@ const SidebarPage = () => {
     if(!user){
         sidebarPage += `<a id="/login" class="nav-item nav-link" href="#" data-uri="/login">Login</a>`;
     }else {
-        sidebarPage += `<a id="/myprofile" class="nav-item nav-link" href="#" data-uri="/myprofile">${user.username}</a>
+        sidebarPage += `<a id="/myprofile" class="nav-item nav-link" href="#" data-uri="/myprofile">${user.userName}</a>
         <a id="/logout" class="nav-item nav-link" href="#" data-uri="/logout">Logout</a>`;
     }
     if (user && user.isBoss) {

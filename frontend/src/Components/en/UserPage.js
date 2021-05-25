@@ -20,10 +20,41 @@ const UserPage = () => {
 };
 
 const onUser = (data) => {
+    console.log(data);
     let user = data.user;
     console.log(user);
     let userPage = `<div class="text-center">`;
     userPage += `<h4 class="mt-2">My profile</h4>
+    <p>Id : ${user.id}</p>
+    <p>userName : ${user.userName}</p>
+    <p>lastName : ${user.lastName}</p>
+    <p>firstName : ${user.firstName}</p>
+    <p>email : ${user.email}</p>
+    <p>isBoss : ${user.isBoss}</p>
+    <p>registrationDate : ${user.registrationDate}</p>
+    <p>profilePicture : ${user.profilePicture}</p>
+    <p>Adress : ${user.adress}</p>
+    <p>phoneNumber : ${user.phoneNumber}</p>
+    <p>facebook : ${user.facebook}</p>
+    <p>instagram : ${user.instagram}</p>
+    <p>twitter : ${user.twitter}</p>
+    <p>youtube : ${user.youtube}</p>
+    <p>hairColor : ${user.hairColor}</p>
+    <p>hairSize : ${user.hairSize}</p>
+    <p>eye : ${user.eye}</p>
+    <p>height : ${user.height}</p>
+    <p>weight : ${user.weight}</p>
+    <p>firstNationality : ${user.firstNationality}</p>
+    <p>secondNationality : ${user.secondNationality}</p>
+    <p>shoeSize : ${user.shoeSize}</p>
+    <p>jacketSize : ${user.jacketSize}</p>
+    <p>pantSize : ${user.pantSize}</p>
+    <p>chest : ${user.chest}</p>
+    <p>braCup : ${user.braCup}</p>
+    <p>waistSize : ${user.waistSize}</p>
+    <p>hipSize : ${user.hipSize}</p>
+    <p>neckSize : ${user.neckSize}</p>
+    <p>headSize : ${user.headSize}</p>
     </div>`;
 
     return (page.innerHTML = userPage);

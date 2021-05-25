@@ -26,7 +26,7 @@ const Navbar = () => {
   if (user) {
     navbar += `
       <div class="navbar navbar-nav ml-auto pt-2">
-        <a class="nav-item nav-link" href="#" data-uri="/myprofile">${user.username}</a>
+        <a class="nav-item nav-link" href="#" data-uri="/myprofile">${user.userName}</a>
         <a class="nav-item nav-link" href="#" data-uri="/logout">Logout</a>
       </div>
     </div>
