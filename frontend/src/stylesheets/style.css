@@ -4,15 +4,30 @@
   cursor: help;
 }
 
+.remove_decoration {
+  text-decoration: none;
+  color: rgb(0, 185, 0);
+}
+
+.remove_decoration:hover {
+  text-decoration: none;
+  color: rgb(0, 255, 0);
+}
+
+.remove_card_background {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.big_under_space{
+  margin-bottom: 200px;
+}
+
 
 
 /*************** Images resizing ***************/
 .logo_size {
   width: 70px;
-}
-
-.big_under_space{
-  margin-bottom: 200px;
 }
 
 .lang_flag {
@@ -53,6 +68,16 @@
 
 
 /*************** Social Logo ***************/
+.fa_logo_mini {
+  padding: 5px !important;
+  font-size: 10px;
+  width: 20px;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 5px;
+  border-radius: 50%;
+}
+
 .fa_logo {
   padding: 10px !important;
   font-size: 30px;
