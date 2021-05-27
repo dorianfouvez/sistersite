@@ -27,7 +27,7 @@ public class CurriculumVitaeResource {
       throw new PresentationException("Id cannot be under 1", Status.BAD_REQUEST);
     }
 
-    // 24 - 25 table ...
+    // TODO 24 - 25 table ... ou créer une classe cv qui reprend tout ?
 
     return ResponseMaker.createEmptyResponseOK();
   }
