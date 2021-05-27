@@ -20,6 +20,15 @@ public class ResponseMaker {
   private static final ObjectMapper jsonMapper = new ObjectMapper();
 
   /**
+   * create an empty response with the status ok.
+   * 
+   * @return a empty response.ok build.
+   */
+  public static Response createEmptyResponseOK() {
+    return Response.ok().build();
+  }
+
+  /**
    * create a response with a token.
    * 
    * @param user the user to put in the token.
