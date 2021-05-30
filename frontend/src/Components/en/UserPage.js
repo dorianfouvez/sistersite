@@ -33,6 +33,7 @@ const onUser = (data) => {
     userPage += `<h4 class="mt-2">My profile</h4>
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
+    <div class="float-right"><button id="" class="btn btn-primary">Voir mon cv</button></div>
         <div class="row">
             <div class="col-sm-2 bg-danger">
                 <div class="card img-fluid remove_card_background">
