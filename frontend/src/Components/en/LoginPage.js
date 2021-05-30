@@ -22,14 +22,14 @@ let loginPage = `<div class="containerForm mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
-            <input type="text" class="form-control" id="username" placeholder="Username">
+            <input type="text" class="form-control" id="username" placeholder="Username" required>
             
           </div>
           <div class="input-group form-group">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-key"></i></span>
             </div>
-            <input type="password" class="form-control" id="password" placeholder="Password">
+            <input type="password" class="form-control" id="password" placeholder="Password" required>
           </div>
           <div class="d-flex justify-content-center">
             <input type="checkbox" id="remember" class="mt-1 mr-1">
