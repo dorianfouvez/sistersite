@@ -1,12 +1,12 @@
 /**
  * @author Fouvez Dorian.
  */
-package domaine.adress;
+package domaine.address;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(as = AdressImpl.class)
-public interface AdressDTO {
+@JsonDeserialize(as = AddressImpl.class)
+public interface AddressDTO {
 
   int getId();
 

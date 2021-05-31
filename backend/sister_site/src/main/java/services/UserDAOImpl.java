@@ -21,13 +21,11 @@ public class UserDAOImpl implements UserDAO {
   @Inject
   private DalBackendServices dalBackendServices;
 
-
-
   @Override
   public UserDTO findById(int id) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
         "SELECT id, username, last_name, first_name, email, is_boss, registration_date, password,"
-            + " profile_picture, adress, phone_number, facebook, instagram, twitter, youtube,"
+            + " profile_picture, address, phone_number, facebook, instagram, twitter, youtube,"
             + " hair_color, hair_size, eye, height, weight, first_nationality, second_nationality,"
             + " shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size,"
             + " head_size" + " FROM ambre_fouvez.users WHERE id = ?");
@@ -47,7 +45,7 @@ public class UserDAOImpl implements UserDAO {
   public UserDTO findByUserName(String username) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
         "SELECT id, username, last_name, first_name, email, is_boss, registration_date, password,"
-            + " profile_picture, adress, phone_number, facebook, instagram, twitter, youtube,"
+            + " profile_picture, address, phone_number, facebook, instagram, twitter, youtube,"
             + " hair_color, hair_size, eye, height, weight, first_nationality, second_nationality,"
             + " shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size,"
             + " head_size" + " FROM ambre_fouvez.users WHERE username = ?");
@@ -70,7 +68,7 @@ public class UserDAOImpl implements UserDAO {
   public List<UserDTO> getAll() {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
         "SELECT id, username, last_name, first_name, email, is_boss, registration_date, password,"
-            + " profile_picture, adress, phone_number, facebook, instagram, twitter, youtube,"
+            + " profile_picture, address, phone_number, facebook, instagram, twitter, youtube,"
             + " hair_color, hair_size, eye, height, weight, first_nationality, second_nationality,"
             + " shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size,"
             + " head_size" + " FROM ambre_fouvez.users" + " ORDER BY id");
@@ -79,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
 
     try (ResultSet rs = ps.executeQuery()) {
       while (rs.next()) {
-        UserDTO user = createFullFillUsersFromResultSet(rs);
+        UserDTO user = createFullFillUserFromResultSet(rs);
         list.add(user);
       }
     } catch (SQLException e) {
@@ -90,8 +88,6 @@ public class UserDAOImpl implements UserDAO {
     return list;
   }
 
-
-
   // ******************** Private's Methods ********************
 
   /**
@@ -100,7 +96,7 @@ public class UserDAOImpl implements UserDAO {
    * @param rs ResultSet who contains the user.
    * @return the UserDTO in the ResultSet.
    */
-  private UserDTO createFullFillUsersFromResultSet(ResultSet rs) {
+  private UserDTO createFullFillUserFromResultSet(ResultSet rs) {
     UserDTO user = domaineFactory.getUserDTO();
     try {
       user.setID(rs.getInt(1));
@@ -112,7 +108,7 @@ public class UserDAOImpl implements UserDAO {
       user.setRegistrationDate(rs.getTimestamp(7));
       user.setPassword(rs.getString(8));
       user.setProfilePicture(rs.getInt(9));
-      user.setAdress(rs.getInt(10));
+      user.setAddress(rs.getInt(10));
       user.setPhoneNumber(rs.getString(11));
       user.setFacebook(rs.getString(12));
       user.setInstagram(rs.getString(13));
@@ -159,7 +155,7 @@ public class UserDAOImpl implements UserDAO {
     UserDTO user = domaineFactory.getUserDTO();
     try (ResultSet rs = ps.executeQuery()) {
       while (rs.next()) {
-        user = createFullFillUsersFromResultSet(rs);
+        user = createFullFillUserFromResultSet(rs);
       }
     }
     return user;

@@ -1,12 +1,12 @@
 /**
  * @author Fouvez Dorian.
  */
-package domaine.adress;
+package domaine.address;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AdressImpl implements AdressDTO {
+public class AddressImpl implements AddressDTO {
 
   private int id;
   private String country;
@@ -112,7 +112,7 @@ public class AdressImpl implements AdressDTO {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    AdressImpl other = (AdressImpl) obj;
+    AddressImpl other = (AddressImpl) obj;
     if (id != other.id) {
       return false;
     }

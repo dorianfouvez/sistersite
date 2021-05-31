@@ -33,7 +33,7 @@ public class UserImpl implements User {
   @JsonView(Views.Public.class)
   private int profilePicture;
   @JsonView(Views.Public.class)
-  private int adress;
+  private int address;
   @JsonView(Views.Public.class)
   private String phoneNumber;
   @JsonView(Views.Public.class)
@@ -175,12 +175,12 @@ public class UserImpl implements User {
     this.profilePicture = profilePicture;
   }
 
-  public int getAdress() {
-    return adress;
+  public int getAddress() {
+    return address;
   }
 
-  public void setAdress(int adress) {
-    this.adress = adress;
+  public void setAddress(int address) {
+    this.address = address;
   }
 
   public String getPhoneNumber() {
@@ -414,7 +414,7 @@ public class UserImpl implements User {
     return "UserImpl [id=" + id + ", userName=" + userName + ", lastName=" + lastName
         + ", firstName=" + firstName + ", email=" + email + ", isBoss=" + isBoss
         + ", registrationDate=" + registrationDate + ", profilePicture=" + profilePicture
-        + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", facebook=" + facebook
+        + ", address=" + address + ", phoneNumber=" + phoneNumber + ", facebook=" + facebook
         + ", instagram=" + instagram + ", twitter=" + twitter + ", youtube=" + youtube
         + ", hairColor=" + hairColor + ", hairSize=" + hairSize + ", eye=" + eye + ", height="
         + height + ", weight=" + weight + ", firstNationality=" + firstNationality

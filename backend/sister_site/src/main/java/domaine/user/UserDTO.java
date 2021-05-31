@@ -71,14 +71,14 @@ public interface UserDTO {
    */
   void setProfilePicture(int profilePicture);
 
-  int getAdress();
+  int getAddress();
 
   /**
-   * Change the adress.
+   * Change the address.
    * 
-   * @param adress the id of the adress and has to be more than 0.
+   * @param address the id of the address and has to be more than 0.
    */
-  void setAdress(int adress);
+  void setAddress(int address);
 
   String getPhoneNumber();
 

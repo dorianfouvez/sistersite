@@ -36,7 +36,7 @@ const routesEn = {
   "/about": WorkInProgressPage,
   "/book": WorkInProgressPage,
   "/contactme": WorkInProgressPage,
-  "/ArtisticCV": WorkInProgressPage,
+  "/ArtisticCV": CVPage,
   "/demotape": WorkInProgressPage,
   "/errornavigation": ErrorNavigationPage,
   "/login": LoginPage,

@@ -3,8 +3,9 @@
  */
 package domaine;
 
-import domaine.adress.AdressDTO;
+import domaine.address.AddressDTO;
 import domaine.color.ColorDTO;
+import domaine.curriculum_vitae.CurriculumVitaeDTO;
 import domaine.nationality.NationalityDTO;
 import domaine.photo.PhotoDTO;
 import domaine.size.SizeDTO;
@@ -14,9 +15,11 @@ import domaine.user.UserDTO;
 
 public interface DomaineFactory {
 
-  AdressDTO getAdressDTO();
+  AddressDTO getAddressDTO();
 
   ColorDTO getColorDTO();
+
+  CurriculumVitaeDTO getCurriculumVitaeDTO();
 
   NationalityDTO getNationalityDTO();
 

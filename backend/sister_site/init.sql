@@ -61,7 +61,7 @@ CREATE TABLE ambre_fouvez.users (
 	registration_date TIMESTAMP NOT NULL CHECK(registration_date <= current_timestamp),
 	password VARCHAR(60) NOT NULL CHECK(password <> ''),
     profile_picture INTEGER REFERENCES ambre_fouvez.photos(id) NOT NULL,
-    adress INTEGER REFERENCES ambre_fouvez.addresses(id) NULL,
+    address INTEGER REFERENCES ambre_fouvez.addresses(id) NULL,
     phone_number VARCHAR(20) NULL CHECK(phone_number <> ''),
     facebook VARCHAR(50) NULL CHECK(facebook SIMILAR TO 'https:\/\/www\.facebook\.com\/[\w\.\/\\$é~#èà&=+*-]+'),
     instagram VARCHAR(50) NULL CHECK(instagram SIMILAR TO 'https:\/\/www\.instagram\.com\/[\w\.\/\\$é~#èà&=+*-]+\/'),

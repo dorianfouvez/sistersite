@@ -3,10 +3,12 @@
  */
 package domaine;
 
-import domaine.adress.AdressDTO;
-import domaine.adress.AdressImpl;
+import domaine.address.AddressDTO;
+import domaine.address.AddressImpl;
 import domaine.color.ColorDTO;
 import domaine.color.ColorImpl;
+import domaine.curriculum_vitae.CurriculumVitaeDTO;
+import domaine.curriculum_vitae.CurriculumVitaeImpl;
 import domaine.nationality.NationalityDTO;
 import domaine.nationality.NationalityImpl;
 import domaine.photo.PhotoDTO;
@@ -23,13 +25,18 @@ import domaine.user.UserImpl;
 public class DomaineFactoryImpl implements DomaineFactory {
 
   @Override
-  public AdressDTO getAdressDTO() {
-    return new AdressImpl();
+  public AddressDTO getAddressDTO() {
+    return new AddressImpl();
   }
 
   @Override
   public ColorDTO getColorDTO() {
     return new ColorImpl();
+  }
+
+  @Override
+  public CurriculumVitaeDTO getCurriculumVitaeDTO() {
+    return new CurriculumVitaeImpl();
   }
 
   @Override
