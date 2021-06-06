@@ -23,12 +23,8 @@ public class UserDAOImpl implements UserDAO {
 
   @Override
   public UserDTO findById(int id) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT id, username, last_name, first_name, email, is_boss, registration_date, password,"
-            + " profile_picture, address, phone_number, facebook, instagram, twitter, youtube,"
-            + " hair_color, hair_size, eye, height, weight, first_nationality, second_nationality,"
-            + " shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size,"
-            + " head_size" + " FROM ambre_fouvez.users WHERE id = ?");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT"
+        + UserDAO.getAllUserAttributes() + " FROM" + UserDAO.getUserTableName() + " WHERE id = ?");
     UserDTO user;
     try {
       ps.setInt(1, id);
@@ -43,12 +39,9 @@ public class UserDAOImpl implements UserDAO {
 
   @Override
   public UserDTO findByUserName(String username) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT id, username, last_name, first_name, email, is_boss, registration_date, password,"
-            + " profile_picture, address, phone_number, facebook, instagram, twitter, youtube,"
-            + " hair_color, hair_size, eye, height, weight, first_nationality, second_nationality,"
-            + " shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size,"
-            + " head_size" + " FROM ambre_fouvez.users WHERE username = ?");
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + UserDAO.getAllUserAttributes()
+            + " FROM" + UserDAO.getUserTableName() + " WHERE u.username = ?");
     UserDTO user;
     try {
       ps.setString(1, username);
@@ -66,12 +59,8 @@ public class UserDAOImpl implements UserDAO {
 
   @Override
   public List<UserDTO> getAll() {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT id, username, last_name, first_name, email, is_boss, registration_date, password,"
-            + " profile_picture, address, phone_number, facebook, instagram, twitter, youtube,"
-            + " hair_color, hair_size, eye, height, weight, first_nationality, second_nationality,"
-            + " shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size,"
-            + " head_size" + " FROM ambre_fouvez.users" + " ORDER BY id");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT "
+        + UserDAO.getAllUserAttributes() + " FROM" + UserDAO.getUserTableName() + " ORDER BY u.id");
 
     List<UserDTO> list = new ArrayList<UserDTO>();
 
@@ -87,6 +76,8 @@ public class UserDAOImpl implements UserDAO {
 
     return list;
   }
+
+
 
   // ******************** Private's Methods ********************
 

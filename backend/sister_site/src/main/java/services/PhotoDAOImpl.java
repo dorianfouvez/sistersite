@@ -24,8 +24,9 @@ public class PhotoDAOImpl implements PhotoDAO {
 
   @Override
   public PhotoDTO findById(int id) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT id," + " name, picture, photographer" + " FROM ambre_fouvez.photos WHERE id = ?");
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
+            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE id = ?");
     PhotoDTO photo = null;
     try {
       ps.setInt(1, id);
@@ -43,8 +44,9 @@ public class PhotoDAOImpl implements PhotoDAO {
 
   @Override
   public PhotoDTO findByName(String name) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT id," + " name, picture, photographer" + " FROM ambre_fouvez.photos WHERE name = ?");
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
+            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE name = ?");
     PhotoDTO photo = domaineFactory.getPhotoDTO();
     try {
       ps.setString(1, name);
@@ -71,8 +73,8 @@ public class PhotoDAOImpl implements PhotoDAO {
 
   @Override
   public PhotoDTO add(PhotoDTO photo) {
-    PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("INSERT INTO ambre_fouvez.photos" + " VALUES(DEFAULT,?,?,?)");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
+        "INSERT INTO" + PhotoDAO.getPhotoTableName() + " VALUES(DEFAULT,?,?,?)");
 
     try {
       setAllPsAttributNotNull(ps, photo);
@@ -88,7 +90,7 @@ public class PhotoDAOImpl implements PhotoDAO {
   @Override
   public PhotoDTO delete(int id) {
     PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("DELETE FROM ambre_fouvez.photos" + " WHERE id = ?");
+        .getPreparedStatement("DELETE FROM" + PhotoDAO.getPhotoTableName() + " WHERE id = ?");
 
     try {
       ps.setInt(1, id);

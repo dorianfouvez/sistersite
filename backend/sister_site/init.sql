@@ -299,7 +299,7 @@ INSERT INTO ambre_fouvez.tags(
 
 INSERT INTO ambre_fouvez.users(
 	id, username, last_name, first_name, email, is_boss, registration_date, password, 
-    profile_picture, adress, phone_number, facebook, instagram, twitter, youtube, 
+    profile_picture, address, phone_number, facebook, instagram, twitter, youtube, 
     hair_color, hair_size, eye, height, weight, first_nationality, second_nationality, shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size, head_size)
 	VALUES (0, 'clabi', 'Fouvez', 'Dorian', 'dofou1995@hotmail.com', TRUE, '2021-05-18 23:53:00', '$2a$10$qHUActFexLNl7AS/Yakyy.wsh1EDnSUbnnrMQMXK2vMi4Yof1tBeC', 
     0, NULL, NULL, NULL, NULL, NULL, NULL, 
@@ -307,7 +307,7 @@ INSERT INTO ambre_fouvez.users(
 
 INSERT INTO ambre_fouvez.users(
 	id, username, last_name, first_name, email, is_boss, registration_date, password, 
-    profile_picture, adress, phone_number, facebook, instagram, twitter, youtube, 
+    profile_picture, address, phone_number, facebook, instagram, twitter, youtube, 
     hair_color, hair_size, eye, height, weight, first_nationality, second_nationality, shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size, head_size)
 	VALUES (DEFAULT, 'ambre', 'Fouvez', 'Ambre', 'ambre.fouvez@gmail.com', TRUE, '2021-05-18 23:55:00', '$2a$10$44L1fxbjQ2Vqtwomy5JBLOktnYbqlEKe28eY18NLvbWwOIb0SZr5K', 
     0, 1, '06 41 80 14 05', 'https://www.facebook.com/ambre.fouvez', 'https://www.instagram.com/ambre.fouvez/', NULL, NULL, 

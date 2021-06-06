@@ -5,7 +5,7 @@ let sideBar = document.querySelector("#sideBar");
 const SidebarPage = () => {
     let sidebarPage = `<div id="mySidenav" class="sidenav">
         <a id="closeSidebar" class="closebtn">&times;</a>
-        <a href="#">Acceuil</a>
+        <a href="#">Accueil</a>
         <a id="comedienne" href="#" value="comedienne" class>Comédienne</a>
         <div id="comedienne_c" class="collapse ml-2">
             <a href="#">CV Artistique</a>

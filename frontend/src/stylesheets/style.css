@@ -28,6 +28,7 @@
 /*************** Images resizing ***************/
 .logo_size {
   width: 70px;
+  /*margin-left: 50px;*/
 }
 
 .lang_flag {

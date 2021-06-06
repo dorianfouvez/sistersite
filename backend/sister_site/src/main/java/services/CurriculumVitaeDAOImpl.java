@@ -20,9 +20,9 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
 
   @Override
   public CurriculumVitaeDTO findById(int id) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT id, title, user_id, profession, playing_age, background_picture"
-            + " FROM ambre_fouvez.curriculum_vitae WHERE id = ?");
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + CurriculumVitaeDAO.getAllCurriculumVitaeAttributes()
+            + " FROM" + CurriculumVitaeDAO.getCurriculumVitaeTableName() + " WHERE id = ?");
     CurriculumVitaeDTO cv;
     try {
       ps.setInt(1, id);
@@ -37,10 +37,12 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
 
   @Override
   public void getFullInfosCurriculumVitae(int id) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "SELECT cv.id, cv.title, cv.user_id, cv.profession, cv.playing_age, cv.background_picture"
-            + ", u.id" + " FROM ambre_fouvez.curriculum_vitae cv"
-            + " JOIN ambre_fouvez.users u ON u.id = cv.user"
+    // TODO finish it
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + CurriculumVitaeDAO.getAllCurriculumVitaeAttributes() + ","
+            + UserDAO.getAllUserAttributes() + " FROM"
+            + CurriculumVitaeDAO.getCurriculumVitaeTableName() + "," + " JOIN"
+            + UserDAO.getUserTableName() + " ON u.id = cv.user"
             + " JOIN ambre_fouvez.addresses a ON a.id = u.address" + " WHERE cv.id = ?");
   }
 

@@ -105,6 +105,10 @@ const onUserLogin = (userData) => {
   Navbar();
   Sidebar();
   RedirectUrl("/");
+  // TODO pourquoi pas envoyer un mail à chaque connection d'un nouveau device ??
+  // Authentification à 2 facteurs ?? => web.dev/sms-otp-form ??
+  // Changer le password si compromi ??? -> /.well-known/change-password
+  // Free certificates? Use Let’s Encrypt, or self-signed certificates.
 };
 
 const onError = (err) => {

@@ -18,4 +18,16 @@ public interface PhotoDAO {
 
   PhotoDTO delete(int id);
 
+
+
+  // ******************** Static's Methods ********************
+
+  static String getAllPhotoAttributes() {
+    return " p.id, p.name, p.picture, p.photographer";
+  }
+
+  static String getPhotoTableName() {
+    return " ambre_fouvez.photos p";
+  }
+
 }

@@ -8,4 +8,16 @@ public interface CurriculumVitaeDAO {
 
   void getFullInfosCurriculumVitae(int id);
 
+
+
+  // ******************** Static's Methods ********************
+
+  public static String getAllCurriculumVitaeAttributes() {
+    return " cv.id, cv.title, cv.user_id, cv.profession, cv.playing_age, cv.background_picture";
+  }
+
+  public static String getCurriculumVitaeTableName() {
+    return " ambre_fouvez.curriculum_vitae cv";
+  }
+
 }
