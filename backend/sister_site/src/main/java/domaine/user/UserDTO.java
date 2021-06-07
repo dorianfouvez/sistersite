@@ -58,9 +58,9 @@ public interface UserDTO {
   /**
    * Change the regitration date.
    * 
-   * @param timestamp has to be Not Null.
+   * @param registrationDate has to be Not Null.
    */
-  void setRegistrationDate(Timestamp timestamp);
+  void setRegistrationDate(Timestamp registrationDate);
 
   int getProfilePicture();
 
@@ -177,4 +177,12 @@ public interface UserDTO {
    * @param hashPassword : has to be Not Null
    */
   void setPassword(String hashPassword);
+
+  void fullfillUser(int id, String username, String lastName, String firstName, String email,
+      boolean isBoss, Timestamp registrationDate, String password, int profilePicture, int address,
+      String phoneNumber, String facebook, String instagram, String twitter, String youtube,
+      int hairColor, int hairSize, int eye, int height, int weight, int firstNationality,
+      int secondNationality, int shoeSize, int jacketSize, int pantSize, int chest, char braCup,
+      int waistSize, int hipSize, int neckSize, int headSize);
+
 }

@@ -13,7 +13,7 @@ public interface NationalityDAO {
   }
 
   static String getNationalityTableName() {
-    return getAllNationalityAttributesWithName("n");
+    return getNationalityTableNameWithName("n");
   }
 
   static String getNationalityTableNameWithName(String name) {

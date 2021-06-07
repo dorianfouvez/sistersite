@@ -34,7 +34,7 @@ const onUser = (data) => {
     userPage += `<h4 class="mt-2">My profile</h4>
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
-    <div class="float-right"><button id="" class="btn btn-primary">Voir mon cv</button></div>
+    <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>
         <div class="row">
             <div class="col-sm-2 bg-danger">
                 <div class="card img-fluid remove_card_background">
@@ -197,8 +197,27 @@ const onUser = (data) => {
     <!--<p>Registration date : ${user.registrationDate}</p>-->
     </div>`;
 
-    return (page.innerHTML = userPage);
+    page.innerHTML = userPage;
+    document.getElementById("cv").addEventListener('click', onSeeCV);
 };
+
+const onSeeCV = (e) => {
+    e.preventDefault();
+    let CVId = 1;
+
+    let id = getTokenSessionData();
+    fetch(API_URL + "curriculumVitea/" + CVId, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: id,
+        },
+    }).then((response) => {
+        if (!response.ok) {
+            return response.text().then((err) => onError(err));
+        } else return response.json().then((data) => console.log(data));
+    });
+}
 
 const onError = (err) => {
     let messageBoard = document.querySelector("#messageBoard");

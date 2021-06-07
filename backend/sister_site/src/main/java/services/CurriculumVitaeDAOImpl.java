@@ -51,8 +51,8 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
             + NationalityDAO.getAllNationalityAttributesWithName("n2") + ","
             + ProfessionDAO.getAllProfessionAttributes() + ","
             + PhotoDAO.getAllPhotoAttributesWithName("p2") + " FROM"
-            + CurriculumVitaeDAO.getCurriculumVitaeTableName() + "," + " JOIN"
-            + UserDAO.getUserTableName() + " ON u.id = cv.user" + " JOIN"
+            + CurriculumVitaeDAO.getCurriculumVitaeTableName() + " JOIN"
+            + UserDAO.getUserTableName() + " ON u.id = cv.user_id" + " JOIN"
             + PhotoDAO.getPhotoTableName() + " ON p.id = u.profile_picture" + " LEFT JOIN"
             + AddressDAO.getAddressTableName() + " ON a.id = u.address" + " LEFT JOIN"
             + ColorDAO.getColorTableName() + " ON c.id = u.hair_color" + " LEFT JOIN"
@@ -130,9 +130,22 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
     try {
       cv.setId(rs.getInt(1));
       cv.setTitle(rs.getString(2));
+
+      user.fullfillUser(rs.getInt(3), rs.getString(8), rs.getString(9), rs.getString(10),
+          rs.getString(11), rs.getBoolean(12), rs.getTimestamp(13), rs.getString(14), rs.getInt(15),
+          rs.getInt(16), rs.getString(17), rs.getString(18), rs.getString(19), rs.getString(20),
+          rs.getString(21), rs.getInt(22), rs.getInt(23), rs.getInt(24), rs.getInt(25),
+          rs.getInt(26), rs.getInt(27), rs.getInt(28), rs.getInt(29), rs.getInt(30), rs.getInt(31),
+          rs.getInt(32), rs.getString(33).charAt(0), rs.getInt(34), rs.getInt(35), rs.getInt(36),
+          rs.getInt(37));
       cv.setUser(user);
+
+      profession.setId(rs.getInt(4));
       cv.setProfession(profession);
+
       cv.setPlayingAge(rs.getString(5));
+
+      photo.setId(6);
       cv.setBackgroundPicture(photo);
 
     } catch (SQLException e) {

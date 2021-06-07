@@ -410,6 +410,47 @@ public class UserImpl implements User {
   }
 
   @Override
+  public void fullfillUser(int id, String username, String lastName, String firstName, String email,
+      boolean isBoss, Timestamp registrationDate, String password, int profilePicture, int address,
+      String phoneNumber, String facebook, String instagram, String twitter, String youtube,
+      int hairColor, int hairSize, int eye, int height, int weight, int firstNationality,
+      int secondNationality, int shoeSize, int jacketSize, int pantSize, int chest, char braCup,
+      int waistSize, int hipSize, int neckSize, int headSize) {
+
+    setID(id);
+    setUserName(username);
+    setLastName(lastName);
+    setFirstName(firstName);
+    setEmail(email);
+    setBoss(isBoss);
+    setRegistrationDate(registrationDate);
+    setPassword(password);
+    setProfilePicture(profilePicture);
+    setAddress(address);
+    setPhoneNumber(phoneNumber);
+    setFacebook(facebook);
+    setInstagram(instagram);
+    setTwitter(twitter);
+    setYoutube(youtube);
+    setHairColor(hairColor);
+    setHairSize(hairSize);
+    setEye(eye);
+    setHeight(height);
+    setWeight(weight);
+    setFirstNationality(firstNationality);
+    setSecondNationality(secondNationality);
+    setShoeSize(shoeSize);
+    setJacketSize(jacketSize);
+    setPantSize(pantSize);
+    setChest(chest);
+    setBraCup(braCup);
+    setWaistSize(waistSize);
+    setHipSize(hipSize);
+    setNeckSize(neckSize);
+    setHeadSize(headSize);
+  }
+
+  @Override
   public String toString() {
     return "UserImpl [id=" + id + ", userName=" + userName + ", lastName=" + lastName
         + ", firstName=" + firstName + ", email=" + email + ", isBoss=" + isBoss
