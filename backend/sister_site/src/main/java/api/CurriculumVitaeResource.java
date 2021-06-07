@@ -4,6 +4,8 @@ import api.filters.AnonymousOrAuthorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
 import domaine.DomaineFactory;
+import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
+import domaine.curriculum_vitae.CurriculumVitaeUCC;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.GET;
@@ -17,6 +19,9 @@ import jakarta.ws.rs.core.Response.Status;
 public class CurriculumVitaeResource {
 
   @Inject
+  private CurriculumVitaeUCC curriculumVitaeUCC;
+
+  @Inject
   private DomaineFactory domaineFactory;
 
   @GET
@@ -27,7 +32,7 @@ public class CurriculumVitaeResource {
       throw new PresentationException("Id cannot be under 1", Status.BAD_REQUEST);
     }
 
-    // TODO 24 - 25 table ... ou créer une classe cv qui reprend tout ?
+    ComplexCurriculumVitaeDTO cv = this.curriculumVitaeUCC.getFullCurriculumVitae(id);
 
     return ResponseMaker.createEmptyResponseOK();
   }

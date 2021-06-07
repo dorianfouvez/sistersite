@@ -1,12 +1,13 @@
 package services;
 
+import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
 
 public interface CurriculumVitaeDAO {
 
   CurriculumVitaeDTO findById(int id);
 
-  Object[] getFullInfosCurriculumVitae(int id);
+  ComplexCurriculumVitaeDTO getFullInfosCurriculumVitae(int id);
 
 
 

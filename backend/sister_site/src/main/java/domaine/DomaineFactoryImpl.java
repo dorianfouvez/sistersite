@@ -7,12 +7,16 @@ import domaine.address.AddressDTO;
 import domaine.address.AddressImpl;
 import domaine.color.ColorDTO;
 import domaine.color.ColorImpl;
+import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
+import domaine.curriculum_vitae.ComplexCurriculumVitaeImpl;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeImpl;
 import domaine.nationality.NationalityDTO;
 import domaine.nationality.NationalityImpl;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoImpl;
+import domaine.profession.ProfessionDTO;
+import domaine.profession.ProfessionImpl;
 import domaine.size.SizeDTO;
 import domaine.size.SizeImpl;
 import domaine.tag.TagDTO;
@@ -35,6 +39,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   }
 
   @Override
+  public ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO() {
+    return new ComplexCurriculumVitaeImpl();
+  }
+
+  @Override
   public CurriculumVitaeDTO getCurriculumVitaeDTO() {
     return new CurriculumVitaeImpl();
   }
@@ -47,6 +56,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public PhotoDTO getPhotoDTO() {
     return new PhotoImpl();
+  }
+
+  @Override
+  public ProfessionDTO getProfessionDTO() {
+    return new ProfessionImpl();
   }
 
   @Override

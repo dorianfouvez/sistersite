@@ -5,7 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import api.utils.FatalException;
 import domaine.DomaineFactory;
+import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
+import domaine.photo.PhotoDTO;
+import domaine.profession.ProfessionDTO;
+import domaine.user.UserDTO;
 import jakarta.inject.Inject;
 
 public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
@@ -36,7 +40,7 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
   }
 
   @Override
-  public Object[] getFullInfosCurriculumVitae(int id) {
+  public ComplexCurriculumVitaeDTO getFullInfosCurriculumVitae(int id) {
     // TODO finish it
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + CurriculumVitaeDAO.getAllCurriculumVitaeAttributes() + ","
@@ -59,9 +63,15 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
             + " ON n2.id = u.second_nationality" + " JOIN" + ProfessionDAO.getProfessionTableName()
             + " ON pr.id = cv.profession" + " JOIN" + PhotoDAO.getPhotoTableNameWithName("p2")
             + " ON p2.id = cv.background_picture" + " WHERE cv.id = ?");
-    Object[] cv = new Object[11];
-    int i = 0;
-
+    ComplexCurriculumVitaeDTO cv;
+    try {
+      ps.setInt(1, id);
+      cv = createFullFillComplexCVFromPreparedStatement(ps);
+    } catch (SQLException e) {
+      e.printStackTrace();
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException(e.getMessage(), e);
+    }
     return cv;
   }
 
@@ -107,6 +117,39 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
     try (ResultSet rs = ps.executeQuery()) {
       while (rs.next()) {
         cv = createFullFillCVFromResultSet(rs);
+      }
+    }
+    return cv;
+  }
+
+  private ComplexCurriculumVitaeDTO createFullFillComplexCVFromResultSet(ResultSet rs) {
+    ComplexCurriculumVitaeDTO cv = domaineFactory.getComplexCurriculumVitaeDTO();
+    UserDTO user = domaineFactory.getUserDTO();
+    ProfessionDTO profession = domaineFactory.getProfessionDTO();
+    PhotoDTO photo = domaineFactory.getPhotoDTO();
+    try {
+      cv.setId(rs.getInt(1));
+      cv.setTitle(rs.getString(2));
+      cv.setUser(user);
+      cv.setProfession(profession);
+      cv.setPlayingAge(rs.getString(5));
+      cv.setBackgroundPicture(photo);
+
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error when create and fully fill the cv from ResultSet.", e);
+    } catch (NullPointerException e) {
+      throw new FatalException("Error when create and fully fill the cv from ResultSet.", e);
+    }
+    return cv;
+  }
+
+  private ComplexCurriculumVitaeDTO createFullFillComplexCVFromPreparedStatement(
+      PreparedStatement ps) throws SQLException {
+    ComplexCurriculumVitaeDTO cv = domaineFactory.getComplexCurriculumVitaeDTO();
+    try (ResultSet rs = ps.executeQuery()) {
+      while (rs.next()) {
+        cv = createFullFillComplexCVFromResultSet(rs);
       }
     }
     return cv;

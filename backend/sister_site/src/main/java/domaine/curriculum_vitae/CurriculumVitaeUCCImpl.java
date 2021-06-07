@@ -45,8 +45,10 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
 
   @Override
-  public Object[] getFullCurriculumVitae(int id) {
+  public ComplexCurriculumVitaeDTO getFullCurriculumVitae(int id) {
     dalservices.startTransaction();
+    ComplexCurriculumVitaeDTO test = curriculumVitaeDAO.getFullInfosCurriculumVitae(id);
+
     Object[] result = new Object[28];
     int i = 0;
 
@@ -153,7 +155,7 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
     dalservices.commitTransaction();
 
-    return result;
+    return test;
   }
 
 }
