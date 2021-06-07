@@ -6,7 +6,7 @@ public interface CurriculumVitaeDAO {
 
   CurriculumVitaeDTO findById(int id);
 
-  void getFullInfosCurriculumVitae(int id);
+  Object[] getFullInfosCurriculumVitae(int id);
 
 
 

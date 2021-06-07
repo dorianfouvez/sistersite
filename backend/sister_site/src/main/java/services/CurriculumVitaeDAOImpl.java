@@ -36,14 +36,21 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
   }
 
   @Override
-  public void getFullInfosCurriculumVitae(int id) {
+  public Object[] getFullInfosCurriculumVitae(int id) {
     // TODO finish it
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + CurriculumVitaeDAO.getAllCurriculumVitaeAttributes() + ","
-            + UserDAO.getAllUserAttributes() + " FROM"
+            + UserDAO.getAllUserAttributes() + "," + AddressDAO.getAllAddressAttributes() + ","
+            + NationalityDAO.getAllNationalityAttributes() + ","
+            + NationalityDAO.getAllNationalityAttributesWithName("n2") + " FROM"
             + CurriculumVitaeDAO.getCurriculumVitaeTableName() + "," + " JOIN"
-            + UserDAO.getUserTableName() + " ON u.id = cv.user"
-            + " JOIN ambre_fouvez.addresses a ON a.id = u.address" + " WHERE cv.id = ?");
+            + UserDAO.getUserTableName() + " ON u.id = cv.user" + " JOIN"
+            + AddressDAO.getAddressTableName() + " ON a.id = u.address" + " LEFT JOIN"
+            + NationalityDAO.getNationalityTableName() + " ON n.id = u.first_nationality"
+            + " LEFT JOIN" + NationalityDAO.getNationalityTableNameWithName("n2")
+            + " ON n2.id = u.second_nationality" + " WHERE cv.id = ?");
+
+    return null;
   }
 
 
