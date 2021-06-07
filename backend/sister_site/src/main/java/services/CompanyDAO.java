@@ -4,11 +4,11 @@ public interface CompanyDAO {
 
   // ******************** Static's Methods ********************
 
-  public static String getAllCompanyAttributes() {
+  static String getAllCompanyAttributes() {
     return " cp.id, cp.name";
   }
 
-  public static String getCompanyTableName() {
+  static String getCompanyTableName() {
     return " ambre_fouvez.companies cp";
   }
 

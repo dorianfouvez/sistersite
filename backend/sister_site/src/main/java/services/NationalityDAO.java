@@ -4,19 +4,19 @@ public interface NationalityDAO {
 
   // ******************** Static's Methods ********************
 
-  public static String getAllNationalityAttributes() {
+  static String getAllNationalityAttributes() {
     return getAllNationalityAttributesWithName("n");
   }
 
-  public static String getAllNationalityAttributesWithName(String name) {
+  static String getAllNationalityAttributesWithName(String name) {
     return " " + name + ".id, " + name + ".nationality";
   }
 
-  public static String getNationalityTableName() {
+  static String getNationalityTableName() {
     return getAllNationalityAttributesWithName("n");
   }
 
-  public static String getNationalityTableNameWithName(String name) {
+  static String getNationalityTableNameWithName(String name) {
     return " ambre_fouvez.nationalities " + name;
   }
 

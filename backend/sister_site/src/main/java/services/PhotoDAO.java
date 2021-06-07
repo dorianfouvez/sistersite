@@ -23,11 +23,19 @@ public interface PhotoDAO {
   // ******************** Static's Methods ********************
 
   static String getAllPhotoAttributes() {
-    return " p.id, p.name, p.picture, p.photographer";
+    return getAllPhotoAttributesWithName("p");
+  }
+
+  static String getAllPhotoAttributesWithName(String name) {
+    return " " + name + ".id, " + name + ".name, " + name + ".picture, " + name + ".photographer";
   }
 
   static String getPhotoTableName() {
-    return " ambre_fouvez.photos p";
+    return getPhotoTableNameWithName("p");
+  }
+
+  static String getPhotoTableNameWithName(String name) {
+    return " ambre_fouvez.photos " + name;
   }
 
 }

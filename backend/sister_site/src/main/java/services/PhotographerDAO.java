@@ -4,11 +4,11 @@ public interface PhotographerDAO {
 
   // ******************** Static's Methods ********************
 
-  public static String getAllPhotographerAttributes() {
+  static String getAllPhotographerAttributes() {
     return " pg.id, pg.name";
   }
 
-  public static String getPhotographerTableName() {
+  static String getPhotographerTableName() {
     return " ambre_fouvez.photographers pg";
   }
 

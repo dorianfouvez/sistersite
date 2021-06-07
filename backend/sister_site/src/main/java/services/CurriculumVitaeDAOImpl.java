@@ -40,17 +40,29 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
     // TODO finish it
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + CurriculumVitaeDAO.getAllCurriculumVitaeAttributes() + ","
-            + UserDAO.getAllUserAttributes() + "," + AddressDAO.getAllAddressAttributes() + ","
-            + NationalityDAO.getAllNationalityAttributes() + ","
-            + NationalityDAO.getAllNationalityAttributesWithName("n2") + " FROM"
+            + UserDAO.getAllUserAttributes() + "," + PhotoDAO.getAllPhotoAttributes() + ","
+            + AddressDAO.getAllAddressAttributes() + "," + ColorDAO.getAllColorAttributes() + ","
+            + SizeDAO.getAllSizeAttributes() + "," + ColorDAO.getAllColorAttributesWithName("c2")
+            + "," + NationalityDAO.getAllNationalityAttributes() + ","
+            + NationalityDAO.getAllNationalityAttributesWithName("n2") + ","
+            + ProfessionDAO.getAllProfessionAttributes() + ","
+            + PhotoDAO.getAllPhotoAttributesWithName("p2") + " FROM"
             + CurriculumVitaeDAO.getCurriculumVitaeTableName() + "," + " JOIN"
             + UserDAO.getUserTableName() + " ON u.id = cv.user" + " JOIN"
+            + PhotoDAO.getPhotoTableName() + " ON p.id = u.profile_picture" + " LEFT JOIN"
             + AddressDAO.getAddressTableName() + " ON a.id = u.address" + " LEFT JOIN"
+            + ColorDAO.getColorTableName() + " ON c.id = u.hair_color" + " LEFT JOIN"
+            + SizeDAO.getSizeTableName() + " ON s.id = u.hair_size" + " LEFT JOIN"
+            + ColorDAO.getColorTableNameWithName("c2") + " ON c2.id = u.eye" + " LEFT JOIN"
             + NationalityDAO.getNationalityTableName() + " ON n.id = u.first_nationality"
             + " LEFT JOIN" + NationalityDAO.getNationalityTableNameWithName("n2")
-            + " ON n2.id = u.second_nationality" + " WHERE cv.id = ?");
+            + " ON n2.id = u.second_nationality" + " JOIN" + ProfessionDAO.getProfessionTableName()
+            + " ON pr.id = cv.profession" + " JOIN" + PhotoDAO.getPhotoTableNameWithName("p2")
+            + " ON p2.id = cv.background_picture" + " WHERE cv.id = ?");
+    Object[] cv = new Object[11];
+    int i = 0;
 
-    return null;
+    return cv;
   }
 
 

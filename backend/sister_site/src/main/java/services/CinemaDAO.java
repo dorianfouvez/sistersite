@@ -4,11 +4,11 @@ public interface CinemaDAO {
 
   // ******************** Static's Methods ********************
 
-  public static String getAllCinemaAttributes() {
+  static String getAllCinemaAttributes() {
     return " ci.id, ci.title, ci.role, ci.year";
   }
 
-  public static String getCinemaTableName() {
+  static String getCinemaTableName() {
     return " ambre_fouvez.cinemas ci";
   }
 

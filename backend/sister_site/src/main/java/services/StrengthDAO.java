@@ -4,11 +4,11 @@ public interface StrengthDAO {
 
   // ******************** Static's Methods ********************
 
-  public static String getAllStrengthAttributes() {
+  static String getAllStrengthAttributes() {
     return " st.id, st.label";
   }
 
-  public static String getStrengthTableName() {
+  static String getStrengthTableName() {
     return " ambre_fouvez.strengths st";
   }
 

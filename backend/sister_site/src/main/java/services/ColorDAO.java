@@ -4,12 +4,20 @@ public interface ColorDAO {
 
   // ******************** Static's Methods ********************
 
-  public static String getAllColorAttributes() {
-    return " c.id, c.color";
+  static String getAllColorAttributes() {
+    return getAllColorAttributesWithName("c");
   }
 
-  public static String getColorTableName() {
-    return " ambre_fouvez.colours c";
+  static String getAllColorAttributesWithName(String name) {
+    return " " + name + ".id, " + name + ".color";
+  }
+
+  static String getColorTableName() {
+    return getColorTableNameWithName("c");
+  }
+
+  static String getColorTableNameWithName(String name) {
+    return " ambre_fouvez.colours " + name;
   }
 
 }
