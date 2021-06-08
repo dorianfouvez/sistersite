@@ -1,3 +1,6 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package domaine.curriculum_vitae;
 
 import java.util.List;
@@ -11,7 +14,7 @@ import domaine.profession.ProfessionDTO;
 import domaine.short_film.ShortFilmDTO;
 import domaine.strength.StrengthDTO;
 import domaine.training.TrainingDTO;
-import domaine.user.UserDTO;
+import domaine.user.ComplexUserDTO;
 import jakarta.ws.rs.core.Response.Status;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,7 +22,7 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
 
   private int id;
   private String title;
-  private UserDTO user;
+  private ComplexUserDTO user;
   private ProfessionDTO profession;
   private String playingAge;
   private PhotoDTO backgroundPicture;
@@ -49,12 +52,12 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   }
 
   @Override
-  public UserDTO getUser() {
+  public ComplexUserDTO getUser() {
     return user;
   }
 
   @Override
-  public void setUser(UserDTO user) {
+  public void setUser(ComplexUserDTO user) {
     this.user = user;
   }
 
@@ -133,6 +136,23 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   @Override
   public void setCinemas(List<CinemaDTO> cinemas) {
     this.cinemas = cinemas;
+  }
+
+  @Override
+  public void fullFillCV(int id, String title, ComplexUserDTO user, ProfessionDTO profession,
+      String playingAge, PhotoDTO backgroundPicture, List<StrengthDTO> strengths,
+      List<TrainingDTO> trainings, List<ShortFilmDTO> shortFilms, List<CinemaDTO> cinemas) {
+
+    setId(id);
+    setTitle(title);
+    setUser(user);
+    setProfession(profession);
+    setPlayingAge(playingAge);
+    setBackgroundPicture(backgroundPicture);
+    setStrengths(strengths);
+    setTrainings(trainings);
+    setShortFilms(shortFilms);
+    setCinemas(cinemas);
   }
 
   @Override

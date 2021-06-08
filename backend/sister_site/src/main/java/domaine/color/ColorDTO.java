@@ -16,4 +16,6 @@ public interface ColorDTO {
 
   void setColor(String color);
 
+  void fullFillColor(int id, String color);
+
 }

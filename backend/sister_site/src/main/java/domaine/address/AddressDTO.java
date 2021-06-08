@@ -36,4 +36,7 @@ public interface AddressDTO {
 
   void setUnitNumber(String unitNumber);
 
+  void fullFillAddress(int id, String country, String commune, String postcode, String street,
+      String buildingNumber, String unitNumber);
+
 }

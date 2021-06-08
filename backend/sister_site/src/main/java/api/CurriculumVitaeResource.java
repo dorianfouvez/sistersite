@@ -1,3 +1,6 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package api;
 
 import api.filters.AnonymousOrAuthorize;
@@ -34,7 +37,7 @@ public class CurriculumVitaeResource {
 
     ComplexCurriculumVitaeDTO cv = this.curriculumVitaeUCC.getFullCurriculumVitae(id);
 
-    return ResponseMaker.createEmptyResponseOK();
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("cv", cv);
   }
 
 }

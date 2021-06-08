@@ -16,4 +16,6 @@ public interface NationalityDTO {
 
   void setNationality(String nationality);
 
+  void fullFillNationality(int id, String nationality);
+
 }

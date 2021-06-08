@@ -215,7 +215,7 @@ const onSeeCV = (e) => {
     }).then((response) => {
         if (!response.ok) {
             return response.text().then((err) => onError(err));
-        } else return response.json().then((data) => console.log(data));
+        } else return response.json().then((data) => console.log(data.cv));
     });
 }
 

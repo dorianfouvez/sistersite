@@ -32,6 +32,12 @@ public class ProfessionImpl implements ProfessionDTO {
   }
 
   @Override
+  public void fullFillProfession(int id, String label) {
+    setId(id);
+    setLabel(label);
+  }
+
+  @Override
   public String toString() {
     return "ProfessionImpl [id=" + id + ", label=" + label + "]";
   }

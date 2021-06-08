@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class PhotoImpl implements PhotoDTO {
 
   private int id;
-  private String picture;
   private String name;
+  private String picture;
   private int photographer;
 
   @Override
@@ -24,16 +24,6 @@ public class PhotoImpl implements PhotoDTO {
   }
 
   @Override
-  public String getPicture() {
-    return picture;
-  }
-
-  @Override
-  public void setPicture(String picture) {
-    this.picture = picture;
-  }
-
-  @Override
   public String getName() {
     return name;
   }
@@ -41,6 +31,16 @@ public class PhotoImpl implements PhotoDTO {
   @Override
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public String getPicture() {
+    return picture;
+  }
+
+  @Override
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
   @Override
@@ -54,8 +54,16 @@ public class PhotoImpl implements PhotoDTO {
   }
 
   @Override
+  public void fullFillPhoto(int id, String name, String picture, int photographer) {
+    setId(id);
+    setPicture(picture);
+    setName(name);
+    setPhotographer(photographer);
+  }
+
+  @Override
   public String toString() {
-    return "PhotoImpl [id=" + id + ", picture=" + picture + ", name=" + name + ", photographer="
+    return "PhotoImpl [id=" + id + ", name=" + name + ", picture=" + picture + ", photographer="
         + photographer + "]";
   }
 
@@ -84,6 +92,5 @@ public class PhotoImpl implements PhotoDTO {
     }
     return true;
   }
-
 
 }

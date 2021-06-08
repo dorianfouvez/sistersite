@@ -5,9 +5,14 @@ package domaine.user;
 
 import java.sql.Timestamp;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import domaine.address.AddressDTO;
+import domaine.color.ColorDTO;
+import domaine.nationality.NationalityDTO;
+import domaine.photo.PhotoDTO;
+import domaine.size.SizeDTO;
 
-@JsonDeserialize(as = UserImpl.class)
-public interface UserDTO {
+@JsonDeserialize(as = ComplexUserImpl.class)
+public interface ComplexUserDTO {
 
   int getID();
 
@@ -62,23 +67,23 @@ public interface UserDTO {
    */
   void setRegistrationDate(Timestamp registrationDate);
 
-  int getProfilePicture();
+  PhotoDTO getProfilePicture();
 
   /**
    * Change the profile picture.
    * 
-   * @param profilePicture the id of the picture and has to be more then 0.
+   * @param profilePicture has to be not null.
    */
-  void setProfilePicture(int profilePicture);
+  void setProfilePicture(PhotoDTO profilePicture);
 
-  int getAddress();
+  AddressDTO getAddress();
 
   /**
    * Change the address.
    * 
-   * @param address the id of the address and has to be more than 0.
+   * @param address has to be not null.
    */
-  void setAddress(int address);
+  void setAddress(AddressDTO address);
 
   String getPhoneNumber();
 
@@ -105,17 +110,17 @@ public interface UserDTO {
 
   void setYoutube(String youtube);
 
-  int getHairColor();
+  ColorDTO getHairColor();
 
-  void setHairColor(int hairColor);
+  void setHairColor(ColorDTO hairColor);
 
-  int getHairSize();
+  SizeDTO getHairSize();
 
-  void setHairSize(int hairSize);
+  void setHairSize(SizeDTO hairSize);
 
-  int getEye();
+  ColorDTO getEye();
 
-  void setEye(int eye);
+  void setEye(ColorDTO eye);
 
   int getHeight();
 
@@ -125,13 +130,13 @@ public interface UserDTO {
 
   void setWeight(int weight);
 
-  int getFirstNationality();
+  NationalityDTO getFirstNationality();
 
-  void setFirstNationality(int firstNationality);
+  void setFirstNationality(NationalityDTO firstNationality);
 
-  int getSecondNationality();
+  NationalityDTO getSecondNationality();
 
-  void setSecondNationality(int secondNationality);
+  void setSecondNationality(NationalityDTO secondNationality);
 
   int getShoeSize();
 
@@ -179,10 +184,11 @@ public interface UserDTO {
   void setPassword(String hashPassword);
 
   void fullFillUser(int id, String username, String lastName, String firstName, String email,
-      boolean isBoss, Timestamp registrationDate, String password, int profilePicture, int address,
-      String phoneNumber, String facebook, String instagram, String twitter, String youtube,
-      int hairColor, int hairSize, int eye, int height, int weight, int firstNationality,
-      int secondNationality, int shoeSize, int jacketSize, int pantSize, int chest, char braCup,
-      int waistSize, int hipSize, int neckSize, int headSize);
+      boolean isBoss, Timestamp registrationDate, String password, PhotoDTO profilePicture,
+      AddressDTO address, String phoneNumber, String facebook, String instagram, String twitter,
+      String youtube, ColorDTO hairColor, SizeDTO hairSize, ColorDTO eye, int height, int weight,
+      NationalityDTO firstNationality, NationalityDTO secondNationality, int shoeSize,
+      int jacketSize, int pantSize, int chest, char braCup, int waistSize, int hipSize,
+      int neckSize, int headSize);
 
 }

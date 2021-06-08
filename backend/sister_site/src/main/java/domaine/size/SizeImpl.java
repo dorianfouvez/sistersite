@@ -32,6 +32,12 @@ public class SizeImpl implements SizeDTO {
   }
 
   @Override
+  public void fullFillSize(int id, String size) {
+    setId(id);
+    setSize(size);
+  }
+
+  @Override
   public String toString() {
     return "SizeImpl [id=" + id + ", size=" + size + "]";
   }

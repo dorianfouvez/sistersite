@@ -13,6 +13,7 @@ import domaine.profession.ProfessionDTO;
 import domaine.size.SizeDTO;
 import domaine.tag.TagDTO;
 import domaine.tag_photo.TagPhotoDTO;
+import domaine.user.ComplexUserDTO;
 import domaine.user.UserDTO;
 
 public interface DomaineFactory {
@@ -22,6 +23,8 @@ public interface DomaineFactory {
   ColorDTO getColorDTO();
 
   ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO();
+
+  ComplexUserDTO getComplexUserDTO();
 
   CurriculumVitaeDTO getCurriculumVitaeDTO();
 

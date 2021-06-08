@@ -1,14 +1,19 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package domaine.curriculum_vitae;
 
 import java.util.List;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import domaine.cinema.CinemaDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
 import domaine.short_film.ShortFilmDTO;
 import domaine.strength.StrengthDTO;
 import domaine.training.TrainingDTO;
-import domaine.user.UserDTO;
+import domaine.user.ComplexUserDTO;
 
+@JsonDeserialize(as = ComplexCurriculumVitaeImpl.class)
 public interface ComplexCurriculumVitaeDTO {
 
   int getId();
@@ -19,9 +24,9 @@ public interface ComplexCurriculumVitaeDTO {
 
   void setTitle(String title);
 
-  UserDTO getUser();
+  ComplexUserDTO getUser();
 
-  void setUser(UserDTO user);
+  void setUser(ComplexUserDTO user);
 
   ProfessionDTO getProfession();
 
@@ -50,5 +55,9 @@ public interface ComplexCurriculumVitaeDTO {
   List<CinemaDTO> getCinemas();
 
   void setCinemas(List<CinemaDTO> cinemas);
+
+  void fullFillCV(int id, String title, ComplexUserDTO user, ProfessionDTO profession,
+      String playingAge, PhotoDTO backgroundPicture, List<StrengthDTO> strengths,
+      List<TrainingDTO> trainings, List<ShortFilmDTO> shortFilms, List<CinemaDTO> cinemas);
 
 }

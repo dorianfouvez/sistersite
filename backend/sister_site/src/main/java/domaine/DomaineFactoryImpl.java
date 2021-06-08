@@ -23,6 +23,8 @@ import domaine.tag.TagDTO;
 import domaine.tag.TagImpl;
 import domaine.tag_photo.TagPhotoDTO;
 import domaine.tag_photo.TagPhotoImpl;
+import domaine.user.ComplexUserDTO;
+import domaine.user.ComplexUserImpl;
 import domaine.user.UserDTO;
 import domaine.user.UserImpl;
 
@@ -41,6 +43,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO() {
     return new ComplexCurriculumVitaeImpl();
+  }
+
+  @Override
+  public ComplexUserDTO getComplexUserDTO() {
+    return new ComplexUserImpl();
   }
 
   @Override

@@ -12,16 +12,18 @@ public interface PhotoDTO {
 
   void setId(int id);
 
-  String getPicture();
-
-  void setPicture(String picture);
-
   String getName();
 
   void setName(String name);
 
+  String getPicture();
+
+  void setPicture(String picture);
+
   int getPhotographer();
 
   void setPhotographer(int photographer);
+
+  void fullFillPhoto(int id, String name, String picture, int photographer);
 
 }

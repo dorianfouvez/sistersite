@@ -16,4 +16,6 @@ public interface SizeDTO {
 
   void setSize(String size);
 
+  void fullFillSize(int id, String size);
+
 }

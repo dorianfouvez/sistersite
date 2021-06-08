@@ -32,6 +32,12 @@ public class ColorImpl implements ColorDTO {
   }
 
   @Override
+  public void fullFillColor(int id, String color) {
+    setId(id);
+    setColor(color);
+  }
+
+  @Override
   public String toString() {
     return "ColorImpl [id=" + id + ", color=" + color + "]";
   }

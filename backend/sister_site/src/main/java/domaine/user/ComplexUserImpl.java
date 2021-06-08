@@ -10,11 +10,16 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import api.utils.BusinessException;
+import domaine.address.AddressDTO;
+import domaine.color.ColorDTO;
+import domaine.nationality.NationalityDTO;
+import domaine.photo.PhotoDTO;
+import domaine.size.SizeDTO;
 import jakarta.ws.rs.core.Response.Status;
 import views.Views;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserImpl implements User {
+public class ComplexUserImpl implements ComplexUser {
 
   @JsonView(Views.Public.class)
   private int id;
@@ -31,9 +36,9 @@ public class UserImpl implements User {
   @JsonView(Views.Public.class)
   private Timestamp registrationDate;
   @JsonView(Views.Public.class)
-  private int profilePicture;
+  private PhotoDTO profilePicture;
   @JsonView(Views.Public.class)
-  private int address;
+  private AddressDTO address;
   @JsonView(Views.Public.class)
   private String phoneNumber;
   @JsonView(Views.Public.class)
@@ -45,19 +50,19 @@ public class UserImpl implements User {
   @JsonView(Views.Public.class)
   private String youtube;
   @JsonView(Views.Public.class)
-  private int hairColor;
+  private ColorDTO hairColor;
   @JsonView(Views.Public.class)
-  private int hairSize;
+  private SizeDTO hairSize;
   @JsonView(Views.Public.class)
-  private int eye;
+  private ColorDTO eye;
   @JsonView(Views.Public.class)
   private int height;
   @JsonView(Views.Public.class)
   private int weight;
   @JsonView(Views.Public.class)
-  private int firstNationality;
+  private NationalityDTO firstNationality;
   @JsonView(Views.Public.class)
-  private int secondNationality;
+  private NationalityDTO secondNationality;
   @JsonView(Views.Public.class)
   private int shoeSize;
   @JsonView(Views.Public.class)
@@ -167,19 +172,19 @@ public class UserImpl implements User {
     this.registrationDate = registrationDate;
   }
 
-  public int getProfilePicture() {
+  public PhotoDTO getProfilePicture() {
     return profilePicture;
   }
 
-  public void setProfilePicture(int profilePicture) {
+  public void setProfilePicture(PhotoDTO profilePicture) {
     this.profilePicture = profilePicture;
   }
 
-  public int getAddress() {
+  public AddressDTO getAddress() {
     return address;
   }
 
-  public void setAddress(int address) {
+  public void setAddress(AddressDTO address) {
     this.address = address;
   }
 
@@ -261,27 +266,27 @@ public class UserImpl implements User {
     this.youtube = youtube;
   }
 
-  public int getHairColor() {
+  public ColorDTO getHairColor() {
     return hairColor;
   }
 
-  public void setHairColor(int hairColor) {
+  public void setHairColor(ColorDTO hairColor) {
     this.hairColor = hairColor;
   }
 
-  public int getHairSize() {
+  public SizeDTO getHairSize() {
     return hairSize;
   }
 
-  public void setHairSize(int hairSize) {
+  public void setHairSize(SizeDTO hairSize) {
     this.hairSize = hairSize;
   }
 
-  public int getEye() {
+  public ColorDTO getEye() {
     return eye;
   }
 
-  public void setEye(int eye) {
+  public void setEye(ColorDTO eye) {
     this.eye = eye;
   }
 
@@ -301,19 +306,19 @@ public class UserImpl implements User {
     this.weight = weight;
   }
 
-  public int getFirstNationality() {
+  public NationalityDTO getFirstNationality() {
     return firstNationality;
   }
 
-  public void setFirstNationality(int firstNationality) {
+  public void setFirstNationality(NationalityDTO firstNationality) {
     this.firstNationality = firstNationality;
   }
 
-  public int getSecondNationality() {
+  public NationalityDTO getSecondNationality() {
     return secondNationality;
   }
 
-  public void setSecondNationality(int secondNationality) {
+  public void setSecondNationality(NationalityDTO secondNationality) {
     this.secondNationality = secondNationality;
   }
 
@@ -411,11 +416,12 @@ public class UserImpl implements User {
 
   @Override
   public void fullFillUser(int id, String username, String lastName, String firstName, String email,
-      boolean isBoss, Timestamp registrationDate, String password, int profilePicture, int address,
-      String phoneNumber, String facebook, String instagram, String twitter, String youtube,
-      int hairColor, int hairSize, int eye, int height, int weight, int firstNationality,
-      int secondNationality, int shoeSize, int jacketSize, int pantSize, int chest, char braCup,
-      int waistSize, int hipSize, int neckSize, int headSize) {
+      boolean isBoss, Timestamp registrationDate, String password, PhotoDTO profilePicture,
+      AddressDTO address, String phoneNumber, String facebook, String instagram, String twitter,
+      String youtube, ColorDTO hairColor, SizeDTO hairSize, ColorDTO eye, int height, int weight,
+      NationalityDTO firstNationality, NationalityDTO secondNationality, int shoeSize,
+      int jacketSize, int pantSize, int chest, char braCup, int waistSize, int hipSize,
+      int neckSize, int headSize) {
 
     setID(id);
     setUserName(username);
@@ -452,17 +458,18 @@ public class UserImpl implements User {
 
   @Override
   public String toString() {
-    return "UserImpl [id=" + id + ", userName=" + userName + ", lastName=" + lastName
+    return "ComplexUserImpl [id=" + id + ", userName=" + userName + ", lastName=" + lastName
         + ", firstName=" + firstName + ", email=" + email + ", isBoss=" + isBoss
-        + ", registrationDate=" + registrationDate + ", profilePicture=" + profilePicture
-        + ", address=" + address + ", phoneNumber=" + phoneNumber + ", facebook=" + facebook
-        + ", instagram=" + instagram + ", twitter=" + twitter + ", youtube=" + youtube
-        + ", hairColor=" + hairColor + ", hairSize=" + hairSize + ", eye=" + eye + ", height="
-        + height + ", weight=" + weight + ", firstNationality=" + firstNationality
-        + ", secondNationality=" + secondNationality + ", shoeSize=" + shoeSize + ", jacketSize="
-        + jacketSize + ", pantSize=" + pantSize + ", chest=" + chest + ", braCup=" + braCup
-        + ", waistSize=" + waistSize + ", hipSize=" + hipSize + ", neckSize=" + neckSize
-        + ", headSize=" + headSize + ", password=" + password + "]";
+        + ", registrationDate=" + registrationDate + ", profilePicture=" + profilePicture.toString()
+        + ", address=" + address.toString() + ", phoneNumber=" + phoneNumber + ", facebook="
+        + facebook + ", instagram=" + instagram + ", twitter=" + twitter + ", youtube=" + youtube
+        + ", hairColor=" + hairColor.toString() + ", hairSize=" + hairSize.toString() + ", eye="
+        + eye.toString() + ", height=" + height + ", weight=" + weight + ", firstNationality="
+        + firstNationality.toString() + ", secondNationality=" + secondNationality.toString()
+        + ", shoeSize=" + shoeSize + ", jacketSize=" + jacketSize + ", pantSize=" + pantSize
+        + ", chest=" + chest + ", braCup=" + braCup + ", waistSize=" + waistSize + ", hipSize="
+        + hipSize + ", neckSize=" + neckSize + ", headSize=" + headSize + ", password=" + password
+        + "]";
   }
 
   @Override
@@ -484,7 +491,7 @@ public class UserImpl implements User {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    UserImpl other = (UserImpl) obj;
+    ComplexUserImpl other = (ComplexUserImpl) obj;
     if (id != other.id) {
       return false;
     }

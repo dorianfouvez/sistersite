@@ -16,4 +16,6 @@ public interface ProfessionDTO {
 
   void setLabel(String label);
 
+  void fullFillProfession(int id, String label);
+
 }

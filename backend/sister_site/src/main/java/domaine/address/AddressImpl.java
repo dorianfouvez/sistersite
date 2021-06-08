@@ -87,6 +87,19 @@ public class AddressImpl implements AddressDTO {
   }
 
   @Override
+  public void fullFillAddress(int id, String country, String commune, String postcode,
+      String street, String buildingNumber, String unitNumber) {
+
+    setId(id);
+    setCountry(country);
+    setCommune(commune);
+    setPostcode(postcode);
+    setStreet(street);
+    setBuildingNumber(buildingNumber);
+    setUnitNumber(unitNumber);
+  }
+
+  @Override
   public String toString() {
     return "AdressImpl [id=" + id + ", country=" + country + ", commune=" + commune + ", postcode="
         + postcode + ", street=" + street + ", buildingNumber=" + buildingNumber + ", unitNumber="

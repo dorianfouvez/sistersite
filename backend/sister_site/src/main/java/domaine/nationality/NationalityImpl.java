@@ -32,6 +32,12 @@ public class NationalityImpl implements NationalityDTO {
   }
 
   @Override
+  public void fullFillNationality(int id, String nationality) {
+    setId(id);
+    setNationality(nationality);
+  }
+
+  @Override
   public String toString() {
     return "NationalityImpl [id=" + id + ", nationality=" + nationality + "]";
   }
