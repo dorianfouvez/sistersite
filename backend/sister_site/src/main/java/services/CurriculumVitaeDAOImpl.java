@@ -53,7 +53,6 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
 
   @Override
   public ComplexCurriculumVitaeDTO getFullInfosCurriculumVitae(int id) {
-    // TODO finish it
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + CurriculumVitaeDAO.getAllCurriculumVitaeAttributes() + ","
             + UserDAO.getAllUserAttributes() + "," + PhotoDAO.getAllPhotoAttributes() + ","

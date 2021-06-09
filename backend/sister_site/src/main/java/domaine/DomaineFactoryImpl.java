@@ -5,6 +5,8 @@ package domaine;
 
 import domaine.address.AddressDTO;
 import domaine.address.AddressImpl;
+import domaine.cinema.ComplexCinemaDTO;
+import domaine.cinema.ComplexCinemaImpl;
 import domaine.color.ColorDTO;
 import domaine.color.ColorImpl;
 import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
@@ -17,6 +19,8 @@ import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoImpl;
 import domaine.profession.ProfessionDTO;
 import domaine.profession.ProfessionImpl;
+import domaine.short_film.ComplexShortFilmDTO;
+import domaine.short_film.ComplexShortFilmImpl;
 import domaine.size.SizeDTO;
 import domaine.size.SizeImpl;
 import domaine.strength.StrengthWithOrderDTO;
@@ -25,6 +29,8 @@ import domaine.tag.TagDTO;
 import domaine.tag.TagImpl;
 import domaine.tag_photo.TagPhotoDTO;
 import domaine.tag_photo.TagPhotoImpl;
+import domaine.training.TrainingWithOrderDTO;
+import domaine.training.TrainingWithOrderImpl;
 import domaine.user.ComplexUserDTO;
 import domaine.user.ComplexUserImpl;
 import domaine.user.UserDTO;
@@ -43,8 +49,18 @@ public class DomaineFactoryImpl implements DomaineFactory {
   }
 
   @Override
+  public ComplexCinemaDTO getComplexCinemaDTO() {
+    return new ComplexCinemaImpl();
+  }
+
+  @Override
   public ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO() {
     return new ComplexCurriculumVitaeImpl();
+  }
+
+  @Override
+  public ComplexShortFilmDTO getComplexShortFilmDTO() {
+    return new ComplexShortFilmImpl();
   }
 
   @Override
@@ -90,6 +106,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public TagPhotoDTO getTagPhotoDTO() {
     return new TagPhotoImpl();
+  }
+
+  @Override
+  public TrainingWithOrderDTO getTrainingWithOrderDTO() {
+    return new TrainingWithOrderImpl();
   }
 
   @Override

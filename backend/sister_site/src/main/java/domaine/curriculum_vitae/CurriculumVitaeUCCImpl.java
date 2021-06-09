@@ -3,7 +3,9 @@
  */
 package domaine.curriculum_vitae;
 
+import api.utils.BusinessException;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response.Status;
 import services.CurriculumVitaeDAO;
 import services.DalServices;
 import services.StrengthDAO;
@@ -28,12 +30,16 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
   @Override
   public ComplexCurriculumVitaeDTO getFullCurriculumVitae(int id) {
     dalservices.startTransaction();
-    ComplexCurriculumVitaeDTO test = curriculumVitaeDAO.getFullInfosCurriculumVitae(id);
+    ComplexCurriculumVitaeDTO cv = curriculumVitaeDAO.getFullInfosCurriculumVitae(id);
+    if (cv == null || cv.getId() == 0) {
+      dalservices.rollbackTransaction();
+      throw new BusinessException("Curriculum Vitae doesn't exist", Status.BAD_REQUEST);
+    }
 
-    test.setStrengths(this.strengthDAO.getAllStrengthWithOrderForCV(id));
-    test.setTrainings(null);
-    test.setShortFilms(null);
-    test.setCinemas(null);
+    cv.setStrengths(this.strengthDAO.getAllStrengthWithOrderForCV(id));
+    // cv.setTrainings(null);
+    // cv.setShortFilms(null);
+    // cv.setCinemas(null);
 
     /*
      * Object[] result = new Object[28]; int i = 0;
@@ -102,7 +108,7 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
     dalservices.commitTransaction();
 
-    return test;
+    return cv;
   }
 
 }
