@@ -3,44 +3,22 @@
  */
 package domaine.curriculum_vitae;
 
-import java.util.List;
-import api.utils.BusinessException;
-import domaine.address.AddressDTO;
-import domaine.cinema.CinemaDTO;
-import domaine.cinema_cv.CinemaCVDTO;
-import domaine.color.ColorDTO;
-import domaine.company.CompanyDTO;
-import domaine.company_short_film.CompanyShortFilmDTO;
-import domaine.director.DirectorDTO;
-import domaine.director_cinema.DirectorCinemaDTO;
-import domaine.director_short_film.DirectorShortFilmDTO;
-import domaine.distinction.DistinctionDTO;
-import domaine.distinction_cinema.DistinctionCinemaDTO;
-import domaine.nationality.NationalityDTO;
-import domaine.photo.PhotoDTO;
-import domaine.profession.ProfessionDTO;
-import domaine.role.RoleDTO;
-import domaine.short_film.ShortFilmDTO;
-import domaine.short_film_cv.ShortFilmCVDTO;
-import domaine.size.SizeDTO;
-import domaine.strength.StrengthDTO;
-import domaine.strength_cv.StrengthCVDTO;
-import domaine.training.TrainingDTO;
-import domaine.training_cv.TrainingCVDTO;
-import domaine.user.UserDTO;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.core.Response.Status;
 import services.CurriculumVitaeDAO;
 import services.DalServices;
+import services.StrengthDAO;
 import services.UserDAO;
 
 public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
   @Inject
-  private UserDAO userDAO;
+  private CurriculumVitaeDAO curriculumVitaeDAO;
 
   @Inject
-  private CurriculumVitaeDAO curriculumVitaeDAO;
+  private StrengthDAO strengthDAO;
+
+  @Inject
+  private UserDAO userDAO;
 
   @Inject
   private DalServices dalservices;
@@ -51,6 +29,11 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
   public ComplexCurriculumVitaeDTO getFullCurriculumVitae(int id) {
     dalservices.startTransaction();
     ComplexCurriculumVitaeDTO test = curriculumVitaeDAO.getFullInfosCurriculumVitae(id);
+
+    test.setStrengths(this.strengthDAO.getAllStrengthWithOrderForCV(id));
+    test.setTrainings(null);
+    test.setShortFilms(null);
+    test.setCinemas(null);
 
     /*
      * Object[] result = new Object[28]; int i = 0;

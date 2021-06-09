@@ -9,7 +9,7 @@ import domaine.cinema.CinemaDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
 import domaine.short_film.ShortFilmDTO;
-import domaine.strength.StrengthDTO;
+import domaine.strength.StrengthWithOrderDTO;
 import domaine.training.TrainingDTO;
 import domaine.user.ComplexUserDTO;
 
@@ -40,9 +40,9 @@ public interface ComplexCurriculumVitaeDTO {
 
   void setBackgroundPicture(PhotoDTO backgroundPicture);
 
-  List<StrengthDTO> getStrengths();
+  List<StrengthWithOrderDTO> getStrengths();
 
-  void setStrengths(List<StrengthDTO> strengths);
+  void setStrengths(List<StrengthWithOrderDTO> strengths);
 
   List<TrainingDTO> getTrainings();
 
@@ -57,7 +57,7 @@ public interface ComplexCurriculumVitaeDTO {
   void setCinemas(List<CinemaDTO> cinemas);
 
   void fullFillCV(int id, String title, ComplexUserDTO user, ProfessionDTO profession,
-      String playingAge, PhotoDTO backgroundPicture, List<StrengthDTO> strengths,
+      String playingAge, PhotoDTO backgroundPicture, List<StrengthWithOrderDTO> strengths,
       List<TrainingDTO> trainings, List<ShortFilmDTO> shortFilms, List<CinemaDTO> cinemas);
 
 }

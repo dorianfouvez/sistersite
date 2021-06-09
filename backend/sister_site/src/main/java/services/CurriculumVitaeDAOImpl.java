@@ -19,7 +19,7 @@ import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
 import domaine.short_film.ShortFilmDTO;
 import domaine.size.SizeDTO;
-import domaine.strength.StrengthDTO;
+import domaine.strength.StrengthWithOrderDTO;
 import domaine.training.TrainingDTO;
 import domaine.user.ComplexUserDTO;
 import jakarta.inject.Inject;
@@ -139,32 +139,29 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
 
     try {
       PhotoDTO profilePicture = domaineFactory.getPhotoDTO();
-      AddressDTO address = domaineFactory.getAddressDTO();
-      ColorDTO hairColor = domaineFactory.getColorDTO();
-      SizeDTO hairSize = domaineFactory.getSizeDTO();
-      ColorDTO eye = domaineFactory.getColorDTO();
-      NationalityDTO firstNationality = domaineFactory.getNationalityDTO();
-      NationalityDTO secondNationality = domaineFactory.getNationalityDTO();
-      ComplexUserDTO user = domaineFactory.getComplexUserDTO();
-      ProfessionDTO profession = domaineFactory.getProfessionDTO();
-      PhotoDTO backgroundPicture = domaineFactory.getPhotoDTO();
-
       profilePicture.fullFillPhoto(rs.getInt(15), rs.getString(39), rs.getString(40),
           rs.getInt(41));
 
+      AddressDTO address = domaineFactory.getAddressDTO();
       address.fullFillAddress(rs.getInt(16), rs.getString(43), rs.getString(44), rs.getString(45),
           rs.getString(46), rs.getString(47), rs.getString(48));
 
+      ColorDTO hairColor = domaineFactory.getColorDTO();
       hairColor.fullFillColor(rs.getInt(22), rs.getString(50));
 
+      SizeDTO hairSize = domaineFactory.getSizeDTO();
       hairSize.fullFillSize(rs.getInt(23), rs.getString(52));
 
+      ColorDTO eye = domaineFactory.getColorDTO();
       eye.fullFillColor(rs.getInt(24), rs.getString(54));
 
+      NationalityDTO firstNationality = domaineFactory.getNationalityDTO();
       firstNationality.fullFillNationality(rs.getInt(27), rs.getString(56));
 
+      NationalityDTO secondNationality = domaineFactory.getNationalityDTO();
       secondNationality.fullFillNationality(rs.getInt(28), rs.getString(58));
 
+      ComplexUserDTO user = domaineFactory.getComplexUserDTO();
       user.fullFillUser(rs.getInt(3), rs.getString(8), rs.getString(9), rs.getString(10),
           rs.getString(11), rs.getBoolean(12), rs.getTimestamp(13), rs.getString(14),
           profilePicture, address, rs.getString(17), rs.getString(18), rs.getString(19),
@@ -173,13 +170,15 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
           rs.getInt(31), rs.getInt(32), rs.getString(33).charAt(0), rs.getInt(34), rs.getInt(35),
           rs.getInt(36), rs.getInt(37));
 
+      ProfessionDTO profession = domaineFactory.getProfessionDTO();
       profession.fullFillProfession(rs.getInt(4), rs.getString(60));
 
+      PhotoDTO backgroundPicture = domaineFactory.getPhotoDTO();
       backgroundPicture.fullFillPhoto(rs.getInt(6), rs.getString(62), rs.getString(63),
           rs.getInt(64));
 
       cv.fullFillCV(rs.getInt(1), rs.getString(2), user, profession, rs.getString(5),
-          backgroundPicture, new ArrayList<StrengthDTO>(), new ArrayList<TrainingDTO>(),
+          backgroundPicture, new ArrayList<StrengthWithOrderDTO>(), new ArrayList<TrainingDTO>(),
           new ArrayList<ShortFilmDTO>(), new ArrayList<CinemaDTO>());
 
     } catch (SQLException e) {

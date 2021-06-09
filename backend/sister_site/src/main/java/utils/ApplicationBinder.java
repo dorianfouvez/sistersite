@@ -21,6 +21,8 @@ import services.DalServices;
 import services.DalServicesImpl;
 import services.PhotoDAO;
 import services.PhotoDAOImpl;
+import services.StrengthDAO;
+import services.StrengthDAOImpl;
 import services.UserDAO;
 import services.UserDAOImpl;
 
@@ -37,6 +39,7 @@ public class ApplicationBinder extends AbstractBinder {
         .in(Singleton.class);
     bind(PhotoDAOImpl.class).to(PhotoDAO.class).in(Singleton.class);
     bind(PhotoUCCImpl.class).to(PhotoUCC.class).in(Singleton.class);
+    bind(StrengthDAOImpl.class).to(StrengthDAO.class).in(Singleton.class);
     bind(UserDAOImpl.class).to(UserDAO.class).in(Singleton.class);
     bind(UserUCCImpl.class).to(UserUCC.class).in(Singleton.class);
 

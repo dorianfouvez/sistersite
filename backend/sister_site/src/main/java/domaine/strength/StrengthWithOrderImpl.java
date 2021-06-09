@@ -1,35 +1,35 @@
 /**
  * @author Fouvez Dorian.
  */
-package domaine.strength_cv;
+package domaine.strength;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StrengthCVImpl implements StrengthCVDTO {
+public class StrengthWithOrderImpl implements StrengthWithOrderDTO {
 
-  private int curriculumVitae;
-  private int strength;
+  private int id;
+  private String label;
   private int orderNumber;
 
   @Override
-  public int getCurriculumVitae() {
-    return curriculumVitae;
+  public int getId() {
+    return id;
   }
 
   @Override
-  public void setCurriculumVitae(int curriculumVitae) {
-    this.curriculumVitae = curriculumVitae;
+  public void setId(int id) {
+    this.id = id;
   }
 
   @Override
-  public int getStrength() {
-    return strength;
+  public String getLabel() {
+    return label;
   }
 
   @Override
-  public void setStrength(int strength) {
-    this.strength = strength;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
   @Override
@@ -43,17 +43,23 @@ public class StrengthCVImpl implements StrengthCVDTO {
   }
 
   @Override
+  public void fullFillStrengthWithOrder(int id, String label, int orderNumber) {
+    setId(id);
+    setLabel(label);
+    setOrderNumber(orderNumber);
+  }
+
+  @Override
   public String toString() {
-    return "StrengthCVImpl [curriculumVitae=" + curriculumVitae + ", strength=" + strength
-        + ", orderNumber=" + orderNumber + "]";
+    return "StrengthWithOrderImpl [id=" + id + ", label=" + label + ", orderNumber=" + orderNumber
+        + "]";
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + curriculumVitae;
-    result = prime * result + strength;
+    result = prime * result + id;
     result = prime * result + orderNumber;
     return result;
   }
@@ -69,11 +75,8 @@ public class StrengthCVImpl implements StrengthCVDTO {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    StrengthCVImpl other = (StrengthCVImpl) obj;
-    if (curriculumVitae != other.curriculumVitae) {
-      return false;
-    }
-    if (strength != other.strength) {
+    StrengthWithOrderImpl other = (StrengthWithOrderImpl) obj;
+    if (id != other.id) {
       return false;
     }
     if (orderNumber != other.orderNumber) {

@@ -11,6 +11,7 @@ import domaine.nationality.NationalityDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
 import domaine.size.SizeDTO;
+import domaine.strength.StrengthWithOrderDTO;
 import domaine.tag.TagDTO;
 import domaine.tag_photo.TagPhotoDTO;
 import domaine.user.ComplexUserDTO;
@@ -35,6 +36,8 @@ public interface DomaineFactory {
   ProfessionDTO getProfessionDTO();
 
   SizeDTO getSizeDTO();
+
+  StrengthWithOrderDTO getStrengthWithOrderDTO();
 
   TagDTO getTagDTO();
 

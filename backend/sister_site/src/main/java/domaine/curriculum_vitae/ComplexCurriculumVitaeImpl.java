@@ -12,7 +12,8 @@ import domaine.cinema.CinemaDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
 import domaine.short_film.ShortFilmDTO;
-import domaine.strength.StrengthDTO;
+import domaine.strength.StrengthWithOrderDTO;
+import domaine.strength.StrengthWithOrderImpl;
 import domaine.training.TrainingDTO;
 import domaine.user.ComplexUserDTO;
 import jakarta.ws.rs.core.Response.Status;
@@ -26,7 +27,7 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   private ProfessionDTO profession;
   private String playingAge;
   private PhotoDTO backgroundPicture;
-  private List<StrengthDTO> strengths;
+  private List<StrengthWithOrderDTO> strengths;
   private List<TrainingDTO> trainings;
   private List<ShortFilmDTO> shortFilms;
   private List<CinemaDTO> cinemas;
@@ -99,12 +100,12 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   }
 
   @Override
-  public List<StrengthDTO> getStrengths() {
+  public List<StrengthWithOrderDTO> getStrengths() {
     return strengths;
   }
 
   @Override
-  public void setStrengths(List<StrengthDTO> strengths) {
+  public void setStrengths(List<StrengthWithOrderDTO> strengths) {
     this.strengths = strengths;
   }
 
@@ -140,7 +141,7 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
 
   @Override
   public void fullFillCV(int id, String title, ComplexUserDTO user, ProfessionDTO profession,
-      String playingAge, PhotoDTO backgroundPicture, List<StrengthDTO> strengths,
+      String playingAge, PhotoDTO backgroundPicture, List<StrengthWithOrderDTO> strengths,
       List<TrainingDTO> trainings, List<ShortFilmDTO> shortFilms, List<CinemaDTO> cinemas) {
 
     setId(id);
@@ -158,7 +159,7 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   @Override
   public String toString() {
     String strengthsToString = "(";
-    for (StrengthDTO strength : strengths) {
+    for (StrengthWithOrderDTO strength : strengths) {
       strengthsToString += strength.toString();
     }
     strengthsToString += ")";

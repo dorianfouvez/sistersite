@@ -19,6 +19,8 @@ import domaine.profession.ProfessionDTO;
 import domaine.profession.ProfessionImpl;
 import domaine.size.SizeDTO;
 import domaine.size.SizeImpl;
+import domaine.strength.StrengthWithOrderDTO;
+import domaine.strength.StrengthWithOrderImpl;
 import domaine.tag.TagDTO;
 import domaine.tag.TagImpl;
 import domaine.tag_photo.TagPhotoDTO;
@@ -73,6 +75,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public SizeDTO getSizeDTO() {
     return new SizeImpl();
+  }
+
+  @Override
+  public StrengthWithOrderDTO getStrengthWithOrderDTO() {
+    return new StrengthWithOrderImpl();
   }
 
   @Override

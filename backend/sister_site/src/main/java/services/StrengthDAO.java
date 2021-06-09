@@ -1,6 +1,16 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package services;
 
+import java.util.List;
+import domaine.strength.StrengthWithOrderDTO;
+
 public interface StrengthDAO {
+
+  List<StrengthWithOrderDTO> getAllStrengthWithOrderForCV(int cvId);
+
+
 
   // ******************** Static's Methods ********************
 
