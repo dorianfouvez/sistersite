@@ -8,13 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import api.utils.BusinessException;
-import domaine.cinema.CinemaDTO;
+import domaine.cinema.ComplexCinemaDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
-import domaine.short_film.ShortFilmDTO;
+import domaine.short_film.ComplexShortFilmDTO;
 import domaine.strength.StrengthWithOrderDTO;
-import domaine.strength.StrengthWithOrderImpl;
-import domaine.training.TrainingDTO;
+import domaine.training.TrainingWithOrderDTO;
 import domaine.user.ComplexUserDTO;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -28,9 +27,9 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   private String playingAge;
   private PhotoDTO backgroundPicture;
   private List<StrengthWithOrderDTO> strengths;
-  private List<TrainingDTO> trainings;
-  private List<ShortFilmDTO> shortFilms;
-  private List<CinemaDTO> cinemas;
+  private List<TrainingWithOrderDTO> trainings;
+  private List<ComplexShortFilmDTO> shortFilms;
+  private List<ComplexCinemaDTO> cinemas;
 
   @Override
   public int getId() {
@@ -110,39 +109,40 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
   }
 
   @Override
-  public List<TrainingDTO> getTrainings() {
+  public List<TrainingWithOrderDTO> getTrainings() {
     return trainings;
   }
 
   @Override
-  public void setTrainings(List<TrainingDTO> trainings) {
+  public void setTrainings(List<TrainingWithOrderDTO> trainings) {
     this.trainings = trainings;
   }
 
   @Override
-  public List<ShortFilmDTO> getShortFilms() {
+  public List<ComplexShortFilmDTO> getShortFilms() {
     return shortFilms;
   }
 
   @Override
-  public void setShortFilms(List<ShortFilmDTO> shortFilms) {
+  public void setShortFilms(List<ComplexShortFilmDTO> shortFilms) {
     this.shortFilms = shortFilms;
   }
 
   @Override
-  public List<CinemaDTO> getCinemas() {
+  public List<ComplexCinemaDTO> getCinemas() {
     return cinemas;
   }
 
   @Override
-  public void setCinemas(List<CinemaDTO> cinemas) {
+  public void setCinemas(List<ComplexCinemaDTO> cinemas) {
     this.cinemas = cinemas;
   }
 
   @Override
   public void fullFillCV(int id, String title, ComplexUserDTO user, ProfessionDTO profession,
       String playingAge, PhotoDTO backgroundPicture, List<StrengthWithOrderDTO> strengths,
-      List<TrainingDTO> trainings, List<ShortFilmDTO> shortFilms, List<CinemaDTO> cinemas) {
+      List<TrainingWithOrderDTO> trainings, List<ComplexShortFilmDTO> shortFilms,
+      List<ComplexCinemaDTO> cinemas) {
 
     setId(id);
     setTitle(title);
@@ -165,19 +165,19 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
     strengthsToString += ")";
 
     String trainingsToString = "(";
-    for (TrainingDTO training : trainings) {
+    for (TrainingWithOrderDTO training : trainings) {
       trainingsToString += training.toString();
     }
     trainingsToString += ")";
 
     String shortFilmsToString = "(";
-    for (ShortFilmDTO shortFilm : shortFilms) {
+    for (ComplexShortFilmDTO shortFilm : shortFilms) {
       shortFilmsToString += shortFilm.toString();
     }
     shortFilmsToString += ")";
 
     String cinemasToString = "(";
-    for (CinemaDTO cinema : cinemas) {
+    for (ComplexCinemaDTO cinema : cinemas) {
       cinemasToString += cinema.toString();
     }
     cinemasToString += ")";

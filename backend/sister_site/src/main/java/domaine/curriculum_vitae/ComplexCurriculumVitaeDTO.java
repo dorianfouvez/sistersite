@@ -5,12 +5,12 @@ package domaine.curriculum_vitae;
 
 import java.util.List;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import domaine.cinema.CinemaDTO;
+import domaine.cinema.ComplexCinemaDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
-import domaine.short_film.ShortFilmDTO;
+import domaine.short_film.ComplexShortFilmDTO;
 import domaine.strength.StrengthWithOrderDTO;
-import domaine.training.TrainingDTO;
+import domaine.training.TrainingWithOrderDTO;
 import domaine.user.ComplexUserDTO;
 
 @JsonDeserialize(as = ComplexCurriculumVitaeImpl.class)
@@ -44,20 +44,21 @@ public interface ComplexCurriculumVitaeDTO {
 
   void setStrengths(List<StrengthWithOrderDTO> strengths);
 
-  List<TrainingDTO> getTrainings();
+  List<TrainingWithOrderDTO> getTrainings();
 
-  void setTrainings(List<TrainingDTO> trainings);
+  void setTrainings(List<TrainingWithOrderDTO> trainings);
 
-  List<ShortFilmDTO> getShortFilms();
+  List<ComplexShortFilmDTO> getShortFilms();
 
-  void setShortFilms(List<ShortFilmDTO> shortFilms);
+  void setShortFilms(List<ComplexShortFilmDTO> shortFilms);
 
-  List<CinemaDTO> getCinemas();
+  List<ComplexCinemaDTO> getCinemas();
 
-  void setCinemas(List<CinemaDTO> cinemas);
+  void setCinemas(List<ComplexCinemaDTO> cinemas);
 
   void fullFillCV(int id, String title, ComplexUserDTO user, ProfessionDTO profession,
       String playingAge, PhotoDTO backgroundPicture, List<StrengthWithOrderDTO> strengths,
-      List<TrainingDTO> trainings, List<ShortFilmDTO> shortFilms, List<CinemaDTO> cinemas);
+      List<TrainingWithOrderDTO> trainings, List<ComplexShortFilmDTO> shortFilms,
+      List<ComplexCinemaDTO> cinemas);
 
 }

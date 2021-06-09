@@ -6,18 +6,30 @@ package domaine.curriculum_vitae;
 import api.utils.BusinessException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response.Status;
+import services.CinemaDAO;
 import services.CurriculumVitaeDAO;
 import services.DalServices;
+import services.ShortFilmDAO;
 import services.StrengthDAO;
+import services.TrainingDAO;
 import services.UserDAO;
 
 public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
   @Inject
+  private CinemaDAO cinemaDAO;
+
+  @Inject
   private CurriculumVitaeDAO curriculumVitaeDAO;
 
   @Inject
+  private ShortFilmDAO shortFilmDAO;
+
+  @Inject
   private StrengthDAO strengthDAO;
+
+  @Inject
+  private TrainingDAO trainingDAO;
 
   @Inject
   private UserDAO userDAO;
@@ -36,10 +48,11 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
       throw new BusinessException("Curriculum Vitae doesn't exist", Status.BAD_REQUEST);
     }
 
+    // TODO
     cv.setStrengths(this.strengthDAO.getAllStrengthWithOrderForCV(id));
-    // cv.setTrainings(null);
-    // cv.setShortFilms(null);
-    // cv.setCinemas(null);
+    cv.setTrainings(this.trainingDAO.getAllTrainingWithOrderForCV(id));
+    cv.setShortFilms(this.shortFilmDAO.getAllComplexShortFilmForCV(id));
+    cv.setCinemas(this.cinemaDAO.getAllComplexCinemaForCV(id));
 
     /*
      * Object[] result = new Object[28]; int i = 0;

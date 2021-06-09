@@ -1,6 +1,13 @@
 package services;
 
+import java.util.List;
+import domaine.short_film.ComplexShortFilmDTO;
+
 public interface ShortFilmDAO {
+
+  List<ComplexShortFilmDTO> getAllComplexShortFilmForCV(int id);
+
+
 
   // ******************** Static's Methods ********************
 

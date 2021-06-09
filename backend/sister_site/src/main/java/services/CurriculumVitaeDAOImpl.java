@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import api.utils.FatalException;
 import domaine.DomaineFactory;
 import domaine.address.AddressDTO;
-import domaine.cinema.CinemaDTO;
+import domaine.cinema.ComplexCinemaDTO;
 import domaine.color.ColorDTO;
 import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
 import domaine.nationality.NationalityDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
-import domaine.short_film.ShortFilmDTO;
+import domaine.short_film.ComplexShortFilmDTO;
 import domaine.size.SizeDTO;
 import domaine.strength.StrengthWithOrderDTO;
-import domaine.training.TrainingDTO;
+import domaine.training.TrainingWithOrderDTO;
 import domaine.user.ComplexUserDTO;
 import jakarta.inject.Inject;
 
@@ -177,8 +177,9 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
           rs.getInt(64));
 
       cv.fullFillCV(rs.getInt(1), rs.getString(2), user, profession, rs.getString(5),
-          backgroundPicture, new ArrayList<StrengthWithOrderDTO>(), new ArrayList<TrainingDTO>(),
-          new ArrayList<ShortFilmDTO>(), new ArrayList<CinemaDTO>());
+          backgroundPicture, new ArrayList<StrengthWithOrderDTO>(),
+          new ArrayList<TrainingWithOrderDTO>(), new ArrayList<ComplexShortFilmDTO>(),
+          new ArrayList<ComplexCinemaDTO>());
 
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
