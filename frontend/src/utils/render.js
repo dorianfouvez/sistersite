@@ -1,3 +1,5 @@
+import { ALERT_BOX } from "./server.js";
+
 import NavbarEn from "../Components/en/Navbar.js";
 import SidebarEn from "../Components/en/Sidebar.js";
 
@@ -50,5 +52,11 @@ function SetEnglishNavigationBars(){
   SidebarEn();
 }
 
+const onError = (err) => {
+  let messageBoard = document.querySelector("#messageBoard");
+  if(err.message) ALERT_BOX(messageBoard, err.message);
+  else ALERT_BOX(messageBoard, err);
+};
+
 // named export
-export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars };
+export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars, onError };

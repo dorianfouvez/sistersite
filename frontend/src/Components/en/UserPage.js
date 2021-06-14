@@ -6,7 +6,7 @@ let page = document.querySelector("#page");
 
 const UserPage = () => {
     fixToBottomFooter();
-    page.innerHTML = `<div class="text-center"><h4 class="mt-2">My profile</h4></div>
+    page.innerHTML = `<div class="text-center"><h4 class="mt-2 pt-5">My profile</h4></div>
     <div class="loader mx-auto"></div>`;
     let id = getTokenSessionData();
     fetch(API_URL + "users/me", {
@@ -33,7 +33,7 @@ const onUser = (data) => {
     let user = data.user;
 
     let userPage = `<div class="text-center">`;
-    userPage += `<h4 class="mt-2">My profile</h4>
+    userPage += `<h4 class="mt-2 pt-5">My profile</h4>
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
     <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>
