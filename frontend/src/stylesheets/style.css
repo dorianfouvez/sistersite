@@ -25,14 +25,34 @@
 
 
 
-/*************** For mobile phones: ***************/
+/*************** CV page ***************/
+.cv_first_row { /*Not Use*/
+  background-color:black !important;
+  height:200px !important;
+  background-image: url("../assets/Images/Bureau_1.png");
+}
+
+
+
+/*************** Resizing For mobile phones: ***************/
 @media only screen and (max-width: 450px) {
-  h5{
+  .cv_float_col h5{
     font-size: smaller !important;
     font-weight: bolder;
   }
-  .size_h{
+
+  .cv_float_col{
     font-size: smaller;
+    margin-left: 20px;
+  }
+
+  .cv_left_col{
+    padding-left: 25px !important;
+  }
+
+  .cv_img{
+    height: max-content !important;
+    width: 100%;
   }
 }
 
@@ -46,6 +66,10 @@
 
 .lang_flag {
   width: 20px;
+}
+
+.cv_img {
+  height: 100%;
 }
 
 

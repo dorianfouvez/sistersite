@@ -44,14 +44,18 @@ const testCV = (cv) => {
     let cvPage = `<div class="text-center"><h4 class="mt-2 pt-5">Artistic Curriculum Vitae</h4></div>
     <div class="container">
         <div class="row">
-            <div class="col" style="background-color:black;height:200px;">
-                <div class="float-left mt-4 ml-5" style="background-color:rgb(0, 255, 225);height:90%;width:32%;">Photo<h5 class="mt-5">CARACTÉRISTIQUES</h5></div>
+            <div class="col" class="cv_first_row" style="background-color:black;height:200px;">
+                <div class="float-left mt-4 ml-5" style="background-color:rgb(0, 255, 225);height:90%;width:32%;">
+                    <div class="d-flex justify-content-center" style="height:100%;" >
+                        <img src="assets/Images/logoAE_v2.png" class="cv_img" alt="Logo">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col" style="background-color:white;">
-                <div class="float-left ml-5 text-center size_h" style="background-color:rgb(0, 255, 225);height:100%;width:32%;">
-                    <h5 class="mt-5"><strong>CARACTÉRISTIQUES</strong></h5>
+                <div class="float-left ml-5 text-center cv_float_col" style="background-color:rgb(0, 255, 225);height:100%;width:32%;">
+                    <h5 class="mt-5">CARACTÉRISTIQUES</h5>
                     <span class="float-left ml-3"><u>Âge de jeu</u></span><span class="float-right mr-3">${cv.playingAge} ans</span><br>
                     <span class="float-left ml-3"><u>Cheveux</u></span><span class="float-right mr-3">${user.hairColor.color}</span><br>
                     <span class="float-left ml-3"><u>Yeux</u></span><span class="float-right mr-3">${user.eye.color}</span><br>
@@ -59,15 +63,17 @@ const testCV = (cv) => {
                     <span class="float-left ml-3"><u>Poids</u></span><span class="float-right mr-3">${user.weight} kg</span><br>
                     <div> </div>
                     
-                    <h5 class="mt-5"><strong>ATOUTS</strong></h5>`;
+                    <h5 class="mt-5">ATOUTS</h5>`;
                     cv.strengths.forEach(strength => {
                         cvPage += `<span>${strength.label}</span><br>`;
                     });
-                    cvPage += `<h5 class="mt-5"><strong>CONTACT</strong></h5>
+                    cvPage += `<h5 class="mt-5">CONTACT</h5>
                     <p>${user.phoneNumber}</p>
                     <p>${user.address.buildingNumber} ${user.address.street}.<br>
                     ${user.address.postcode} ${user.address.commune}, ${user.address.country}.</p>`;
-                    if(user.facebook) cvPage += `<p><a href="${user.facebook}" class="fa fa_logo_mini fa-facebook"></a> ${user.firstName} ${user.lastName}</p>`;
+                    if(user.facebook) cvPage += `<p><a href="${user.facebook}" class="fa fa_logo_mini fa-facebook"></a>`;
+                    if(window.screen.width <= 450) cvPage += `<br>`;
+                    cvPage += ` ${user.firstName} ${user.lastName}</p>`;
                     if(user.instagram){ cvPage += `<p>
                             <a href="${user.instagram}" class="fa fa_logo_mini fa-instagram"></a> ${user.instagram.substring(26, (user.instagram.length-1))}
                         </p>`;
@@ -78,7 +84,7 @@ const testCV = (cv) => {
                         cvPage += `<p>${user.email.replace("@", "@\n")}</p>`;
                     }
                 cvPage += `</div>
-                <div class="col-7 offset-5">
+                <div class="col-7 offset-5 cv_left_col">
                     <h5 class="mt-5" style="color:rgb(0, 255, 225);">FORMATIONS</h5>`;
                     cv.trainings.forEach(training => {
                         cvPage += `<div class="float-left mr-5 mt-3">${training.startYear} - ${training.endYear}</div>
