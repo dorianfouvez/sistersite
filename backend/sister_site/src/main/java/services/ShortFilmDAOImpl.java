@@ -35,7 +35,7 @@ public class ShortFilmDAOImpl implements ShortFilmDAO {
             + " JOIN" + RoleDAO.getRoleTableName() + " ON sf.role = r.id" + " LEFT JOIN"
             + CompanyShortFilmDAO.getCompanyShortFilmTableName() + " ON sf.id = cpsf.short_film_id"
             + " LEFT JOIN" + CompanyDAO.getCompanyTableName() + " ON cpsf.company_id = cp.id"
-            + " WHERE sfcv.curriculum_vitae = ?" + " ORDER BY sf.year, sf.id");
+            + " WHERE sfcv.curriculum_vitae = ?" + " ORDER BY sfcv.order_number");
     List<ComplexShortFilmDTO> shortFilms = new ArrayList<ComplexShortFilmDTO>();
     try {
       ps.setInt(1, cvId);

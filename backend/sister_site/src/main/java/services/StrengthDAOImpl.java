@@ -20,11 +20,11 @@ public class StrengthDAOImpl implements StrengthDAO {
 
   @Override
   public List<StrengthWithOrderDTO> getAllStrengthWithOrderForCV(int cvId) {
-    PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("SELECT" + StrengthDAO.getAllStrengthAttributes() + ","
-            + StrengthCVDAO.getAllStrengthCVAttributes() + " FROM"
-            + StrengthDAO.getStrengthTableName() + " JOIN" + StrengthCVDAO.getStrengthCVTableName()
-            + " ON stcv.strength = st.id" + " WHERE stcv.curriculum_vitae = ?");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT"
+        + StrengthDAO.getAllStrengthAttributes() + "," + StrengthCVDAO.getAllStrengthCVAttributes()
+        + " FROM" + StrengthDAO.getStrengthTableName() + " JOIN"
+        + StrengthCVDAO.getStrengthCVTableName() + " ON stcv.strength = st.id"
+        + " WHERE stcv.curriculum_vitae = ?" + " ORDER BY stcv.order_number");
     List<StrengthWithOrderDTO> strengths = new ArrayList<StrengthWithOrderDTO>();
     try {
       ps.setInt(1, cvId);

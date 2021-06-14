@@ -34,7 +34,7 @@ public class CinemaDAOImpl implements CinemaDAO {
             + "," + RoleDAO.getAllRoleAttributes() + " FROM" + CinemaDAO.getCinemaTableName()
             + " JOIN" + CinemaCVDAO.getCinemaCVTableName() + " ON cicv.cinema = ci.id" + " JOIN"
             + RoleDAO.getRoleTableName() + " ON ci.role = r.id" + " WHERE cicv.curriculum_vitae = ?"
-            + " ORDER BY ci.year, ci.id");
+            + " ORDER BY cicv.order_number");
     List<ComplexCinemaDTO> shortFilms = new ArrayList<>();
     try {
       ps.setInt(1, cvId);

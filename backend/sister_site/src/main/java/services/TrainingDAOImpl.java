@@ -20,11 +20,11 @@ public class TrainingDAOImpl implements TrainingDAO {
 
   @Override
   public List<TrainingWithOrderDTO> getAllTrainingWithOrderForCV(int cvId) {
-    PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("SELECT" + TrainingDAO.getAllTrainingAttributes() + ","
-            + TrainingCVDAO.getAllTrainingCVAttributes() + " FROM"
-            + TrainingDAO.getTrainingTableName() + " JOIN" + TrainingCVDAO.getTrainingCVTableName()
-            + " ON trcv.training = tr.id" + " WHERE trcv.curriculum_vitae = ?");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT"
+        + TrainingDAO.getAllTrainingAttributes() + "," + TrainingCVDAO.getAllTrainingCVAttributes()
+        + " FROM" + TrainingDAO.getTrainingTableName() + " JOIN"
+        + TrainingCVDAO.getTrainingCVTableName() + " ON trcv.training = tr.id"
+        + " WHERE trcv.curriculum_vitae = ?" + " ORDER BY trcv.order_number");
     List<TrainingWithOrderDTO> trainings = new ArrayList<TrainingWithOrderDTO>();
     try {
       ps.setInt(1, cvId);
