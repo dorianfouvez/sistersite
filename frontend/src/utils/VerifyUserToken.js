@@ -1,9 +1,6 @@
-import NavbarEn from "../Components/en/Navbar.js";
-import NavbarFr from "../Components/fr/Navbar.js";
-import SidebarEn from "../Components/en/Sidebar.js";
-import SidebarFr from "../Components/fr/Sidebar.js";
 import { API_URL, ALERT_BOX } from "./server.js";
 import { setUserSessionData, removeSessionData, getLangSessionData } from "./session.js"
+import { SetEnglishNavigationBars, SetFrenchNavigationBars } from "./render.js";
 
 let isLocalToken = null;
 
@@ -31,8 +28,8 @@ const onUserFound = (userData) => {
     const user = { ...userData, isAutenticated: true };
     setUserSessionData(user, isLocalToken);
     let lang = getLangSessionData();
-    if(lang === "en"){ NavbarEn(); SidebarEn();}
-    else { NavbarFr(); SidebarFr();}
+    if(lang === "en"){ SetEnglishNavigationBars(); }
+    else { SetFrenchNavigationBars();}
 };
 
 const onError = (err) => {

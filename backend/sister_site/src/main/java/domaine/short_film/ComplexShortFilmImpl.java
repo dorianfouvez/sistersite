@@ -4,6 +4,7 @@
 package domaine.short_film;
 
 import java.util.Calendar;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import api.utils.BusinessException;
 import domaine.company.CompanyDTO;
@@ -20,7 +21,7 @@ public class ComplexShortFilmImpl implements ComplexShortFilmDTO {
   private int year;
   private int orderNumber;
   private CompanyDTO company;
-  private DirectorDTO director;
+  private List<DirectorDTO> directors;
 
   @Override
   public int getId() {
@@ -91,20 +92,38 @@ public class ComplexShortFilmImpl implements ComplexShortFilmDTO {
   }
 
   @Override
-  public DirectorDTO getDirector() {
-    return director;
+  public List<DirectorDTO> getDirectors() {
+    return directors;
   }
 
   @Override
-  public void setDirector(DirectorDTO director) {
-    this.director = director;
+  public void setDirectors(List<DirectorDTO> directors) {
+    this.directors = directors;
+  }
+
+  @Override
+  public void fullFillComplexShortFilm(int id, String title, RoleDTO role, int year,
+      int orderNumber, CompanyDTO company, List<DirectorDTO> directors) {
+    setId(id);
+    setTitle(title);
+    setRole(role);
+    setYear(year);
+    setOrderNumber(orderNumber);
+    setCompany(company);
+    setDirectors(directors);
   }
 
   @Override
   public String toString() {
+    String directorList = "{";
+    for (DirectorDTO directorDTO : directors) {
+      directorList += directorDTO.toString() + " ";
+    }
+    directorList = "}";
+
     return "ShortFilmImpl [id=" + id + ", title=" + title + ", role=" + role.toString() + ", year="
         + year + ", orderNumber=" + orderNumber + ", company=" + company.toString() + ", director="
-        + director.toString() + "]";
+        + directorList + "]";
   }
 
   @Override

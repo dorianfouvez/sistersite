@@ -21,6 +21,10 @@ import services.CurriculumVitaeDAOImpl;
 import services.DalBackendServices;
 import services.DalServices;
 import services.DalServicesImpl;
+import services.DirectorDAO;
+import services.DirectorDAOImpl;
+import services.DistinctionDAO;
+import services.DistinctionDAOImpl;
 import services.PhotoDAO;
 import services.PhotoDAOImpl;
 import services.ShortFilmDAO;
@@ -41,6 +45,8 @@ public class ApplicationBinder extends AbstractBinder {
     bind(CinemaDAOImpl.class).to(CinemaDAO.class).in(Singleton.class);
     bind(CurriculumVitaeUCCImpl.class).to(CurriculumVitaeUCC.class).in(Singleton.class);
     bind(CurriculumVitaeDAOImpl.class).to(CurriculumVitaeDAO.class).in(Singleton.class);
+    bind(DirectorDAOImpl.class).to(DirectorDAO.class).in(Singleton.class);
+    bind(DistinctionDAOImpl.class).to(DistinctionDAO.class).in(Singleton.class);
     bind(DomaineFactoryImpl.class).to(DomaineFactory.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalBackendServices.class).to(DalServices.class)
         .in(Singleton.class);

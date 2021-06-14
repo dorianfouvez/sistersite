@@ -5,7 +5,7 @@ import domaine.short_film.ComplexShortFilmDTO;
 
 public interface ShortFilmDAO {
 
-  List<ComplexShortFilmDTO> getAllComplexShortFilmForCV(int id);
+  List<ComplexShortFilmDTO> getAllComplexShortFilmForCV(int cvId);
 
 
 

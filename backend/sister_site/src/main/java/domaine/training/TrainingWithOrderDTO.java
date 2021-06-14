@@ -12,4 +12,7 @@ public interface TrainingWithOrderDTO extends TrainingDTO {
 
   void setOrderNumber(int orderNumber);
 
+  void fullFillTrainingWithOrder(int id, int startYear, int endYear, String label,
+      String explanations, int orderNumber);
+
 }

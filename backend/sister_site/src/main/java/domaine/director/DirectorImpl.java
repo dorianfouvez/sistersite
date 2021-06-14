@@ -32,6 +32,12 @@ public class DirectorImpl implements DirectorDTO {
   }
 
   @Override
+  public void fullFillDirector(int id, String name) {
+    setId(id);
+    setName(name);
+  }
+
+  @Override
   public String toString() {
     return "DirectorImpl [id=" + id + ", name=" + name + "]";
   }

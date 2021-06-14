@@ -6,11 +6,15 @@ package domaine;
 import domaine.address.AddressDTO;
 import domaine.cinema.ComplexCinemaDTO;
 import domaine.color.ColorDTO;
+import domaine.company.CompanyDTO;
 import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
+import domaine.director.DirectorDTO;
+import domaine.distinction.DistinctionDTO;
 import domaine.nationality.NationalityDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
+import domaine.role.RoleDTO;
 import domaine.short_film.ComplexShortFilmDTO;
 import domaine.size.SizeDTO;
 import domaine.strength.StrengthWithOrderDTO;
@@ -26,6 +30,8 @@ public interface DomaineFactory {
 
   ColorDTO getColorDTO();
 
+  CompanyDTO getCompanyDTO();
+
   ComplexCinemaDTO getComplexCinemaDTO();
 
   ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO();
@@ -36,11 +42,17 @@ public interface DomaineFactory {
 
   CurriculumVitaeDTO getCurriculumVitaeDTO();
 
+  DirectorDTO getDirectorDTO();
+
+  DistinctionDTO getDistinctionDTO();
+
   NationalityDTO getNationalityDTO();
 
   PhotoDTO getPhotoDTO();
 
   ProfessionDTO getProfessionDTO();
+
+  RoleDTO getRoleDTO();
 
   SizeDTO getSizeDTO();
 

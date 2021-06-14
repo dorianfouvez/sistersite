@@ -4,8 +4,6 @@ By default, all escape sequences in a template literal are ignored.*/
 import { getUserSessionData, setUserSessionData } from "../../utils/session.js";
 import { RedirectUrl } from "../Router.js";
 import { API_URL, ALERT_BOX } from "../../utils/server.js";
-import Navbar from "./Navbar.js";
-import Sidebar from "./Sidebar.js";
 
 let remember = false;
 
@@ -54,9 +52,6 @@ const LoginPage = () => {
   page.innerHTML = loginPage;
   const user = getUserSessionData();
   if (user) {
-    // re-render the navbar for the authenticated user.
-    Navbar();
-    Sidebar();
     RedirectUrl("/");
   } else{
     let loginForm = document.getElementById("login");
@@ -101,9 +96,6 @@ const onLogin = (e) => {
 const onUserLogin = (userData) => {
   const user = { ...userData, isAutenticated: true };
   setUserSessionData(user, remember);
-  // re-render the navbar for the authenticated user
-  Navbar();
-  Sidebar();
   RedirectUrl("/");
   // TODO pourquoi pas envoyer un mail à chaque connection d'un nouveau device ??
   // Authentification à 2 facteurs ?? => web.dev/sms-otp-form ??

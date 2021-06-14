@@ -5,7 +5,7 @@ import domaine.training.TrainingWithOrderDTO;
 
 public interface TrainingDAO {
 
-  List<TrainingWithOrderDTO> getAllTrainingWithOrderForCV(int id);
+  List<TrainingWithOrderDTO> getAllTrainingWithOrderForCV(int cvId);
 
 
 

@@ -16,4 +16,6 @@ public interface DistinctionDTO {
 
   void setName(String name);
 
+  void fullFillDistinction(int id, String name);
+
 }

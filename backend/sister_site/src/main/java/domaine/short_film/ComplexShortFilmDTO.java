@@ -3,6 +3,7 @@
  */
 package domaine.short_film;
 
+import java.util.List;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import domaine.company.CompanyDTO;
 import domaine.director.DirectorDTO;
@@ -35,8 +36,11 @@ public interface ComplexShortFilmDTO {
 
   void setCompany(CompanyDTO company);
 
-  DirectorDTO getDirector();
+  List<DirectorDTO> getDirectors();
 
-  void setDirector(DirectorDTO director);
+  void setDirectors(List<DirectorDTO> directors);
+
+  void fullFillComplexShortFilm(int id, String title, RoleDTO role, int year, int orderNumber,
+      CompanyDTO company, List<DirectorDTO> directors);
 
 }

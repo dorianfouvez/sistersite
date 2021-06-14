@@ -16,4 +16,6 @@ public interface DirectorDTO {
 
   void setName(String name);
 
+  void fullFillDirector(int id, String name);
+
 }

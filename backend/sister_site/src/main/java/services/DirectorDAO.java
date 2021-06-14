@@ -1,6 +1,15 @@
 package services;
 
+import java.util.List;
+import domaine.director.DirectorDTO;
+
 public interface DirectorDAO {
+
+  List<DirectorDTO> getAllDirectorForCinema(int cinemaId);
+
+  List<DirectorDTO> getAllDirectorForShortFilm(int shortFilmId);
+
+
 
   // ******************** Static's Methods ********************
 

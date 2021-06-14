@@ -32,6 +32,12 @@ public class CompanyImpl implements CompanyDTO {
   }
 
   @Override
+  public void fullFillCompany(int id, String name) {
+    setId(id);
+    setName(name);
+  }
+
+  @Override
   public String toString() {
     return "CompanyImpl [id=" + id + ", name=" + name + "]";
   }

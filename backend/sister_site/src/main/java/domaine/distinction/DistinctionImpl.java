@@ -32,6 +32,12 @@ public class DistinctionImpl implements DistinctionDTO {
   }
 
   @Override
+  public void fullFillDistinction(int id, String name) {
+    setId(id);
+    setName(name);
+  }
+
+  @Override
   public String toString() {
     return "DistinctionImpl [id=" + id + ", name=" + name + "]";
   }

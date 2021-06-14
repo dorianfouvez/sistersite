@@ -32,6 +32,12 @@ public class RoleImpl implements RoleDTO {
   }
 
   @Override
+  public void fullFillRole(int id, String name) {
+    setId(id);
+    setName(name);
+  }
+
+  @Override
   public String toString() {
     return "RoleImpl [id=" + id + ", name=" + name + "]";
   }

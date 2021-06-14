@@ -21,6 +21,17 @@ public class TrainingWithOrderImpl extends TrainingImpl implements TrainingWithO
   }
 
   @Override
+  public void fullFillTrainingWithOrder(int id, int startYear, int endYear, String label,
+      String explanations, int orderNumber) {
+    setId(id);
+    setStartYear(startYear);
+    setEndYear(endYear);
+    setLabel(label);
+    setExplanations(explanations);
+    setOrderNumber(orderNumber);
+  }
+
+  @Override
   public String toString() {
     return "TrainingWithOrderImpl [id=" + getId() + ", startYear=" + getStartYear() + ", endYear="
         + getEndYear() + ", label=" + getLabel() + ", explanations=" + getExplanations()

@@ -1,9 +1,11 @@
+import { fixToBottomFooter } from "../../utils/render.js";
 import { API_URL, ALERT_BOX } from "../../utils/server.js";
 import { getTokenSessionData } from "../../utils/session.js";
 
 let page = document.querySelector("#page");
 
 const UserPage = () => {
+    fixToBottomFooter();
     page.innerHTML = `<div class="text-center"><h4 class="mt-2">My profile</h4></div>
     <div class="loader mx-auto"></div>`;
     let id = getTokenSessionData();

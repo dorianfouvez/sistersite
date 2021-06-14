@@ -16,4 +16,6 @@ public interface RoleDTO {
 
   void setName(String name);
 
+  void fullFillRole(int id, String name);
+
 }

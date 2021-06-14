@@ -1,4 +1,8 @@
+import NavbarEn from "../Components/en/Navbar.js";
+import SidebarEn from "../Components/en/Sidebar.js";
 
+import NavbarFr from "../Components/fr/Navbar.js";
+import SidebarFr from "../Components/fr/Sidebar.js";
 
 /**
  * setLayout allows to display specific information in an HTML template
@@ -14,6 +18,8 @@ function setLayout(headerTitle, footerText) {
 function setFooter(){
   let footerDiv = document.querySelector("#footerText");
 
+  footerDiv.className = "navbar bg-dark navbar-dark justify-content-center text-white";
+
   let footerText = `<a href="https://www.facebook.com/ambre.fouvez" class="fa fa_logo fa-facebook"></a>
   <a href="https://www.instagram.com/ambre.fouvez/" class="fa fa_logo fa-instagram"></a>
   <!--<a href="https://www.youtube.com/channel/UCEdtOcwxGX9viDs4G9AAHeg" class="fa fa_logo fa-youtube"></a>
@@ -22,5 +28,27 @@ function setFooter(){
   footerDiv.innerHTML = footerText;
 }
 
+function unfixToBottomFooter(){
+  let footerDiv = document.querySelector("#footerText");
+
+  footerDiv.className = "navbar bg-dark navbar-dark justify-content-center text-white";
+}
+
+function fixToBottomFooter(){
+  let footerDiv = document.querySelector("#footerText");
+
+  footerDiv.className = "navbar bg-dark navbar-dark justify-content-center fixed-bottom text-white";
+}
+
+function SetFrenchNavigationBars(){
+  //NavbarFr();
+  SidebarFr();
+}
+
+function SetEnglishNavigationBars(){
+  //NavbarEn();
+  SidebarEn();
+}
+
 // named export
-export { setLayout, setFooter };
+export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars };

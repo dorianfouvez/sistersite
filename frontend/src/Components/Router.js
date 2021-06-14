@@ -1,4 +1,5 @@
 // Global Import.
+import { SetFrenchNavigationBars, SetEnglishNavigationBars } from "../utils/render.js";
 import { getLangSessionData, setLangSessionData } from "../utils/session.js";
 import HomePage from "./HomePage.js";
 
@@ -29,6 +30,7 @@ import NavbarFr from "./fr/Navbar.js";
 import SidebarFr from "./fr/Sidebar.js";
 import TravauxEnCours from "./fr/WorkInProgressPage.js";
 import Utilisateur from "./fr/UserPage.js";
+import { unfixToBottomFooter } from "../utils/render.js";
 
 
 const routesEn = {
@@ -58,6 +60,7 @@ const routesFr = {
 };
 
 let navBar = document.querySelector("#navBar");
+let sideBar = document.querySelector("#sideBar");
 let componentToRender;
 
 // dictionnary of routes
@@ -67,36 +70,30 @@ const Router = () => {
     let lang = getLangSessionData();
     if(window.location.pathname === "/" && lang === "en") { 
       componentToRender = routesEn[window.location.pathname];
-      NavbarEn();
-      SidebarEn();
+      SetEnglishNavigationBars();
     }else if(window.location.pathname === "/") {
       componentToRender = routesFr[window.location.pathname];
-      NavbarFr();
-      SidebarFr();
+      SetFrenchNavigationBars();
     }else{
       componentToRender = routesEn[window.location.pathname];
       if(componentToRender) {
       if(lang !== "en") setLangSessionData("en");
-        NavbarEn();
-        SidebarEn();
+      SetEnglishNavigationBars();
       }else {
         componentToRender = routesFr[window.location.pathname];
         if(componentToRender) {
           if(lang !== "fr") setLangSessionData("fr");
-          NavbarFr();
-          SidebarFr();
+          SetFrenchNavigationBars();
         }
       }
     }
     
     if (!componentToRender){
       if(lang === "en"){
-        NavbarEn();
-        SidebarEn();
+        SetEnglishNavigationBars();
         ErrorNavigationPage(new Error("The <strong>" + window.location.pathname + "</strong> ressource does not exist."));
       }else {
-        NavbarFr();
-        SidebarFr();
+        SetFrenchNavigationBars();
         ErrorNavigationPage(new Error("Le chemin <strong>" + window.location.pathname + "</strong> n'existe pas."));
       }
     }else{
@@ -113,6 +110,7 @@ const Router = () => {
       uri = e.target.dataset.uri;
     }
     if (uri) {
+      unfixToBottomFooter();
       // use Web History API to add current page URL to the user's navigation history & set right URL in the browser (instead of "#")
       window.history.pushState({}, uri, window.location.origin + uri);
       // render the requested component
@@ -121,24 +119,20 @@ const Router = () => {
       let lang = getLangSessionData();
       if(uri === "/" && lang === "en") { 
         componentToRender = routesEn[uri];
-        NavbarEn();
-        SidebarEn();
+        SetEnglishNavigationBars();
       }else if(uri === "/") {
         componentToRender = routesFr[uri];
-        NavbarFr();
-        SidebarFr();
+        SetFrenchNavigationBars();
       }else{
         componentToRender = routesEn[uri];
         if(componentToRender) {
         if(lang !== "en") setLangSessionData("en");
-          NavbarEn();
-          SidebarEn();
+          SetEnglishNavigationBars();
         }else {
           componentToRender = routesFr[uri];
           if(componentToRender) {
             if(lang !== "fr") setLangSessionData("fr");
-            NavbarFr();
-            SidebarFr();
+            SetFrenchNavigationBars();
           }
         }
       }
@@ -146,12 +140,10 @@ const Router = () => {
         componentToRender();
       } else {
         if(lang === "en"){
-          NavbarEn();
-          SidebarEn();
+          SetEnglishNavigationBars();
           ErrorNavigationPage(new Error("The <strong>" + window.location.pathname + "</strong> ressource does not exist."));
         }else {
-          NavbarFr();
-          SidebarFr();
+          SetFrenchNavigationBars();
           ErrorNavigationPage(new Error("Le chemin <strong>" + window.location.pathname + "</strong> n'existe pas."));
         }
       }
@@ -159,30 +151,28 @@ const Router = () => {
   };
 
   navBar.addEventListener("click", onNavigate);
+  sideBar.addEventListener("click", onNavigate);
 
   // Display the right component when the user use the browsing history
   window.addEventListener("popstate", () => {
+    unfixToBottomFooter();
     let lang = getLangSessionData();
     if(window.location.pathname === "/" && lang === "en") { 
       componentToRender = routesEn[window.location.pathname];
-      NavbarEn();
-      SidebarEn();
+      SetEnglishNavigationBars();
     }else if(window.location.pathname === "/") {
       componentToRender = routesFr[window.location.pathname];
-      NavbarFr();
-      SidebarFr();
+      SetFrenchNavigationBars();
     }else{
       componentToRender = routesEn[window.location.pathname];
       if(componentToRender) {
       if(lang !== "en") setLangSessionData("en");
-        NavbarEn();
-        SidebarEn();
+        SetEnglishNavigationBars();
       }else {
         componentToRender = routesFr[window.location.pathname];
         if(componentToRender) {
           if(lang !== "fr") setLangSessionData("fr");
-          NavbarFr();
-          SidebarFr();
+          SetFrenchNavigationBars();
         }
       }
     }
@@ -191,6 +181,7 @@ const Router = () => {
 };
 
 const RedirectUrl = (uri, data) => {
+  unfixToBottomFooter();
   // use Web History API to add current page URL to the user's navigation history & set right URL in the browser (instead of "#")
   window.history.pushState({}, uri, window.location.origin + uri);
   // render the requested component
@@ -199,24 +190,20 @@ const RedirectUrl = (uri, data) => {
   let lang = getLangSessionData();
   if(uri === "/" && lang === "en") { 
     componentToRender = routesEn[uri];
-    NavbarEn();
-    SidebarEn();
+    SetEnglishNavigationBars();
   }else if(uri === "/") {
     componentToRender = routesFr[uri];
-    NavbarFr();
-    SidebarFr();
+    SetFrenchNavigationBars();
   }else{
     componentToRender = routesEn[uri];
     if(componentToRender) {
     if(lang !== "en") setLangSessionData("en");
-      NavbarEn();
-      SidebarEn();
+      SetEnglishNavigationBars();
     }else {
       componentToRender = routesFr[uri];
       if(componentToRender) {
         if(lang !== "fr") setLangSessionData("fr");
-        NavbarFr();
-        SidebarFr();
+        SetFrenchNavigationBars();
       }
     }
   }
@@ -225,12 +212,10 @@ const RedirectUrl = (uri, data) => {
     else componentToRender(data);
   } else {
     if(lang === "en"){
-      NavbarEn();
-      SidebarEn();
+      SetEnglishNavigationBars();
       ErrorNavigationPage(new Error("The <strong>" + window.location.pathname + "</strong> ressource does not exist."));
     }else {
-      NavbarFr();
-      SidebarFr();
+      SetFrenchNavigationBars();
       ErrorNavigationPage(new Error("Le chemin <strong>" + window.location.pathname + "</strong> n'existe pas."));
     }
   }

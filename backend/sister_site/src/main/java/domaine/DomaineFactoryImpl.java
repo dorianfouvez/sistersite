@@ -9,16 +9,24 @@ import domaine.cinema.ComplexCinemaDTO;
 import domaine.cinema.ComplexCinemaImpl;
 import domaine.color.ColorDTO;
 import domaine.color.ColorImpl;
+import domaine.company.CompanyDTO;
+import domaine.company.CompanyImpl;
 import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.ComplexCurriculumVitaeImpl;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeImpl;
+import domaine.director.DirectorDTO;
+import domaine.director.DirectorImpl;
+import domaine.distinction.DistinctionDTO;
+import domaine.distinction.DistinctionImpl;
 import domaine.nationality.NationalityDTO;
 import domaine.nationality.NationalityImpl;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoImpl;
 import domaine.profession.ProfessionDTO;
 import domaine.profession.ProfessionImpl;
+import domaine.role.RoleDTO;
+import domaine.role.RoleImpl;
 import domaine.short_film.ComplexShortFilmDTO;
 import domaine.short_film.ComplexShortFilmImpl;
 import domaine.size.SizeDTO;
@@ -49,6 +57,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   }
 
   @Override
+  public CompanyDTO getCompanyDTO() {
+    return new CompanyImpl();
+  }
+
+  @Override
   public ComplexCinemaDTO getComplexCinemaDTO() {
     return new ComplexCinemaImpl();
   }
@@ -74,6 +87,16 @@ public class DomaineFactoryImpl implements DomaineFactory {
   }
 
   @Override
+  public DirectorDTO getDirectorDTO() {
+    return new DirectorImpl();
+  }
+
+  @Override
+  public DistinctionDTO getDistinctionDTO() {
+    return new DistinctionImpl();
+  }
+
+  @Override
   public NationalityDTO getNationalityDTO() {
     return new NationalityImpl();
   }
@@ -86,6 +109,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public ProfessionDTO getProfessionDTO() {
     return new ProfessionImpl();
+  }
+
+  @Override
+  public RoleDTO getRoleDTO() {
+    return new RoleImpl();
   }
 
   @Override

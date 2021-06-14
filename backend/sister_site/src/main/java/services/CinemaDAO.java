@@ -5,7 +5,7 @@ import domaine.cinema.ComplexCinemaDTO;
 
 public interface CinemaDAO {
 
-  List<ComplexCinemaDTO> getAllComplexCinemaForCV(int id);
+  List<ComplexCinemaDTO> getAllComplexCinemaForCV(int cvId);
 
 
 

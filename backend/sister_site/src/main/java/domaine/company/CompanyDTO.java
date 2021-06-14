@@ -16,4 +16,6 @@ public interface CompanyDTO {
 
   void setName(String name);
 
+  void fullFillCompany(int id, String name);
+
 }
