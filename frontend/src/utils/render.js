@@ -52,6 +52,10 @@ function SetEnglishNavigationBars(){
   SidebarEn();
 }
 
+function setBodyWhite(){
+  document.body.style.backgroundColor = "white";
+}
+
 const onError = (err) => {
   let messageBoard = document.querySelector("#messageBoard");
   if(err.message) ALERT_BOX(messageBoard, err.message);
@@ -59,4 +63,4 @@ const onError = (err) => {
 };
 
 // named export
-export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars, onError };
+export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars, setBodyWhite, onError };

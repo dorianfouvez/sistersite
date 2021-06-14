@@ -440,7 +440,7 @@ INSERT INTO ambre_fouvez.cinemas_curriculum_vitae(
 
 INSERT INTO ambre_fouvez.distinctions(
 	id, name)
-	VALUES (DEFAULT, 'Sélectionné pour l`ACID à Cannes 2020(annulé)');
+	VALUES (DEFAULT, 'Sélectionné pour l`ACID à Cannes 2020 (annulé)');
 
 -------------------------------------
 -----INSERT distinctions_cinema-----

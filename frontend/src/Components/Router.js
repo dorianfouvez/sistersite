@@ -1,5 +1,5 @@
 // Global Import.
-import { SetFrenchNavigationBars, SetEnglishNavigationBars } from "../utils/render.js";
+import { SetFrenchNavigationBars, SetEnglishNavigationBars, setBodyWhite } from "../utils/render.js";
 import { getLangSessionData, setLangSessionData } from "../utils/session.js";
 import HomePage from "./HomePage.js";
 
@@ -111,6 +111,7 @@ const Router = () => {
     }
     if (uri) {
       unfixToBottomFooter();
+      setBodyWhite();
       // use Web History API to add current page URL to the user's navigation history & set right URL in the browser (instead of "#")
       window.history.pushState({}, uri, window.location.origin + uri);
       // render the requested component
@@ -156,6 +157,7 @@ const Router = () => {
   // Display the right component when the user use the browsing history
   window.addEventListener("popstate", () => {
     unfixToBottomFooter();
+    setBodyWhite();
     let lang = getLangSessionData();
     if(window.location.pathname === "/" && lang === "en") { 
       componentToRender = routesEn[window.location.pathname];
@@ -182,6 +184,7 @@ const Router = () => {
 
 const RedirectUrl = (uri, data) => {
   unfixToBottomFooter();
+  setBodyWhite();
   // use Web History API to add current page URL to the user's navigation history & set right URL in the browser (instead of "#")
   window.history.pushState({}, uri, window.location.origin + uri);
   // render the requested component
