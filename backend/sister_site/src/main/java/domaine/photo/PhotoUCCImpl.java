@@ -31,18 +31,4 @@ public class PhotoUCCImpl implements PhotoUCC {
     return photoDTO;
   }
 
-
-  @Override
-  public void delete(int id) {
-    dalservices.startTransaction();
-
-    /*
-     * PhotoFurnitureDTO photoFurnitureDTO = photoFurnitureDAO.delete(id); if (photoFurnitureDTO != null) { dalservices.rollbackTransaction(); throw new
-     * BusinessException("Photo_Furniture doesn't delete", Status.BAD_REQUEST); } PhotoDTO photoDTO = photoDAO.delete(id); if (photoDTO != null) {
-     * dalservices.rollbackTransaction(); throw new BusinessException("Photo doesn't delete", Status.BAD_REQUEST); }
-     */
-
-    dalservices.commitTransaction();
-  }
-
 }

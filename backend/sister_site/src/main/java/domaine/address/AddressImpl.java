@@ -89,7 +89,6 @@ public class AddressImpl implements AddressDTO {
   @Override
   public void fullFillAddress(int id, String country, String commune, String postcode,
       String street, String buildingNumber, String unitNumber) {
-
     setId(id);
     setCountry(country);
     setCommune(commune);

@@ -34,14 +34,7 @@ public class TrainingImpl implements TrainingDTO {
 
   @Override
   public void setStartYear(int startYear) {
-    if (startYear <= (Calendar.getInstance().get(Calendar.YEAR) - 120)) {
-      throw new BusinessException("The start year is to old, you aren't born at this date normaly.",
-          Status.BAD_REQUEST);
-    }
-    if (startYear >= (Calendar.getInstance().get(Calendar.YEAR) + 1)) {
-      throw new BusinessException(
-          "The start year is in the future, you haven't work on it till now.", Status.BAD_REQUEST);
-    }
+    checkYear(startYear, "start year");
     this.startYear = startYear;
   }
 
@@ -52,15 +45,7 @@ public class TrainingImpl implements TrainingDTO {
 
   @Override
   public void setEndYear(int endYear) {
-    if (startYear <= (Calendar.getInstance().get(Calendar.YEAR) - 120)) {
-      throw new BusinessException("The end year is to old, you aren't born at this date normaly.",
-          Status.BAD_REQUEST);
-    }
-    if (endYear <= (Calendar.getInstance().get(Calendar.YEAR) - 120)
-        || endYear >= (Calendar.getInstance().get(Calendar.YEAR) + 1)) {
-      throw new BusinessException("The end year is in the future, you haven't work on it till now.",
-          Status.BAD_REQUEST);
-    }
+    checkYear(endYear, "end year");
     this.endYear = endYear;
   }
 
@@ -114,6 +99,18 @@ public class TrainingImpl implements TrainingDTO {
       return false;
     }
     return true;
+  }
+
+  private void checkYear(int year, String name) {
+    if (year <= (Calendar.getInstance().get(Calendar.YEAR) - 120)) {
+      throw new BusinessException(
+          "The " + name + " is to old, you aren't born at this date normaly.", Status.BAD_REQUEST);
+    }
+    if (year >= (Calendar.getInstance().get(Calendar.YEAR) + 1)) {
+      throw new BusinessException(
+          "The " + name + " is in the future, you haven't work on it till now.",
+          Status.BAD_REQUEST);
+    }
   }
 
 }

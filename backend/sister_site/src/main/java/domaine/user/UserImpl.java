@@ -4,12 +4,11 @@
 package domaine.user;
 
 import java.sql.Timestamp;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import api.utils.BusinessException;
+import api.utils.PatternChecker;
 import jakarta.ws.rs.core.Response.Status;
 import views.Views;
 
@@ -131,13 +130,7 @@ public class UserImpl implements User {
       throw new BusinessException("The email can't be null.", Status.BAD_REQUEST);
     }
 
-    String regex = "^[\\w\\.\\/\\\\$é~#èà&=+*-]+@[\\w\\.]+\\.[a-zA-Z]{2,4}$";
-    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(email);
-    if (!matcher.find()) {
-      throw new BusinessException("The gived email is not matching a the pattern of an email.",
-          Status.BAD_REQUEST);
-    }
+    PatternChecker.checkEmailPattern(email);
     this.email = email;
   }
 
@@ -197,14 +190,7 @@ public class UserImpl implements User {
 
   public void setFacebook(String facebook) {
     if (facebook != null) {
-      String regex = "^https:\\/\\/www\\.facebook\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
-      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-      Matcher matcher = pattern.matcher(facebook);
-      if (!matcher.find()) {
-        throw new BusinessException(
-            "The facebook link is not matching a the pattern of facebook link.",
-            Status.BAD_REQUEST);
-      }
+      PatternChecker.checkFacebookPattern(facebook);
     }
     this.facebook = facebook;
   }
@@ -215,14 +201,7 @@ public class UserImpl implements User {
 
   public void setInstagram(String instagram) {
     if (instagram != null) {
-      String regex = "^https:\\/\\/www\\.instagram\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+\\/$";
-      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-      Matcher matcher = pattern.matcher(instagram);
-      if (!matcher.find()) {
-        throw new BusinessException(
-            "The instagram link is not matching a the pattern of instagram link.",
-            Status.BAD_REQUEST);
-      }
+      PatternChecker.checkInstagramPattern(instagram);
     }
     this.instagram = instagram;
   }
@@ -233,13 +212,7 @@ public class UserImpl implements User {
 
   public void setTwitter(String twitter) {
     if (twitter != null) {
-      String regex = "^https:\\/\\/www\\.twitter\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
-      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-      Matcher matcher = pattern.matcher(twitter);
-      if (!matcher.find()) {
-        throw new BusinessException(
-            "The twitter link is not matching a the pattern of twitter link.", Status.BAD_REQUEST);
-      }
+      PatternChecker.checkTwitterPattern(twitter);
     }
     this.twitter = twitter;
   }
@@ -250,13 +223,7 @@ public class UserImpl implements User {
 
   public void setYoutube(String youtube) {
     if (youtube != null) {
-      String regex = "^https:\\/\\/www\\.youtube\\.com\\/channel\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$";
-      Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-      Matcher matcher = pattern.matcher(youtube);
-      if (!matcher.find()) {
-        throw new BusinessException(
-            "The youtube link is not matching a the pattern of youtube link.", Status.BAD_REQUEST);
-      }
+      PatternChecker.checkYoutubePattern(youtube);
     }
     this.youtube = youtube;
   }

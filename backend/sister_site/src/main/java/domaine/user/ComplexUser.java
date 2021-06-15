@@ -1,3 +1,6 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package domaine.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

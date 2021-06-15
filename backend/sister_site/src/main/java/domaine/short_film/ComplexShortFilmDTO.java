@@ -10,23 +10,11 @@ import domaine.director.DirectorDTO;
 import domaine.role.RoleDTO;
 
 @JsonDeserialize(as = ComplexShortFilmImpl.class)
-public interface ComplexShortFilmDTO {
-
-  int getId();
-
-  void setId(int id);
-
-  String getTitle();
-
-  void setTitle(String title);
+public interface ComplexShortFilmDTO extends BasicShortFilmDTO {
 
   RoleDTO getRole();
 
   void setRole(RoleDTO role);
-
-  int getYear();
-
-  void setYear(int year);
 
   int getOrderNumber();
 

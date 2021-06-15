@@ -1,3 +1,6 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package domaine.short_film_cv;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

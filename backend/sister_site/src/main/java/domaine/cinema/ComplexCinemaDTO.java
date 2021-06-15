@@ -10,23 +10,11 @@ import domaine.distinction.DistinctionDTO;
 import domaine.role.RoleDTO;
 
 @JsonDeserialize(as = ComplexCinemaImpl.class)
-public interface ComplexCinemaDTO {
-
-  int getId();
-
-  void setId(int id);
-
-  String getTitle();
-
-  void setTitle(String title);
+public interface ComplexCinemaDTO extends CinemaWithoutRoleDTO {
 
   RoleDTO getRole();
 
   void setRole(RoleDTO role);
-
-  int getYear();
-
-  void setYear(int year);
 
   int getOrderNumber();
 

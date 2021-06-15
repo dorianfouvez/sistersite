@@ -14,15 +14,7 @@ import domaine.training.TrainingWithOrderDTO;
 import domaine.user.ComplexUserDTO;
 
 @JsonDeserialize(as = ComplexCurriculumVitaeImpl.class)
-public interface ComplexCurriculumVitaeDTO {
-
-  int getId();
-
-  void setId(int id);
-
-  String getTitle();
-
-  void setTitle(String title);
+public interface ComplexCurriculumVitaeDTO extends BasicCurriculumVitaeDTO {
 
   ComplexUserDTO getUser();
 
@@ -31,10 +23,6 @@ public interface ComplexCurriculumVitaeDTO {
   ProfessionDTO getProfession();
 
   void setProfession(ProfessionDTO profession);
-
-  String getPlayingAge();
-
-  void setPlayingAge(String playingAge);
 
   PhotoDTO getBackgroundPicture();
 

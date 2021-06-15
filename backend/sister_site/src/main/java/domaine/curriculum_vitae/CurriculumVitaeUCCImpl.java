@@ -12,7 +12,6 @@ import services.DalServices;
 import services.ShortFilmDAO;
 import services.StrengthDAO;
 import services.TrainingDAO;
-import services.UserDAO;
 
 public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
@@ -30,9 +29,6 @@ public class CurriculumVitaeUCCImpl implements CurriculumVitaeUCC {
 
   @Inject
   private TrainingDAO trainingDAO;
-
-  @Inject
-  private UserDAO userDAO;
 
   @Inject
   private DalServices dalservices;

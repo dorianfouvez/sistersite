@@ -6,7 +6,6 @@ package services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import api.utils.FatalException;
 import domaine.DomaineFactory;
 import domaine.photo.PhotoDTO;
@@ -63,12 +62,6 @@ public class PhotoDAOImpl implements PhotoDAO {
       return null;
     }
     return photo;
-  }
-
-  @Override
-  public List<PhotoDTO> getAll() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not implemented yet!");
   }
 
   @Override

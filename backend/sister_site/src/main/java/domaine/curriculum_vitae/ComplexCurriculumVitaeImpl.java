@@ -4,10 +4,8 @@
 package domaine.curriculum_vitae;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import api.utils.BusinessException;
+import api.utils.PatternChecker;
 import domaine.cinema.ComplexCinemaDTO;
 import domaine.photo.PhotoDTO;
 import domaine.profession.ProfessionDTO;
@@ -15,7 +13,6 @@ import domaine.short_film.ComplexShortFilmDTO;
 import domaine.strength.StrengthWithOrderDTO;
 import domaine.training.TrainingWithOrderDTO;
 import domaine.user.ComplexUserDTO;
-import jakarta.ws.rs.core.Response.Status;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
@@ -78,13 +75,8 @@ public class ComplexCurriculumVitaeImpl implements ComplexCurriculumVitaeDTO {
 
   @Override
   public void setPlayingAge(String playingAge) {
-    String regex = "^[0-9]{2,3} - [0-9]{2,3}$";
-    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-    Matcher matcher = pattern.matcher(playingAge);
-    if (!matcher.find()) {
-      throw new BusinessException(
-          "The facebook link is not matching a the pattern of facebook link.", Status.BAD_REQUEST);
-    }
+    PatternChecker.checkPattern("^[0-9]{2,3} - [0-9]{2,3}$", playingAge,
+        "The facebook link is not matching a the pattern of facebook link.");
     this.playingAge = playingAge;
   }
 

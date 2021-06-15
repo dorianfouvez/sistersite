@@ -1,3 +1,6 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package domaine.training_cv;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -6,31 +6,9 @@ package domaine.strength;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StrengthWithOrderImpl implements StrengthWithOrderDTO {
+public class StrengthWithOrderImpl extends StrengthImpl implements StrengthWithOrderDTO {
 
-  private int id;
-  private String label;
   private int orderNumber;
-
-  @Override
-  public int getId() {
-    return id;
-  }
-
-  @Override
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  @Override
-  public String getLabel() {
-    return label;
-  }
-
-  @Override
-  public void setLabel(String label) {
-    this.label = label;
-  }
 
   @Override
   public int getOrderNumber() {
@@ -51,15 +29,15 @@ public class StrengthWithOrderImpl implements StrengthWithOrderDTO {
 
   @Override
   public String toString() {
-    return "StrengthWithOrderImpl [id=" + id + ", label=" + label + ", orderNumber=" + orderNumber
-        + "]";
+    return "StrengthWithOrderImpl [id=" + getId() + ", label=" + getLabel() + ", orderNumber="
+        + orderNumber + "]";
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + id;
+    result = prime * result + getId();
     result = prime * result + orderNumber;
     return result;
   }
@@ -76,7 +54,7 @@ public class StrengthWithOrderImpl implements StrengthWithOrderDTO {
       return false;
     }
     StrengthWithOrderImpl other = (StrengthWithOrderImpl) obj;
-    if (id != other.id) {
+    if (getId() != other.getId()) {
       return false;
     }
     if (orderNumber != other.orderNumber) {

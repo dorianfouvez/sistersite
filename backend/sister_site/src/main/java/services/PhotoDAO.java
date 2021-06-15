@@ -3,7 +3,6 @@
  */
 package services;
 
-import java.util.List;
 import domaine.photo.PhotoDTO;
 
 public interface PhotoDAO {
@@ -11,8 +10,6 @@ public interface PhotoDAO {
   PhotoDTO findById(int id);
 
   PhotoDTO findByName(String name);
-
-  List<PhotoDTO> getAll();
 
   PhotoDTO add(PhotoDTO photo);
 

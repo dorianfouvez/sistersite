@@ -6,7 +6,6 @@ package api;
 import api.filters.AnonymousOrAuthorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
-import domaine.DomaineFactory;
 import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeUCC;
 import jakarta.inject.Inject;
@@ -23,9 +22,6 @@ public class CurriculumVitaeResource {
 
   @Inject
   private CurriculumVitaeUCC curriculumVitaeUCC;
-
-  @Inject
-  private DomaineFactory domaineFactory;
 
   @GET
   @Path("/{id}")

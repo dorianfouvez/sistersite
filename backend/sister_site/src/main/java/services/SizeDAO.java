@@ -1,3 +1,6 @@
+/**
+ * @author Fouvez Dorian.
+ */
 package services;
 
 public interface SizeDAO {
