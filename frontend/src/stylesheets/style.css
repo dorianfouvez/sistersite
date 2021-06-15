@@ -117,8 +117,8 @@
 
 .fa_logo {
   padding: 10px !important;
-  font-size: 30px;
-  width: 50px;
+  font-size: 30px !important;
+  width: 50px !important;
   text-align: center;
   text-decoration: none;
   margin-left: 5px;
