@@ -89,6 +89,7 @@
   display:flex;
 }
 #bg {
+  z-index: -1;
   opacity: 1;
   transition: 1s;
   /*background-color: #f10000;*/
@@ -206,12 +207,12 @@
 
 /*************** Sidebar ***************/
 .sidenav {
+  height: 100%;
   width: 0;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
-  bottom: 0;
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;

@@ -6,20 +6,20 @@ let sideBar = document.querySelector("#sideBar");
 const SidebarPage = () => {
     let sidebarPage = `<div id="mySidenav" class="sidenav">
         <a id="closeSidebar" class="closebtn">&times;</a>
-        <a id="/" href="/">Home</a>
-        <a id="comedienne" class="cursor_pointer" data-toggle="collapse" data-target="#comedienne_c" class>Actress</a>
+        <a id="/" href="/"><i class='fas fa-home'></i> Home</a>
+        <a id="comedienne" href="" data-toggle="collapse" data-target="#comedienne_c" class><i class='fas fa-film'></i> Actress</a>
         <div id="comedienne_c" class="collapse ml-2">
             <a id="/ArtisticCV" href="/ArtisticCV">Artistic CV</a>
             <a id="/demotape" href="/demotape">Demo Tape</a>
         </div>
-        <a id="book" class="cursor_pointer" data-toggle="collapse" data-target="#book_c" class>Book</a>
+        <a id="book" href="" data-toggle="collapse" data-target="#book_c" class><i class='fas fa-book'></i> Book</a>
         <div id="book_c" class="collapse ml-2">
             <a id="/book" href="/book">Portraits</a>
             <a id="/book" href="/book">Artistic</a>
             <a id="/book" href="/book">Couple</a>
         </div>
-        <a id="/about" href="/about">About Me</a>
-        <a id="/contactme" href="/contactme">Contact</a>
+        <a id="/about" href="/about"><i class='fas fa-address-book'></i> About Me</a>
+        <a id="/contactme" href="/contactme"><i class='fas fa-envelope'></i> Contact</a>
         
         <div class="d-flex justify-content-center mt-3">
             <a href="https://www.facebook.com/ambre.fouvez" class="fa fa_logo fa-facebook"></a>
@@ -32,7 +32,7 @@ const SidebarPage = () => {
         sidebarPage += `<a id="/login" class="login_icon" href="/login" data-uri="/login"><img src="assets/Images/stage_theater.png" alt="stage_theater"></a>`;
     }else {
         sidebarPage += `<a id="/myprofile" class="nav-item nav-link" href="/myprofile" data-uri="/myprofile">${user.userName}</a>
-        <a id="/logout" class="nav-item nav-link" href="/logout" data-uri="/logout">Logout</a>`;
+        <a id="/logout" class="nav-item nav-link" href="/logout" data-uri="/logout"><i class='fas fa-sign-out-alt'></i> Logout</a>`;
     }
     if (user && user.isBoss) {
         sidebarPage += `<a id="/Boss" class="nav-item nav-link" href="/Boss" data-uri="/myprofile">Boss</a>
@@ -71,12 +71,16 @@ const openSidebar = () => {
     document.getElementById("mySidenav").style.width = "50%";
     document.getElementById("page").style.opacity = "0.4";
     document.getElementById("overlay").style.width = "100%";
+    document.getElementById("footerText").style.zIndex = "-1";
 };
 
 const closeSidebar = () => {
     document.getElementById("mySidenav").style.width = "0px";
     document.getElementById("page").style.opacity = "1";
     document.getElementById("overlay").style.width = "0%";
+    setTimeout(() => {  
+        document.getElementById("footerText").style.zIndex = "1";
+    }, 500);
 };
 
 const showCollapse = (e) => {

@@ -25,9 +25,40 @@ function setFooter(){
   let footerText = `<a href="https://www.facebook.com/ambre.fouvez" class="fa fa_logo fa-facebook"></a>
   <a href="https://www.instagram.com/ambre.fouvez/" class="fa fa_logo fa-instagram"></a>
   <!--<a href="https://www.youtube.com/channel/UCEdtOcwxGX9viDs4G9AAHeg" class="fa fa_logo fa-youtube"></a>
-  <a href="https://www.twitter.com/barackobama" class="fa fa_logo fa-twitter"></a>-->`;
+  <a href="https://www.twitter.com/barackobama" class="fa fa_logo fa-twitter"></a>-->
+  
+  <button id="role_dice" class="btn btn-outline-primary ml-2" style='font-size:24px'>Role <i class='fas fa-dice-d6'></i></button><span id="result_dice"></span>`;
 
   footerDiv.innerHTML = footerText;
+  document.getElementById("role_dice").addEventListener("click", roleDice);
+}
+
+function roleDice(){
+  const rndInt = Math.floor(Math.random() * 6) + 1;
+
+  switch (rndInt) {
+    case 1:
+      document.getElementById("result_dice").innerHTML = `<i class='fas fa-dice-one ml-2' style='font-size:24px'></i>`;
+      break;
+    case 2:
+      document.getElementById("result_dice").innerHTML = `<i class='fas fa-dice-two ml-2' style='font-size:24px'></i>`;
+      break;
+    case 3:
+      document.getElementById("result_dice").innerHTML = `<i class='fas fa-dice-three ml-2' style='font-size:24px'></i>`;
+      break;
+    case 4:
+      document.getElementById("result_dice").innerHTML = `<i class='fas fa-dice-four ml-2' style='font-size:24px'></i>`;
+      break;
+    case 5:
+      document.getElementById("result_dice").innerHTML = `<i class='fas fa-dice-five ml-2' style='font-size:24px'></i>`;
+      break;
+    case 6:
+      document.getElementById("result_dice").innerHTML = `<i class='fas fa-dice-six ml-2' style='font-size:24px'></i>`;
+      break;
+  
+    default:
+      break;
+  }
 }
 
 function unfixToBottomFooter(){
