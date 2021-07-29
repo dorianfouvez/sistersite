@@ -23,6 +23,10 @@
   margin-bottom: 200px;
 }
 
+.cursor_pointer {
+  cursor: pointer;
+}
+
 
 
 /*************** CV page ***************/
@@ -74,6 +78,52 @@
 
 
 
+/*************** Home Image Background Second Test ***************/
+#bg_container {
+  position: relative;
+  width: 50%;
+  text-align:center;
+  margin:auto;
+  margin-bottom: 3%;
+  padding-top: 3%;
+  display:flex;
+}
+#bg {
+  opacity: 1;
+  transition: 1s;
+  /*background-color: #f10000;*/
+  /* Set rules to fill background */
+  /*min-height: 100%;
+  min-width: 1024px;*/
+	
+  /* Set up proportionate scaling */
+  /*width: 100%;
+  height: auto;*/
+	
+  /* Set up positioning */
+  /*position: fixed;
+  top: 0;
+  left: 0;*/
+}
+
+#bg_container:hover #bg{
+  opacity: 0.7;
+}
+
+#bg_container:hover #bg_text{
+  opacity: 1;
+}
+
+#bg_text {
+  transition: 1s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
 /*************** Home Image Background ***************/
 .background_img {
   background-image: url("../assets/Images/Bureau_1.png");
@@ -156,12 +206,12 @@
 
 /*************** Sidebar ***************/
 .sidenav {
-  height: 100%;
   width: 0;
   position: absolute;
   z-index: 1;
   top: 0;
   right: 0;
+  bottom: 0;
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
@@ -189,6 +239,12 @@
   margin-left: 50px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.sidenav .login_icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 @media screen and (max-height: 450px) {

@@ -5,13 +5,16 @@ import { getUserSessionData, setLangSessionData } from "../utils/session";
 
 let page = document.querySelector("#page");
 
-const HomePage = () => { 
-
-  let homePage = `<div class="background_img mb-2">
+const HomePage = () => {
+  /*let homePage = `<div class="background_img mb-2">
     <div class="disapered_text">
       <h1>Ambre Fouvez</h1>
     </div>
-  </div><!--<img class="d-block" src="assets/Images/Bureau_1.png" alt="First slide" >-->`;  
+  </div><!--<img class="d-block" src="assets/Images/Bureau_1.png" alt="First slide" >-->`; */
+  let homePage = `<div id="bg_container">
+    <img src="../assets/Images/thumbnail_IMG_5980.jpg" id="bg" alt="Ambre Fouvez">
+    <div id="bg_text"><h1>Ambre Fouvez</h1></div>
+  </div>`;
   page.innerHTML = homePage;
 };
 
