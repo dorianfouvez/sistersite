@@ -266,6 +266,50 @@
 
 
 
+/*************** Limitateur largeur photo Book ***************/
+/* Phone */
+@media only screen and (max-width: 450px) {
+  .create {
+    width: 50%;
+  }
+}
+
+/* Others */
+@media only screen and (min-width: 450px) {
+  .create {
+    width: 14.28%;
+  }
+}
+.photo_book {
+  width: 100%;
+  padding: 5%;
+}
+
+
+
+.reset {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.pin_container {
+	column-width: 250px;
+  width: 100%
+}
+
+div.pin_container img {
+	width: 100%; 
+  height: auto;
+	margin-bottom: 3%;
+}
+
+div.pin_container:hover img:not(:hover) {
+	opacity: 0.7;
+}
+
+
+
 /*************** LOADING CIRCLE ***************/
 .loader {
   border: 16px solid #f3f3f3;

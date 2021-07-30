@@ -36,7 +36,7 @@ import { unfixToBottomFooter } from "../utils/render.js";
 const routesEn = {
   "/": HomePage,
   "/about": WorkInProgressPage,
-  "/book": WorkInProgressPage,
+  "/book": BookPage,
   "/contactme": WorkInProgressPage,
   "/ArtisticCV": CVPage,
   "/demotape": WorkInProgressPage,
