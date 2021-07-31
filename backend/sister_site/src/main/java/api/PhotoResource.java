@@ -10,9 +10,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -21,6 +24,10 @@ import api.filters.Authorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
 import domaine.DomaineFactory;
+import domaine.makeup_artist.MakeupArtistDTO;
+import domaine.makeup_artist.MakeupArtistUCC;
+import domaine.photo.AddPhotoInformationDTO;
+import domaine.photo.AddPhotoInformationUCC;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoUCC;
 import domaine.photographer.PhotographerDTO;
@@ -33,6 +40,7 @@ import domaine.user.UserUCC;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Context;
@@ -46,7 +54,13 @@ import utils.Config;
 public class PhotoResource {
 
   @Inject
+  private AddPhotoInformationUCC addPhotoInformationUCC;
+
+  @Inject
   private DomaineFactory domaineFactory;
+
+  @Inject
+  private MakeupArtistUCC makeupArtistUCC;
 
   @Inject
   private PhotoUCC photoUCC;
@@ -73,17 +87,25 @@ public class PhotoResource {
   @Authorize
   public Response uploadPhotos(@Context ContainerRequest request,
       final FormDataMultiPart multiPart) {
+    // Check all the make-up artists.
+    List<Integer> makeupArtists = checkAndGetMakeupArtists(request);
+    System.out.println("Make-up Artists: " + makeupArtists); // TODO remove
+
     // Check all the photographers.
     List<Integer> photographers = checkAndGetPhotographers(request);
     System.out.println("Photographers: " + photographers); // TODO remove
 
     // Check all the sharers.
     List<Integer> sharers = checkAndGetSharers(request);
-    System.out.println("Sharer: " + sharers); // TODO remove
+    System.out.println("Sharers: " + sharers); // TODO remove
 
     // Check all the tags.
     List<Integer> tags = checkAndGetTags(request);
-    System.out.println("Tag: " + tags); // TODO remove
+    System.out.println("Tags: " + tags); // TODO remove
+
+    // Check all the dates.
+    List<Timestamp> dates = checkAndGetDates(request);
+    System.out.println("Dates: " + dates); // TODO remove
 
     // Save all photo include.
     Map<String, List<FormDataBodyPart>> fields = multiPart.getFields();
@@ -109,14 +131,15 @@ public class PhotoResource {
         }
         // System.out.println("URL : " + System.getProperty("user.dir") + uploadedFileLocation);
         System.out.println("FileName: " + fileName + ", New Name: "
-            + getNameOfImageFrom(formDataBodyPart) + ", Photographer: " + photographers.get(i)
-            + ", Sharer: " + sharers.get(i) + ", Tag: " + tags.get(i)); // TODO remove
+            + getNameOfImageFrom(formDataBodyPart) + "Make-up Artist: " + makeupArtists.get(i)
+            + ", Photographer: " + photographers.get(i) + ", Sharer: " + sharers.get(i) + ", Tag: "
+            + tags.get(i) + ", Date: " + dates.get(i)); // TODO remove
 
         // Save it.
         saveThePhotoInTheLocation(formDataBodyPart.getValueAs(InputStream.class),
             System.getProperty("user.dir") + uploadedFileLocation);
-        photos.add(createPhotoDTOWith(uploadedFileLocation, fileName, photographers.get(i),
-            sharers.get(i)));
+        photos.add(createPhotoDTOWith(uploadedFileLocation, fileName, makeupArtists.get(i),
+            photographers.get(i), sharers.get(i), dates.get(i)));
         tagsPhotos.add(createFullFillTagPhoto(-1, tags.get(i)));
       }
       i++;
@@ -128,6 +151,15 @@ public class PhotoResource {
     }
 
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photos", paths);
+  }
+
+  @GET
+  @Path("/addPhotoInformation")
+  @Authorize
+  public Response addPhotoInformation(@Context ContainerRequest request) {
+    AddPhotoInformationDTO addPhotoInformation = this.addPhotoInformationUCC.get();
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("addPhotoInformation",
+        addPhotoInformation);
   }
 
 
@@ -193,15 +225,59 @@ public class PhotoResource {
     return tagPhotoDTO;
   }
 
-  private PhotoDTO createPhotoDTOWith(String picture, String name, int photographer, int sharer) {
+  private PhotoDTO createPhotoDTOWith(String picture, String name, int makeupArtist,
+      int photographer, int sharer, Timestamp date) {
     PhotoDTO photo = domaineFactory.getPhotoDTO();
 
     photo.setName(name);
-    photo.setPhotographer(photographer);
     photo.setPicture(picture);
+    photo.setMakeupArtist(makeupArtist);
+    photo.setPhotographer(photographer);
     photo.setSharer(sharer);
+    photo.setDate(date);
 
     return photo;
+  }
+
+  private List<Timestamp> checkAndGetDates(ContainerRequest request) {
+    List<Timestamp> dates = new ArrayList<Timestamp>();
+
+    int numberDate = 1;
+    for (String dateToConvert : request.getHeaderString("dates").split(",")) {
+      Timestamp timestamp = null;
+      if (dateToConvert != null) {
+        checkTimestampPattern("Date N°" + numberDate, dateToConvert);
+        timestamp = Timestamp.valueOf(dateToConvert.replaceFirst("T", " "));
+      }
+
+      dates.add(timestamp);
+      numberDate++;
+    }
+
+    return dates;
+  }
+
+  private List<Integer> checkAndGetMakeupArtists(ContainerRequest request) {
+    List<Integer> makeupArtists = new ArrayList<Integer>();
+    int numberMakeupArtist = 1;
+    for (String integerToConvert : request.getHeaderString("makeupArtists").split(",")) {
+      int makeupArtistId = Integer.valueOf(integerToConvert);
+
+      MakeupArtistDTO makeupArtist = checkAndGetMakeupArtistId(makeupArtistId, numberMakeupArtist);
+
+      makeupArtists.add(makeupArtist.getId());
+      numberMakeupArtist++;
+    }
+    return makeupArtists;
+  }
+
+  private MakeupArtistDTO checkAndGetMakeupArtistId(int makeupArtistId, int numberMakeupArtist) {
+    if (makeupArtistId < 0) {
+      throw new PresentationException(
+          "Make-up artist of the photo N°" + numberMakeupArtist + " doesn't exist",
+          Status.BAD_REQUEST);
+    }
+    return this.makeupArtistUCC.findById(makeupArtistId);
   }
 
   private List<Integer> checkAndGetPhotographers(ContainerRequest request) {
@@ -291,6 +367,17 @@ public class PhotoResource {
     if (this.photoUCC.nameAlreadyExist(name)) {
       throw new PresentationException(
           "The Name \"" + name + "\" of the photo N°" + photoNumber + " is already use.",
+          Status.BAD_REQUEST);
+    }
+  }
+
+  private void checkTimestampPattern(String name, String toVerify) {
+    toVerify = toVerify.replaceFirst("T", " ");
+    String timestampPattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$";
+    Pattern pattern = Pattern.compile(timestampPattern, Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(toVerify);
+    if (!matcher.find()) {
+      throw new PresentationException(name + " is not matching a Timestamp pattern.",
           Status.BAD_REQUEST);
     }
   }

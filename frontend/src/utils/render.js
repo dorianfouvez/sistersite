@@ -88,6 +88,12 @@ function setBodyWhite(){
 }
 
 const onError = (err) => {
+  // Reset possible loading circle
+  let loadingCircle = document.getElementById('loading');
+  if(loadingCircle){
+    loadingCircle.innerHTML = "";
+  }
+
   let messageBoard = document.querySelector("#messageBoard");
   if(err.message) ALERT_BOX(messageBoard, err.message);
   else ALERT_BOX(messageBoard, err);

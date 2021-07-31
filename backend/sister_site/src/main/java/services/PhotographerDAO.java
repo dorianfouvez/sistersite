@@ -17,7 +17,8 @@ public interface PhotographerDAO {
   // ******************** Static's Methods ********************
 
   static String getAllPhotographerAttributes() {
-    return " pg.id, pg.name";
+    return " " + getPhotographerAbbreviation() + ".id, " + getPhotographerAbbreviation() + ".name, "
+        + getPhotographerAbbreviation() + ".instagram";
   }
 
   static String getPhotographerAbbreviation() {
@@ -25,7 +26,7 @@ public interface PhotographerDAO {
   }
 
   static String getPhotographerTableName() {
-    return " ambre_fouvez.photographers pg";
+    return " ambre_fouvez.photographers " + getPhotographerAbbreviation();
   }
 
 }

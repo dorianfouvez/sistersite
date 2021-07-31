@@ -3,6 +3,7 @@
  */
 package domaine.photo;
 
+import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -11,8 +12,10 @@ public class PhotoImpl implements PhotoDTO {
   private int id;
   private String name;
   private String picture;
+  private int makeupArtist;
   private int photographer;
   private int sharer;
+  private Timestamp date;
 
   @Override
   public int getId() {
@@ -45,6 +48,16 @@ public class PhotoImpl implements PhotoDTO {
   }
 
   @Override
+  public int getMakeupArtist() {
+    return makeupArtist;
+  }
+
+  @Override
+  public void setMakeupArtist(int makeupArtist) {
+    this.makeupArtist = makeupArtist;
+  }
+
+  @Override
   public int getPhotographer() {
     return photographer;
   }
@@ -65,18 +78,32 @@ public class PhotoImpl implements PhotoDTO {
   }
 
   @Override
-  public void fullFillPhoto(int id, String name, String picture, int photographer, int sharer) {
+  public Timestamp getDate() {
+    return date;
+  }
+
+  @Override
+  public void setDate(Timestamp date) {
+    this.date = date;
+  }
+
+  @Override
+  public void fullFillPhoto(int id, String name, String picture, int makeupArtist, int photographer,
+      int sharer, Timestamp date) {
     setId(id);
     setPicture(picture);
     setName(name);
+    setMakeupArtist(makeupArtist);
     setPhotographer(photographer);
     setSharer(sharer);
+    setDate(date);
   }
 
   @Override
   public String toString() {
-    return "PhotoImpl [id=" + id + ", name=" + name + ", picture=" + picture + ", photographer="
-        + photographer + ", sharer=" + sharer + "]";
+    return "PhotoImpl [id=" + id + ", name=" + name + ", make-up artist=" + makeupArtist
+        + ", picture=" + picture + ", photographer=" + photographer + ", sharer=" + sharer
+        + ", date=" + date + "]";
   }
 
   @Override

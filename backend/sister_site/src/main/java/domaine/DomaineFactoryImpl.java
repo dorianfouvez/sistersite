@@ -19,8 +19,12 @@ import domaine.director.DirectorDTO;
 import domaine.director.DirectorImpl;
 import domaine.distinction.DistinctionDTO;
 import domaine.distinction.DistinctionImpl;
+import domaine.makeup_artist.MakeupArtistDTO;
+import domaine.makeup_artist.MakeupArtistImpl;
 import domaine.nationality.NationalityDTO;
 import domaine.nationality.NationalityImpl;
+import domaine.photo.AddPhotoInformationDTO;
+import domaine.photo.AddPhotoInformationImpl;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoImpl;
 import domaine.photographer.PhotographerDTO;
@@ -47,6 +51,11 @@ import domaine.user.UserDTO;
 import domaine.user.UserImpl;
 
 public class DomaineFactoryImpl implements DomaineFactory {
+
+  @Override
+  public AddPhotoInformationDTO getAddPhotoInformationDTO() {
+    return new AddPhotoInformationImpl();
+  }
 
   @Override
   public AddressDTO getAddressDTO() {
@@ -96,6 +105,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public DistinctionDTO getDistinctionDTO() {
     return new DistinctionImpl();
+  }
+
+  @Override
+  public MakeupArtistDTO getMakeupArtistDTO() {
+    return new MakeupArtistImpl();
   }
 
   @Override

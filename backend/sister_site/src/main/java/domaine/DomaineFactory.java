@@ -11,7 +11,9 @@ import domaine.curriculum_vitae.ComplexCurriculumVitaeDTO;
 import domaine.curriculum_vitae.CurriculumVitaeDTO;
 import domaine.director.DirectorDTO;
 import domaine.distinction.DistinctionDTO;
+import domaine.makeup_artist.MakeupArtistDTO;
 import domaine.nationality.NationalityDTO;
+import domaine.photo.AddPhotoInformationDTO;
 import domaine.photo.PhotoDTO;
 import domaine.photographer.PhotographerDTO;
 import domaine.profession.ProfessionDTO;
@@ -26,6 +28,8 @@ import domaine.user.ComplexUserDTO;
 import domaine.user.UserDTO;
 
 public interface DomaineFactory {
+
+  AddPhotoInformationDTO getAddPhotoInformationDTO();
 
   AddressDTO getAddressDTO();
 
@@ -46,6 +50,8 @@ public interface DomaineFactory {
   DirectorDTO getDirectorDTO();
 
   DistinctionDTO getDistinctionDTO();
+
+  MakeupArtistDTO getMakeupArtistDTO();
 
   NationalityDTO getNationalityDTO();
 

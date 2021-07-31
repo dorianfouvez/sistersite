@@ -8,6 +8,10 @@ import domaine.DomaineFactory;
 import domaine.DomaineFactoryImpl;
 import domaine.curriculum_vitae.CurriculumVitaeUCC;
 import domaine.curriculum_vitae.CurriculumVitaeUCCImpl;
+import domaine.makeup_artist.MakeupArtistUCC;
+import domaine.makeup_artist.MakeupArtistUCCImpl;
+import domaine.photo.AddPhotoInformationUCC;
+import domaine.photo.AddPhotoInformationUCCImpl;
 import domaine.photo.PhotoUCC;
 import domaine.photo.PhotoUCCImpl;
 import domaine.photographer.PhotographerUCC;
@@ -29,6 +33,8 @@ import services.DirectorDAO;
 import services.DirectorDAOImpl;
 import services.DistinctionDAO;
 import services.DistinctionDAOImpl;
+import services.MakeupArtistDAO;
+import services.MakeupArtistDAOImpl;
 import services.PhotoDAO;
 import services.PhotoDAOImpl;
 import services.PhotographerDAO;
@@ -39,6 +45,8 @@ import services.StrengthDAO;
 import services.StrengthDAOImpl;
 import services.TagDAO;
 import services.TagDAOImpl;
+import services.TagPhotoDAO;
+import services.TagPhotoDAOImpl;
 import services.TrainingDAO;
 import services.TrainingDAOImpl;
 import services.UserDAO;
@@ -50,6 +58,7 @@ public class ApplicationBinder extends AbstractBinder {
   @Override
   protected void configure() {
 
+    bind(AddPhotoInformationUCCImpl.class).to(AddPhotoInformationUCC.class).in(Singleton.class);
     bind(CinemaDAOImpl.class).to(CinemaDAO.class).in(Singleton.class);
     bind(CurriculumVitaeUCCImpl.class).to(CurriculumVitaeUCC.class).in(Singleton.class);
     bind(CurriculumVitaeDAOImpl.class).to(CurriculumVitaeDAO.class).in(Singleton.class);
@@ -58,6 +67,8 @@ public class ApplicationBinder extends AbstractBinder {
     bind(DomaineFactoryImpl.class).to(DomaineFactory.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalBackendServices.class).to(DalServices.class)
         .in(Singleton.class);
+    bind(MakeupArtistDAOImpl.class).to(MakeupArtistDAO.class).in(Singleton.class);
+    bind(MakeupArtistUCCImpl.class).to(MakeupArtistUCC.class).in(Singleton.class);
     bind(PhotoDAOImpl.class).to(PhotoDAO.class).in(Singleton.class);
     bind(PhotoUCCImpl.class).to(PhotoUCC.class).in(Singleton.class);
     bind(PhotographerDAOImpl.class).to(PhotographerDAO.class).in(Singleton.class);
@@ -65,6 +76,7 @@ public class ApplicationBinder extends AbstractBinder {
     bind(ShortFilmDAOImpl.class).to(ShortFilmDAO.class).in(Singleton.class);
     bind(StrengthDAOImpl.class).to(StrengthDAO.class).in(Singleton.class);
     bind(TagDAOImpl.class).to(TagDAO.class).in(Singleton.class);
+    bind(TagPhotoDAOImpl.class).to(TagPhotoDAO.class).in(Singleton.class);
     bind(TagUCCImpl.class).to(TagUCC.class).in(Singleton.class);
     bind(TrainingDAOImpl.class).to(TrainingDAO.class).in(Singleton.class);
     bind(UserDAOImpl.class).to(UserDAO.class).in(Singleton.class);

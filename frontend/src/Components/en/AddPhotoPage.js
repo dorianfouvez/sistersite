@@ -16,11 +16,7 @@ const AddPhotoPage = () => {
             <input id="savedFiles" type="file" hidden multiple>
             <div id="showImg" class="row"></div>
             <button type="submit" name="submitPhoto" class="btn btn-primary mt-2 mb-2"><i class="fas fa-save"></i></button>
-        </form>
-        
-        <p>Une Photo néssécite un id (fait dans le backend), une picture, un nom, l'id d'un photographer, un sharer.<br>
-        Il peux ensuite soit être lier par un <b>tags_photo</b> au book "Portraits", "Artistic" ou "couple".<br>
-        Mais également lier à un cv ou photo d'utilisateur.</p>`;
+        </form>`;
 
         let page = document.querySelector("#page");
         page.innerHTML = addPhotoPage;
@@ -32,7 +28,7 @@ const AddPhotoPage = () => {
 const onUpload = (e) => {
     document.getElementById("loading").innerHTML = `<div class="loader"></div>`;
     let id = getTokenSessionData();
-    fetch(API_URL + "photographers/all", {
+    fetch(API_URL + "photos/addPhotoInformation", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -41,25 +37,11 @@ const onUpload = (e) => {
     }).then((response) => {
         if (!response.ok) {
             return response.text().then((err) => onError(err));
-        } else return response.json().then((data) => onFetchTags(e, data.photographers, id));
+        } else return response.json().then((data) => onShowImage(e, data.addPhotoInformation.makeupArtists, data.addPhotoInformation.photographers, data.addPhotoInformation.tags));
     });
-}
+};
 
-const onFetchTags = (e, photographers, id) => {
-    fetch(API_URL + "tags/all", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": id,
-        },
-    }).then((response) => {
-        if (!response.ok) {
-            return response.text().then((err) => onError(err));
-        } else return response.json().then((data) => onShowImage(e, photographers, data.tags));
-    });
-}
-
-const onShowImage = (e, photographers, tags) => {
+const onShowImage = (e, makeupArtists, photographers, tags) => {
     let files = e.target.files;
     let hello = document.getElementById('savedFiles');
     if(!hello.savedFiles) hello.savedFiles = [];
@@ -70,18 +52,33 @@ const onShowImage = (e, photographers, tags) => {
     // Add visuel and 
     for(let i = 0; i < files.length; i++){
         let reader = new FileReader();
-        reader.onloadend = function() {
+        reader.onloadend = function() {//document.getElementById('savedFiles').savedFiles.splice(${hello.savedFiles.length}, 1);
             let fileName = files[i].name.substr(0, files[i].name.length - 4);
-            let photoToShow = `<div class="card_photo">
+            let photoToShow = `<div id="card${hello.savedFiles.length}" class="card_photo">
                 <img id="imgShowed${hello.savedFiles.length}" src="` + reader.result + `" alt="` + fileName + `" />
+                <a id="remove${hello.savedFiles.length}" onClick='
+                document.getElementById("savedFiles").savedFiles = document.getElementById("savedFiles").savedFiles.filter(file => 
+                file.name != "${(files[i].name.replace("\"", "&quot;")).replace("\'", "&#39;")}");
+                document.getElementById("card${hello.savedFiles.length}").remove();' class="closebtn">
+                    &times;
+                </a>
                 <div class="container">
                     <label for="name">Name: </label>
                     <h6><textarea id="name${hello.savedFiles.length}" name="name" >${fileName}</textarea></h6>
+                    <label for="makeupArtist">Make-up Artist: </label>
+                    <select id="makeupArtist${hello.savedFiles.length}" class="form-control mb-2" name="makeupArtist">`;
+                    for (let i = 0; i < makeupArtists.length; i++) {
+                        photoToShow += `<option value="${makeupArtists[i].id}" `;
+                        if(makeupArtists[i].id == 0) photoToShow += `selected`;
+                        photoToShow +=`>${makeupArtists[i].name}</option>`;
+                    }
+                    photoToShow += `
+                    </select>
                     <label for="photographer">Photographer: </label>
                     <select id="photographer${hello.savedFiles.length}" class="form-control mb-2" name="photographer">`;
                     for (let i = 0; i < photographers.length; i++) {
                         photoToShow += `<option value="${photographers[i].id}" `;
-                        if(i == 0) photoToShow += `selected`;
+                        if(photographers[i].id == 0) photoToShow += `selected`;
                         photoToShow +=`>${photographers[i].name}</option>`;
                     }
                     photoToShow += `
@@ -100,6 +97,11 @@ const onShowImage = (e, photographers, tags) => {
                     }
                     photoToShow += `
                     </select>
+                    <label for="date">Date: </label>
+                    <div class="input-group">
+                        <input id="date${hello.savedFiles.length}" type="datetime-local" class="form-control" value="" name="date" step="1">
+                        <button id="dateButton" type="button" onClick="document.getElementById('date${hello.savedFiles.length}').value = '';"><i class="material-icons">delete</i></button>
+                    </div>
                 </div>
             </div>`;
 
@@ -114,53 +116,57 @@ const onShowImage = (e, photographers, tags) => {
 const onSubmit = (e) => {
     e.preventDefault();
     let savedFiles = document.getElementById('savedFiles').savedFiles;
-    let photoNames = [];
-    let photographers = [];
-    let sharers = [];
-    let tags = [];
-    console.log(savedFiles);
-    for (let i = 0; i < savedFiles.length; i++) {
-        let photoName = document.getElementById("name" + i).value;
-        let photoPhotographer = document.getElementById("photographer" + i).value;
-        let photoSharer = document.getElementById("sharer" + i).value;
-        let photoTag = document.getElementById("tag" + i).value;
-        let extention = savedFiles[i].name.substr(savedFiles[i].name.lastIndexOf("."), savedFiles[i].name.length);
-        //console.log(photoName + extention);
-        savedFiles[i].photoName = photoName + extention;
-        savedFiles[i].photographer = photoPhotographer;
-        savedFiles[i].sharer = photoSharer;
-        console.log("Photo=[Name: " + photoName + ", Picture: " + savedFiles[i] + ", Photographer: " + photoPhotographer + ", Sharer: " 
-        + photoSharer + ", Tag: " + photoTag + "]", savedFiles[i]);
-        
-        
-        photoNames.push(photoName + extention);
-        photographers.push(photoPhotographer);
-        sharers.push(photoSharer);
-        tags.push(photoTag);
-    }
 
-    // Creation of the formData with all the photos.
-    const formData = new FormData();
-    for(let i = 0; i < savedFiles.length; i++){
-        formData.append(photoNames[i], savedFiles[i]);
-    }
+    if(savedFiles && savedFiles.length != 0) {
 
-    let id = getTokenSessionData();
-    //TODO faire un insert  des photos (avec nom), puis un put pour ajouter les photographers (id) et finir avec les tags.
-    fetch(API_URL + "photos/", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "Authorization": id,
-            "photographers": photographers,
-            "sharers": sharers,
-            "tags": tags,
-        },
-    }).then((response) => {
-        if (!response.ok) {
-            return response.text().then((err) => onError(err));
-        } else return response.json().then((data) => console.log(data));
-    });
+        let photoNames = [];
+        let photographers = [];
+        let sharers = [];
+        let tags = [];
+        console.log(savedFiles);
+        for (let i = 0; i < savedFiles.length; i++) {
+            let photoName = document.getElementById("name" + i).value;
+            let photoPhotographer = document.getElementById("photographer" + i).value;
+            let photoSharer = document.getElementById("sharer" + i).value;
+            let photoTag = document.getElementById("tag" + i).value;
+            let extention = savedFiles[i].name.substr(savedFiles[i].name.lastIndexOf("."), savedFiles[i].name.length);
+            //console.log(photoName + extention);
+            savedFiles[i].photoName = photoName + extention;
+            savedFiles[i].photographer = photoPhotographer;
+            savedFiles[i].sharer = photoSharer;
+            console.log("Photo=[Name: " + photoName + ", Picture: " + savedFiles[i] + ", Photographer: " + photoPhotographer + ", Sharer: " 
+            + photoSharer + ", Tag: " + photoTag + "]", savedFiles[i]);
+            
+            
+            photoNames.push(photoName + extention);
+            photographers.push(photoPhotographer);
+            sharers.push(photoSharer);
+            tags.push(photoTag);
+        }
+
+        // Creation of the formData with all the photos.
+        const formData = new FormData();
+        for(let i = 0; i < savedFiles.length; i++){
+            formData.append(photoNames[i], savedFiles[i]);
+        }
+
+        let id = getTokenSessionData();
+        //TODO faire un insert  des photos (avec nom), puis un put pour ajouter les photographers (id) et finir avec les tags.
+        fetch(API_URL + "photos/", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Authorization": id,
+                "photographers": photographers,
+                "sharers": sharers,
+                "tags": tags,
+            },
+        }).then((response) => {
+            if (!response.ok) {
+                return response.text().then((err) => onError(err));
+            } else return response.json().then((data) => console.log(data));
+        });
+    }
 };
 
 export default AddPhotoPage;

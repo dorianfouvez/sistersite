@@ -5,20 +5,20 @@ package domaine.photo;
 
 import java.util.List;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import domaine.makeup_artist.MakeupArtistDTO;
 import domaine.photographer.PhotographerDTO;
 import domaine.tag.TagDTO;
-import domaine.user.UserDTO;
 
 @JsonDeserialize(as = AddPhotoInformationImpl.class)
 public interface AddPhotoInformationDTO {
 
+  List<MakeupArtistDTO> getMakeupArtists();
+
+  void setMakeupArtists(List<MakeupArtistDTO> makeupArtists);
+
   List<PhotographerDTO> getPhotographers();
 
   void setPhotographers(List<PhotographerDTO> photographers);
-
-  List<UserDTO> getSharers();
-
-  void setSharers(List<UserDTO> sharers);
 
   List<TagDTO> getTags();
 

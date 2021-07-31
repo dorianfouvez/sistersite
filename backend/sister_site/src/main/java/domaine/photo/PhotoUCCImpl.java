@@ -3,6 +3,7 @@
  */
 package domaine.photo;
 
+import java.util.ArrayList;
 import java.util.List;
 import api.utils.BusinessException;
 import domaine.tag_photo.TagPhotoDTO;
@@ -10,6 +11,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response.Status;
 import services.DalServices;
 import services.PhotoDAO;
+import services.TagPhotoDAO;
 
 public class PhotoUCCImpl implements PhotoUCC {
 
@@ -18,6 +20,9 @@ public class PhotoUCCImpl implements PhotoUCC {
 
   @Inject
   private PhotoDAO photoDAO;
+
+  @Inject
+  private TagPhotoDAO tagPhotoDAO;
 
 
 
@@ -46,11 +51,53 @@ public class PhotoUCCImpl implements PhotoUCC {
 
   @Override
   public List<PhotoDTO> addPhotos(List<PhotoDTO> photos, List<TagPhotoDTO> tagsPhotos) {
+    if (photos.size() != tagsPhotos.size()) {
+      throw new BusinessException("There is not the same amout of photo and tags",
+          Status.BAD_REQUEST);
+    }
+
     dalservices.startTransaction();
-    // TODO Create photo
-    // TODO Create tags_photo
+    List<PhotoDTO> addedPhotos = new ArrayList<>();
+    for (int i = 0; i < photos.size(); i++) {
+      PhotoDTO newPhoto = addPhoto(photos.get(i), i + 1);
+      addTagPhoto(tagsPhotos.get(i), newPhoto, i);
+      addedPhotos.add(newPhoto);
+    }
     dalservices.commitTransaction();
-    throw new UnsupportedOperationException("Not implemented yet!");
+    // throw new UnsupportedOperationException("Not implemented yet!");
+    return addedPhotos;
+  }
+
+
+
+  // ******************** Private's Methods ********************
+
+  private PhotoDTO addPhoto(PhotoDTO photo, int indexPhoto) {
+    PhotoDTO newPhoto = this.photoDAO.add(photo);
+    if (newPhoto == null) {
+      dalservices.rollbackTransaction();
+      if (indexPhoto == -1) {
+        throw new BusinessException("Photo doesn't add", Status.BAD_REQUEST);
+      } else {
+        throw new BusinessException("Photo N°" + indexPhoto + " doesn't add", Status.BAD_REQUEST);
+      }
+    }
+    return newPhoto;
+  }
+
+  private TagPhotoDTO addTagPhoto(TagPhotoDTO tagPhoto, PhotoDTO photoToLink, int indexPhoto) {
+    tagPhoto.setPhotoId(photoToLink.getId());
+    TagPhotoDTO newTagPhoto = this.tagPhotoDAO.add(tagPhoto);
+    if (newTagPhoto == null) {
+      dalservices.rollbackTransaction();
+      if (indexPhoto == -1) {
+        throw new BusinessException("Tag link of the photo doesn't add", Status.BAD_REQUEST);
+      } else {
+        throw new BusinessException("Tag link of the photo N°" + indexPhoto + " doesn't add",
+            Status.BAD_REQUEST);
+      }
+    }
+    return newTagPhoto;
   }
 
 }

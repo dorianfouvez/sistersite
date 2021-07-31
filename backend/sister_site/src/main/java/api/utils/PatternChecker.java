@@ -39,6 +39,11 @@ public class PatternChecker {
         "The instagram link is not matching a the pattern of instagram link.");
   }
 
+  public static void checkInstagramPseudoPattern(String instagramPseudo) {
+    checkPattern("^@[\\w\\.\\/\\\\$é~#èà&=+*-]+$", instagramPseudo,
+        "The instagram pseudo is not matching a the pattern of instagram pseudo.");
+  }
+
   public static void checkTwitterPattern(String twitter) {
     checkPattern("^https:\\/\\/www\\.twitter\\.com\\/[\\w\\.\\/\\\\$é~#èà&=+*-]+$", twitter,
         "The twitter link is not matching a the pattern of twitter link.");

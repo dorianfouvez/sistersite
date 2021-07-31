@@ -80,6 +80,7 @@ public class PhotographerDAOImpl implements PhotographerDAO {
     try {
       photographer.setId(rs.getInt(1));
       photographer.setName(rs.getString(2));
+      photographer.setInstagram(rs.getString(3));
 
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();

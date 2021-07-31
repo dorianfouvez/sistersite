@@ -1,12 +1,12 @@
 /**
  * @author Fouvez Dorian.
  */
-package domaine.photographer;
+package domaine.makeup_artist;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(as = PhotographerImpl.class)
-public interface PhotographerDTO {
+@JsonDeserialize(as = MakeupArtistImpl.class)
+public interface MakeupArtistDTO {
 
   int getId();
 

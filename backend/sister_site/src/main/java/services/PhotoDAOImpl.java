@@ -67,7 +67,7 @@ public class PhotoDAOImpl implements PhotoDAO {
   @Override
   public PhotoDTO add(PhotoDTO photo) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "INSERT INTO" + PhotoDAO.getPhotoTableName() + " VALUES(DEFAULT,?,?,?)");
+        "INSERT INTO" + PhotoDAO.getPhotoTableName() + " VALUES(DEFAULT,?,?,?,?,?)");
 
     try {
       setAllPsAttributNotNull(ps, photo);
@@ -113,7 +113,10 @@ public class PhotoDAOImpl implements PhotoDAO {
       photo.setId(rs.getInt(1));
       photo.setName(rs.getString(2));
       photo.setPicture(rs.getString(3));
-      photo.setPhotographer(rs.getInt(4));
+      photo.setMakeupArtist(rs.getInt(4));
+      photo.setPhotographer(rs.getInt(5));
+      photo.setSharer(rs.getInt(6));
+      photo.setDate(rs.getTimestamp(7));
 
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
@@ -135,7 +138,10 @@ public class PhotoDAOImpl implements PhotoDAO {
       throws SQLException {
     ps.setString(1, photo.getName());
     ps.setString(2, photo.getPicture());
-    ps.setInt(3, photo.getPhotographer());
+    ps.setInt(3, photo.getMakeupArtist());
+    ps.setInt(4, photo.getPhotographer());
+    ps.setInt(5, photo.getSharer());
+    ps.setTimestamp(6, photo.getDate()); // TODO Need to Check if when it's null it's working.
 
     return ps;
   }

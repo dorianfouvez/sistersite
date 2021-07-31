@@ -356,9 +356,17 @@ div.pin_container:hover img:not(:hover) {
   font-weight: bold;
 }
 
-
 .card_photo .container {
   padding: 2px 16px;
+}
+
+.card_photo .closebtn {
+  cursor: pointer;
+  text-decoration: none;
+  color: red;
+  float: right;
+  font-weight: bold;
+  font-size: 30px;
 }
 
 

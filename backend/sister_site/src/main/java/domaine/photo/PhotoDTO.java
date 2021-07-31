@@ -3,6 +3,7 @@
  */
 package domaine.photo;
 
+import java.sql.Timestamp;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(as = PhotoImpl.class)
@@ -20,6 +21,10 @@ public interface PhotoDTO {
 
   void setPicture(String picture);
 
+  int getMakeupArtist();
+
+  void setMakeupArtist(int makeupArtist);
+
   int getPhotographer();
 
   void setPhotographer(int photographer);
@@ -28,6 +33,11 @@ public interface PhotoDTO {
 
   void setSharer(int sharer);
 
-  void fullFillPhoto(int id, String name, String picture, int photographer, int sharer);
+  Timestamp getDate();
+
+  void setDate(Timestamp date);
+
+  void fullFillPhoto(int id, String name, String picture, int makeupArtist, int photographer,
+      int sharer, Timestamp date);
 
 }

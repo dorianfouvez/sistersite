@@ -30,15 +30,24 @@ CREATE TABLE ambre_fouvez.addresses (
 
 CREATE TABLE ambre_fouvez.photographers (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(100) NULL UNIQUE CHECK(name <> '')
+	name VARCHAR(100) NOT NULL UNIQUE CHECK(name <> '' AND name <> ' '),
+	instagram VARCHAR(50) NULL CHECK(instagram SIMILAR TO '@[\w\.\/\\$é~#èà&=+*-]+')
+);
+
+CREATE TABLE ambre_fouvez.makeup_artists (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE CHECK(name <> '' AND name <> ' '),
+	instagram VARCHAR(50) NULL CHECK(instagram SIMILAR TO '@[\w\.\/\\$é~#èà&=+*-]+')
 );
 
 CREATE TABLE ambre_fouvez.photos (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NULL UNIQUE CHECK(name <> ''),
     picture VARCHAR NOT NULL CHECK(picture <> ''),
+	makeup_artist INTEGER REFERENCES ambre_fouvez.makeup_artists(id) NOT NULL,
     photographer INTEGER REFERENCES ambre_fouvez.photographers(id) NOT NULL,
-	sharer INTEGER NOT NULL CHECK(sharer >= -1) --- Mettre une vérification si le user existe ou est -1 ---
+	sharer INTEGER NOT NULL CHECK(sharer >= -1), --- Mettre une vérification si le user existe ou est -1 ---
+	date TIMESTAMP NULL
 );
 
 CREATE TABLE ambre_fouvez.tags (
@@ -254,21 +263,29 @@ INSERT INTO ambre_fouvez.addresses(
 	id, country, commune, postcode, street, building_number, unit_number)
 	VALUES (DEFAULT, 'France', 'Créteil', '94000', 'Rue Charles Gustave Stoskopf', '34', NULL);
 
---------------------------
+------------------------------
 -----INSERT photographers-----
---------------------------
+------------------------------
 
 INSERT INTO ambre_fouvez.photographers(
-	id, name)
-	VALUES (0, E'I Don\''t No'); ---Need to remove the second quote in Don\''t---
+	id, name, instagram)
+	VALUES (0, 'Anonyme', NULL); ---If Need to write quote, use E'I Don\'t now'---
 
---------------------------
+--------------------------------
+-----INSERT make-up artists-----
+--------------------------------
+
+INSERT INTO ambre_fouvez.makeup_artists(
+	id, name, instagram)
+	VALUES (0, 'No make-up artist', '@ambre.fouvez');
+
+------------------------
 -----INSERT photos-----
---------------------------
+------------------------
 
 INSERT INTO ambre_fouvez.photos(
-	id, name, picture, photographer, sharer)
-	VALUES (0, 'Default picture', '/src/photos/defaultPicture.png', 0, -1);
+	id, name, picture, makeup_artist, photographer, sharer, date)
+	VALUES (0, 'Default picture', '/src/photos/defaultPicture.png', 0, 0, -1, NULL);
 
 ---------------------
 -----INSERT tags-----

@@ -1,13 +1,13 @@
 /**
  * @author Fouvez Dorian.
  */
-package domaine.photographer;
+package domaine.makeup_artist;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import api.utils.PatternChecker;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PhotographerImpl implements PhotographerDTO {
+public class MakeupArtistImpl implements MakeupArtistDTO {
 
   private int id;
   private String name;
@@ -48,7 +48,7 @@ public class PhotographerImpl implements PhotographerDTO {
 
   @Override
   public String toString() {
-    return "PhotographerImpl [id=" + id + ", name=" + name + ", instagram=" + instagram + "]";
+    return "MakeupArtistImpl [id=" + id + ", name=" + name + ", instagram=" + instagram + "]";
   }
 
   @Override
@@ -70,7 +70,7 @@ public class PhotographerImpl implements PhotographerDTO {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    PhotographerImpl other = (PhotographerImpl) obj;
+    MakeupArtistImpl other = (MakeupArtistImpl) obj;
     if (id != other.id) {
       return false;
     }
