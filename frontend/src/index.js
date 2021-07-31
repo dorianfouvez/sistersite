@@ -10,12 +10,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 /* load bootstrap module (JS) */
 import 'bootstrap';
 
-let user_me = { itself: null, lang: null };
+let user_me = { itself: null, lang: null, choice_of_book: null };
 
 getLangFromStorage();
+LanguagePage();
+
 checkTokenOnLoad();
 
-LanguagePage();
 Router();
 
 setFooter();

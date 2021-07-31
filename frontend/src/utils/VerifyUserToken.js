@@ -4,9 +4,9 @@ import { SetEnglishNavigationBars, SetFrenchNavigationBars } from "./render.js";
 
 let isLocalToken = null;
 
-const VerifyUserToken = (id, isLocalItem) => {
+const VerifyUserToken = async (id, isLocalItem) => {
     isLocalToken = isLocalItem;
-    fetch(API_URL + "users/me", {
+    await fetch(API_URL + "users/me", {
         method: "GET", 
         headers: {
           "Content-Type": "application/json",

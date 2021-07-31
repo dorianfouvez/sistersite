@@ -23,6 +23,8 @@ import domaine.nationality.NationalityDTO;
 import domaine.nationality.NationalityImpl;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoImpl;
+import domaine.photographer.PhotographerDTO;
+import domaine.photographer.PhotographerImpl;
 import domaine.profession.ProfessionDTO;
 import domaine.profession.ProfessionImpl;
 import domaine.role.RoleDTO;
@@ -104,6 +106,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public PhotoDTO getPhotoDTO() {
     return new PhotoImpl();
+  }
+
+  @Override
+  public PhotographerDTO getPhotographerDTO() {
+    return new PhotographerImpl();
   }
 
   @Override

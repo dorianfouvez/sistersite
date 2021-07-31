@@ -1,3 +1,4 @@
+import { user_me } from "../../index.js";
 import { getUserSessionData } from "../../utils/session.js";
 import { RedirectUrl } from "../Router.js";
 
@@ -14,9 +15,9 @@ const SidebarPage = () => {
         </div>
         <a id="book" href="" data-toggle="collapse" data-target="#book_c" class><i class='fas fa-book'></i> Book</a>
         <div id="book_c" class="collapse ml-2">
-            <a id="/book" href="/book">Portraits</a>
-            <a id="/book" href="/book">Artistic</a>
-            <a id="/book" href="/book">Couple</a>
+            <a id="/bookP" href="/book">Portraits</a>
+            <a id="/bookA" href="/book">Artistic</a>
+            <a id="/bookC" href="/book">Couple</a>
         </div>
         <a id="/about" href="/about"><i class='fas fa-address-book'></i> About Me</a>
         <a id="/contactme" href="/contactme"><i class='fas fa-envelope'></i> Contact</a>
@@ -57,7 +58,9 @@ const SidebarPage = () => {
     // Lisen all the navigation link.
     document.getElementById("/").addEventListener("click", onNavigate);
     document.getElementById("/about").addEventListener("click", onNavigate);
-    document.getElementById("/book").addEventListener("click", onNavigate);
+    document.getElementById("/bookP").addEventListener("click", onChooseBook);
+    document.getElementById("/bookA").addEventListener("click", onChooseBook);
+    document.getElementById("/bookC").addEventListener("click", onChooseBook);
     document.getElementById("/contactme").addEventListener("click", onNavigate);
     document.getElementById("/ArtisticCV").addEventListener("click", onNavigate);
     document.getElementById("/demotape").addEventListener("click", onNavigate);
@@ -103,6 +106,22 @@ const onNavigate = (e) => {
     e.preventDefault();
     closeSidebar();
     RedirectUrl(document.activeElement.id);
+};
+
+const onChooseBook = (e) => {
+    e.preventDefault();
+
+    // Set choice_of_book.
+    if (document.activeElement.id === "/bookP") {
+        user_me.choice_of_book = "Portrait";
+    } else if(document.activeElement.id === "/bookA"){
+        user_me.choice_of_book = "Artistique";
+    } else if(document.activeElement.id === "/bookC") {
+        user_me.choice_of_book = "Couple";
+    }
+
+    closeSidebar();
+    RedirectUrl(document.activeElement.id.substr(0, document.activeElement.id.length - 1));
 };
 
 export default SidebarPage;

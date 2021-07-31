@@ -31,7 +31,7 @@ const removeSessionData = () => {
   user_me.itself = null;
 };
 
-const checkTokenOnLoad = () => {
+const checkTokenOnLoad = async () => {
   let retrievedToken = localStorage.getItem(STORE_NAME);
   let isLocalToken = true;
   if(!retrievedToken){
@@ -40,7 +40,7 @@ const checkTokenOnLoad = () => {
   }
   if(!retrievedToken) return;
 
-  VerifyUserToken(retrievedToken, isLocalToken);
+  await VerifyUserToken(retrievedToken, isLocalToken);
 };
 
 const getLangSessionData = () => {

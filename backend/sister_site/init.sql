@@ -37,7 +37,8 @@ CREATE TABLE ambre_fouvez.photos (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NULL UNIQUE CHECK(name <> ''),
     picture VARCHAR NOT NULL CHECK(picture <> ''),
-    photographer INTEGER REFERENCES ambre_fouvez.photographers(id) NOT NULL
+    photographer INTEGER REFERENCES ambre_fouvez.photographers(id) NOT NULL,
+	sharer INTEGER NOT NULL CHECK(sharer >= -1) --- Mettre une vérification si le user existe ou est -1 ---
 );
 
 CREATE TABLE ambre_fouvez.tags (
@@ -70,19 +71,19 @@ CREATE TABLE ambre_fouvez.users (
     hair_color INTEGER REFERENCES ambre_fouvez.colours(id) NULL,
     hair_size INTEGER REFERENCES ambre_fouvez.sizes(id) NULL,
     eye INTEGER REFERENCES ambre_fouvez.colours(id) NULL,
-    height INTEGER NULL CHECK(height > 0 AND height < 300), --cm--
+    height FLOAT NULL CHECK(height > 0 AND height < 300), --cm--
     weight INTEGER NULL CHECK(weight > 0 AND weight < 700), --kg--
     first_nationality INTEGER REFERENCES ambre_fouvez.nationalities(id) NULL,
     second_nationality INTEGER REFERENCES ambre_fouvez.nationalities(id) NULL,
     shoe_size INTEGER NULL CHECK(shoe_size > 0 AND shoe_size < 150),
     jacket_size INTEGER NULL CHECK(jacket_size > 0 AND jacket_size < 150),
     pant_size INTEGER NULL CHECK(pant_size > 0 AND pant_size < 150),
-    chest INTEGER NULL CHECK(chest > 0 AND chest < 150), --cm--
+    chest FLOAT NULL CHECK(chest > 0 AND chest < 150), --cm--
     bra_cup CHAR(1) NULL CHECK(bra_cup <> ''),
-    waist_size INTEGER NULL CHECK(waist_size > 0 AND waist_size < 150), --cm--
-    hip_size INTEGER NULL CHECK(hip_size > 0 AND hip_size < 150), --cm--
-    neck_size INTEGER NULL CHECK(neck_size > 0 AND neck_size < 150), --cm--
-    head_size INTEGER NULL CHECK(head_size > 0 AND head_size < 150) --cm--
+    waist_size FLOAT NULL CHECK(waist_size > 0 AND waist_size < 150), --cm--
+    hip_size FLOAT NULL CHECK(hip_size > 0 AND hip_size < 150), --cm--
+    neck_size FLOAT NULL CHECK(neck_size > 0 AND neck_size < 150), --cm--
+    head_size FLOAT NULL CHECK(head_size > 0 AND head_size < 150) --cm--
 );
 
 CREATE TABLE ambre_fouvez.professions (
@@ -259,15 +260,15 @@ INSERT INTO ambre_fouvez.addresses(
 
 INSERT INTO ambre_fouvez.photographers(
 	id, name)
-	VALUES (0, 'I Dont No');
+	VALUES (0, E'I Don\''t No'); ---Need to remove the second quote in Don\''t---
 
 --------------------------
 -----INSERT photos-----
 --------------------------
 
 INSERT INTO ambre_fouvez.photos(
-	id, name, picture, photographer)
-	VALUES (0, 'Default picture', '/src/photos/defaultPicture.png', 0);
+	id, name, picture, photographer, sharer)
+	VALUES (0, 'Default picture', '/src/photos/defaultPicture.png', 0, -1);
 
 ---------------------
 -----INSERT tags-----

@@ -12,6 +12,7 @@ public class PhotoImpl implements PhotoDTO {
   private String name;
   private String picture;
   private int photographer;
+  private int sharer;
 
   @Override
   public int getId() {
@@ -54,17 +55,28 @@ public class PhotoImpl implements PhotoDTO {
   }
 
   @Override
-  public void fullFillPhoto(int id, String name, String picture, int photographer) {
+  public int getSharer() {
+    return sharer;
+  }
+
+  @Override
+  public void setSharer(int sharer) {
+    this.sharer = sharer;
+  }
+
+  @Override
+  public void fullFillPhoto(int id, String name, String picture, int photographer, int sharer) {
     setId(id);
     setPicture(picture);
     setName(name);
     setPhotographer(photographer);
+    setSharer(sharer);
   }
 
   @Override
   public String toString() {
     return "PhotoImpl [id=" + id + ", name=" + name + ", picture=" + picture + ", photographer="
-        + photographer + "]";
+        + photographer + ", sharer=" + sharer + "]";
   }
 
   @Override

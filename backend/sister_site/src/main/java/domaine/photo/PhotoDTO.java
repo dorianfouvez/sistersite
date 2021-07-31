@@ -24,6 +24,10 @@ public interface PhotoDTO {
 
   void setPhotographer(int photographer);
 
-  void fullFillPhoto(int id, String name, String picture, int photographer);
+  int getSharer();
+
+  void setSharer(int sharer);
+
+  void fullFillPhoto(int id, String name, String picture, int photographer, int sharer);
 
 }

@@ -293,9 +293,18 @@
   width: 100%;
 }
 
-.pin_container {
-	column-width: 250px;
-  width: 100%
+@media only screen and (max-width: 450px) {
+  .pin_container {
+    column-width: 150px;
+    width: 100%
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .pin_container {
+    column-width: 250px;
+    width: 100%
+  }
 }
 
 div.pin_container img {
@@ -306,6 +315,50 @@ div.pin_container img {
 
 div.pin_container:hover img:not(:hover) {
 	opacity: 0.7;
+}
+
+
+
+/*************** Cards for Photo ***************/
+.card_photo {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 250px;
+  border-radius: 5px;
+  padding: 0;
+  margin: 1%;
+}
+
+.card_photo:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+}
+
+.card_photo img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+}
+
+.card_photo input {
+  width: 100%;
+}
+
+.card_photo select {
+  width: 100%;
+}
+
+.card_photo textarea {
+  width: 100%;
+  font-weight: bold;
+}
+
+.card_photo label {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+
+.card_photo .container {
+  padding: 2px 16px;
 }
 
 

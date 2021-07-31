@@ -13,6 +13,7 @@ import domaine.director.DirectorDTO;
 import domaine.distinction.DistinctionDTO;
 import domaine.nationality.NationalityDTO;
 import domaine.photo.PhotoDTO;
+import domaine.photographer.PhotographerDTO;
 import domaine.profession.ProfessionDTO;
 import domaine.role.RoleDTO;
 import domaine.short_film.ComplexShortFilmDTO;
@@ -49,6 +50,8 @@ public interface DomaineFactory {
   NationalityDTO getNationalityDTO();
 
   PhotoDTO getPhotoDTO();
+
+  PhotographerDTO getPhotographerDTO();
 
   ProfessionDTO getProfessionDTO();
 

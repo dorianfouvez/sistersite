@@ -1,25 +1,31 @@
 import { fixToBottomFooter } from "../../utils/render.js";
 import { API_URL, ALERT_BOX } from "../../utils/server.js";
-import { getTokenSessionData } from "../../utils/session.js";
+import { getTokenSessionData, getUserSessionData } from "../../utils/session.js";
+import { RedirectUrl } from "../Router.js";
 
 let page = document.querySelector("#page");
 
 const UserPage = () => {
-    fixToBottomFooter();
-    page.innerHTML = `<div class="text-center"><h4 class="mt-2 pt-5">My profile</h4></div>
-    <div class="loader mx-auto"></div>`;
-    let id = getTokenSessionData();
-    fetch(API_URL + "users/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: id,
-        },
-    }).then((response) => {
-        if (!response.ok) {
-          return response.text().then((err) => onError(err));
-        } else return response.json().then((data) => onUser(data));
-    });
+    const user = getUserSessionData();
+    if (!user) {
+        RedirectUrl("/");
+    } else {
+        fixToBottomFooter();
+        page.innerHTML = `<div class="text-center"><h4 class="mt-2 pt-5">My profile</h4></div>
+        <div class="loader mx-auto"></div>`;
+        let id = getTokenSessionData();
+        fetch(API_URL + "users/me", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: id,
+            },
+        }).then((response) => {
+            if (!response.ok) {
+            return response.text().then((err) => onError(err));
+            } else return response.json().then((data) => onUser(data));
+        });
+    }
 };
 
 const onUser = (data) => {
@@ -36,7 +42,8 @@ const onUser = (data) => {
     userPage += `<h4 class="mt-2 pt-5">My profile</h4>
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
-    <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>
+        <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>
+        <div class="float-right mr-2"><button id="addPhoto" class="btn btn-primary">Add a photo</button></div>
         <div class="row">
             <div class="col-sm-2 bg-danger">
                 <div class="card img-fluid remove_card_background">
@@ -201,11 +208,12 @@ const onUser = (data) => {
 
     page.innerHTML = userPage;
     document.getElementById("cv").addEventListener('click', onSeeCV);
+    document.getElementById("addPhoto").addEventListener('click', onAddPhoto);
 };
 
 const onSeeCV = (e) => {
     e.preventDefault();
-    let CVId = 1;
+    let CVId = 1; //TODO faire un fetch?
 
     let id = getTokenSessionData();
     fetch(API_URL + "curriculumVitea/" + CVId, {
@@ -219,7 +227,12 @@ const onSeeCV = (e) => {
             return response.text().then((err) => onError(err));
         } else return response.json().then((data) => console.log(data.cv));
     });
-}
+};
+
+const onAddPhoto = (e) => {
+    e.preventDefault();
+    RedirectUrl("/addPhoto");
+};
 
 const onError = (err) => {
     let messageBoard = document.querySelector("#messageBoard");

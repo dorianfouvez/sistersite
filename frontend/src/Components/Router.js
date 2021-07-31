@@ -1,10 +1,11 @@
 // Global Import.
 import { SetFrenchNavigationBars, SetEnglishNavigationBars, setBodyWhite } from "../utils/render.js";
-import { getLangSessionData, setLangSessionData } from "../utils/session.js";
+import { checkTokenOnLoad, getLangSessionData, setLangSessionData } from "../utils/session.js";
 import HomePage from "./HomePage.js";
 
 // Import for English routes.
 import AboutPage from "./en/AboutPage.js";
+import AddPhotoPage from "./en/AddPhotoPage.js";
 import BookPage from "./en/BookPage.js";
 import ContactPage from "./en/ContactPage.js";
 import CVPage from "./en/CVPage.js";
@@ -36,6 +37,7 @@ import { unfixToBottomFooter } from "../utils/render.js";
 const routesEn = {
   "/": HomePage,
   "/about": WorkInProgressPage,
+  "/addPhoto": AddPhotoPage,
   "/book": BookPage,
   "/contactme": WorkInProgressPage,
   "/ArtisticCV": CVPage,
@@ -48,6 +50,7 @@ const routesEn = {
 
 const routesFr = {
   "/": HomePage,
+  "/ajoutPhoto": TravauxEnCours,
   "/apropos": TravauxEnCours,
   "/bandedemo": TravauxEnCours,
   "/books": TravauxEnCours,
@@ -67,6 +70,7 @@ let componentToRender;
 const Router = () => {
   /* manage to route the right component when the page is loaded */
   window.addEventListener("load", (e) => {
+    //await checkTokenOnLoad();
     let lang = getLangSessionData();
     if(window.location.pathname === "/" && lang === "en") { 
       componentToRender = routesEn[window.location.pathname];

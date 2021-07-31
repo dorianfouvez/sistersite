@@ -138,27 +138,27 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
 
     try {
       PhotoDTO profilePicture = domaineFactory.getPhotoDTO();
-      profilePicture.fullFillPhoto(rs.getInt(15), rs.getString(39), rs.getString(40),
-          rs.getInt(41));
+      profilePicture.fullFillPhoto(rs.getInt(15), rs.getString(39), rs.getString(40), rs.getInt(41),
+          rs.getInt(42));
 
       AddressDTO address = domaineFactory.getAddressDTO();
-      address.fullFillAddress(rs.getInt(16), rs.getString(43), rs.getString(44), rs.getString(45),
-          rs.getString(46), rs.getString(47), rs.getString(48));
+      address.fullFillAddress(rs.getInt(16), rs.getString(44), rs.getString(45), rs.getString(46),
+          rs.getString(47), rs.getString(48), rs.getString(49));
 
       ColorDTO hairColor = domaineFactory.getColorDTO();
-      hairColor.fullFillColor(rs.getInt(22), rs.getString(50));
+      hairColor.fullFillColor(rs.getInt(22), rs.getString(51));
 
       SizeDTO hairSize = domaineFactory.getSizeDTO();
-      hairSize.fullFillSize(rs.getInt(23), rs.getString(52));
+      hairSize.fullFillSize(rs.getInt(23), rs.getString(53));
 
       ColorDTO eye = domaineFactory.getColorDTO();
-      eye.fullFillColor(rs.getInt(24), rs.getString(54));
+      eye.fullFillColor(rs.getInt(24), rs.getString(55));
 
       NationalityDTO firstNationality = domaineFactory.getNationalityDTO();
-      firstNationality.fullFillNationality(rs.getInt(27), rs.getString(56));
+      firstNationality.fullFillNationality(rs.getInt(27), rs.getString(57));
 
       NationalityDTO secondNationality = domaineFactory.getNationalityDTO();
-      secondNationality.fullFillNationality(rs.getInt(28), rs.getString(58));
+      secondNationality.fullFillNationality(rs.getInt(28), rs.getString(59));
 
       ComplexUserDTO user = domaineFactory.getComplexUserDTO();
       user.fullFillUser(rs.getInt(3), rs.getString(8), rs.getString(9), rs.getString(10),
@@ -170,11 +170,11 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
           rs.getInt(36), rs.getInt(37));
 
       ProfessionDTO profession = domaineFactory.getProfessionDTO();
-      profession.fullFillProfession(rs.getInt(4), rs.getString(60));
+      profession.fullFillProfession(rs.getInt(4), rs.getString(61));
 
       PhotoDTO backgroundPicture = domaineFactory.getPhotoDTO();
-      backgroundPicture.fullFillPhoto(rs.getInt(6), rs.getString(62), rs.getString(63),
-          rs.getInt(64));
+      backgroundPicture.fullFillPhoto(rs.getInt(6), rs.getString(63), rs.getString(64),
+          rs.getInt(65), rs.getInt(66));
 
       cv.fullFillCV(rs.getInt(1), rs.getString(2), user, profession, rs.getString(5),
           backgroundPicture, new ArrayList<StrengthWithOrderDTO>(),

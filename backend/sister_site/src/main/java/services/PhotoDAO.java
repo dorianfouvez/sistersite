@@ -24,7 +24,8 @@ public interface PhotoDAO {
   }
 
   static String getAllPhotoAttributesWithName(String name) {
-    return " " + name + ".id, " + name + ".name, " + name + ".picture, " + name + ".photographer";
+    return " " + name + ".id, " + name + ".name, " + name + ".picture, " + name + ".photographer,"
+        + name + ".sharer";
   }
 
   static String getPhotoTableName() {
