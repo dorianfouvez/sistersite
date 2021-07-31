@@ -35,7 +35,7 @@ public class TagUCCImpl implements TagUCC {
   @Override
   public List<TagDTO> getAll() {
     dalservices.startTransaction();
-    List<TagDTO> tags = tagDAO.getAll();
+    List<TagDTO> tags = tagDAO.getAllSortedByLabel();
     dalservices.commitTransaction();
     return tags;
   }

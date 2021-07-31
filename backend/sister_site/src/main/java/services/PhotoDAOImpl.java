@@ -66,8 +66,8 @@ public class PhotoDAOImpl implements PhotoDAO {
 
   @Override
   public PhotoDTO add(PhotoDTO photo) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "INSERT INTO" + PhotoDAO.getPhotoTableName() + " VALUES(DEFAULT,?,?,?,?,?)");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("INSERT INTO"
+        + PhotoDAO.getPhotoTableNameWithoutAbbreviation() + " VALUES(DEFAULT,?,?,?,?,?,?)");
 
     try {
       setAllPsAttributNotNull(ps, photo);
@@ -77,6 +77,7 @@ public class PhotoDAOImpl implements PhotoDAO {
       ((DalServices) dalBackendServices).rollbackTransaction();
       throw new FatalException("Error add photo", e);
     }
+    // System.out.println(photo.getName());
     return findByName(photo.getName());
   }
 

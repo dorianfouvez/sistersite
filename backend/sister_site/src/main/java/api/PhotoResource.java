@@ -82,7 +82,6 @@ public class PhotoResource {
    * @return Response.ok if everything is going fine.
    */
   @POST
-  @Path("/")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @Authorize
   public Response uploadPhotos(@Context ContainerRequest request,
@@ -107,6 +106,11 @@ public class PhotoResource {
     List<Timestamp> dates = checkAndGetDates(request);
     System.out.println("Dates: " + dates); // TODO remove
 
+    if (makeupArtists.size() != photographers.size() || photographers.size() != sharers.size()
+        || sharers.size() != tags.size() || tags.size() != dates.size()) {
+      throw new PresentationException("Il manque des informations.", Status.BAD_REQUEST);
+    }
+
     // Save all photo include.
     Map<String, List<FormDataBodyPart>> fields = multiPart.getFields();
     List<String> paths = new ArrayList<>();
@@ -121,13 +125,12 @@ public class PhotoResource {
         String uploadedFileLocation = Config.getProperty("PhotosPath") + fileName;
         String newName = getNameOfImageFrom(formDataBodyPart);
         if (newName != null) {
-          System.out.println("NewName");
-          checkName(newName, i);
+          checkName(newName, i + 1);
           uploadedFileLocation = Config.getProperty("PhotosPath") + newName;
           fileName = newName;
         } else {
           // Never Come here.
-          checkName(fileName, i);
+          checkName(fileName, i + 1);
         }
         // System.out.println("URL : " + System.getProperty("user.dir") + uploadedFileLocation);
         System.out.println("FileName: " + fileName + ", New Name: "
@@ -245,8 +248,8 @@ public class PhotoResource {
     int numberDate = 1;
     for (String dateToConvert : request.getHeaderString("dates").split(",")) {
       Timestamp timestamp = null;
-      if (dateToConvert != null) {
-        checkTimestampPattern("Date N°" + numberDate, dateToConvert);
+      if (dateToConvert != null && !dateToConvert.equals("")) {
+        checkTimestampPattern("Date of the photo N°" + numberDate, dateToConvert);
         timestamp = Timestamp.valueOf(dateToConvert.replaceFirst("T", " "));
       }
 

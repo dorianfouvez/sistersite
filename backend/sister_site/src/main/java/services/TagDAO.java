@@ -10,7 +10,7 @@ public interface TagDAO {
 
   TagDTO findById(int id);
 
-  List<TagDTO> getAll();
+  List<TagDTO> getAllSortedByLabel();
 
 
 

@@ -45,8 +45,8 @@ public class TagPhotoDAOImpl implements TagPhotoDAO {
 
   @Override
   public TagPhotoDTO add(TagPhotoDTO tagPhoto) {
-    PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("INSERT INTO" + TagPhotoDAO.getTagPhotoTableName() + " VALUES(?,?)");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
+        "INSERT INTO" + TagPhotoDAO.getTagPhotoTableNameWithoutAbbreviation() + " VALUES(?,?)");
 
     try {
       ps = setAllPsAttributNotNull(ps, tagPhoto);

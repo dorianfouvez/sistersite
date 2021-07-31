@@ -36,7 +36,7 @@ public class AddPhotoInformationUCCImpl implements AddPhotoInformationUCC {
     dalservices.startTransaction();
     addPhotoInformation.setMakeupArtists(this.makeupArtistDAO.getAll());
     addPhotoInformation.setPhotographers(this.photographerDAO.getAll());
-    addPhotoInformation.setTags(tagDAO.getAll());
+    addPhotoInformation.setTags(tagDAO.getAllSortedByLabel());
     dalservices.commitTransaction();
 
     return addPhotoInformation;

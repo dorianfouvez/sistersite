@@ -43,10 +43,10 @@ public class TagDAOImpl implements TagDAO {
   }
 
   @Override
-  public List<TagDTO> getAll() {
+  public List<TagDTO> getAllSortedByLabel() {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + TagDAO.getAllTagAttributes() + " FROM"
-            + TagDAO.getTagTableName() + " ORDER BY " + TagDAO.getTagAbbreviation() + ".id");
+            + TagDAO.getTagTableName() + " ORDER BY " + TagDAO.getTagAbbreviation() + ".label");
     List<TagDTO> tags = new ArrayList<TagDTO>();
     try {
       try (ResultSet rs = ps.executeQuery()) {

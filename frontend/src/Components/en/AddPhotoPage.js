@@ -120,15 +120,19 @@ const onSubmit = (e) => {
     if(savedFiles && savedFiles.length != 0) {
 
         let photoNames = [];
+        let makeupArtists = [];
         let photographers = [];
         let sharers = [];
         let tags = [];
+        let dates = [];
         console.log(savedFiles);
         for (let i = 0; i < savedFiles.length; i++) {
             let photoName = document.getElementById("name" + i).value;
+            let photoMakeupArtist = document.getElementById("makeupArtist" + i).value;
             let photoPhotographer = document.getElementById("photographer" + i).value;
             let photoSharer = document.getElementById("sharer" + i).value;
             let photoTag = document.getElementById("tag" + i).value;
+            let photoDate = document.getElementById("date" + i).value;
             let extention = savedFiles[i].name.substr(savedFiles[i].name.lastIndexOf("."), savedFiles[i].name.length);
             //console.log(photoName + extention);
             savedFiles[i].photoName = photoName + extention;
@@ -139,9 +143,11 @@ const onSubmit = (e) => {
             
             
             photoNames.push(photoName + extention);
+            makeupArtists.push(photoMakeupArtist);
             photographers.push(photoPhotographer);
             sharers.push(photoSharer);
             tags.push(photoTag);
+            dates.push(photoDate);
         }
 
         // Creation of the formData with all the photos.
@@ -151,15 +157,16 @@ const onSubmit = (e) => {
         }
 
         let id = getTokenSessionData();
-        //TODO faire un insert  des photos (avec nom), puis un put pour ajouter les photographers (id) et finir avec les tags.
         fetch(API_URL + "photos/", {
             method: "POST",
             body: formData,
             headers: {
                 "Authorization": id,
+                "makeupArtists": makeupArtists,
                 "photographers": photographers,
                 "sharers": sharers,
                 "tags": tags,
+                "dates": dates,
             },
         }).then((response) => {
             if (!response.ok) {

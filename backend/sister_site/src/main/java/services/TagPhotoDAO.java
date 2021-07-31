@@ -25,4 +25,8 @@ public interface TagPhotoDAO {
     return " ambre_fouvez.tags_photo " + getTagPhotoAbbreviation();
   }
 
+  static String getTagPhotoTableNameWithoutAbbreviation() {
+    return " ambre_fouvez.tags_photo";
+  }
+
 }
