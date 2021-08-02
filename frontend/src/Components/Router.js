@@ -6,6 +6,7 @@ import HomePage from "./HomePage.js";
 // Import for English routes.
 import AboutPage from "./en/AboutPage.js";
 import AddPhotoPage from "./en/AddPhotoPage.js";
+import AddPhotographerPage from "./en/AddPhotographer.js";
 import BookPage from "./en/BookPage.js";
 import ContactPage from "./en/ContactPage.js";
 import CVPage from "./en/CVPage.js";
@@ -38,6 +39,7 @@ const routesEn = {
   "/": HomePage,
   "/about": WorkInProgressPage,
   "/addPhoto": AddPhotoPage,
+  "/addPhotographer": AddPhotographerPage,
   "/book": BookPage,
   "/contactme": WorkInProgressPage,
   "/ArtisticCV": CVPage,
@@ -51,6 +53,7 @@ const routesEn = {
 const routesFr = {
   "/": HomePage,
   "/ajoutPhoto": TravauxEnCours,
+  "/ajoutPhotographe": TravauxEnCours,
   "/apropos": TravauxEnCours,
   "/bandedemo": TravauxEnCours,
   "/books": TravauxEnCours,

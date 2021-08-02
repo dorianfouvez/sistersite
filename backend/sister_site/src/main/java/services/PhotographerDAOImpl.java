@@ -27,7 +27,8 @@ public class PhotographerDAOImpl implements PhotographerDAO {
   public PhotographerDTO findById(int id) {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + PhotographerDAO.getAllPhotographerAttributes() + " FROM"
-            + PhotographerDAO.getPhotographerTableName() + " WHERE id = ?");
+            + PhotographerDAO.getPhotographerTableName() + " WHERE "
+            + PhotographerDAO.getPhotographerAbbreviation() + ".id = ?");
     PhotographerDTO photographer = null;
     try {
       ps.setInt(1, id);
@@ -39,6 +40,27 @@ public class PhotographerDAOImpl implements PhotographerDAO {
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
       throw new FatalException("Error findById", e);
+    }
+    return photographer;
+  }
+
+  @Override
+  public PhotographerDTO findByName(String name) {
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + PhotographerDAO.getAllPhotographerAttributes() + " FROM"
+            + PhotographerDAO.getPhotographerTableName() + " WHERE "
+            + PhotographerDAO.getPhotographerAbbreviation() + ".name = ?");
+    PhotographerDTO photographer = null;
+    try {
+      ps.setString(1, name);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          photographer = createFullFillPhotographer(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error findByName", e);
     }
     return photographer;
   }
@@ -62,6 +84,22 @@ public class PhotographerDAOImpl implements PhotographerDAO {
       throw new FatalException("Error getAll photographers", e);
     }
     return photographers;
+  }
+
+  @Override
+  public PhotographerDTO add(PhotographerDTO photographer) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("INSERT INTO"
+        + PhotographerDAO.getPhotographerTableNameWithoutAbbreviation() + " VALUES(DEFAULT,?,?)");
+
+    try {
+      ps = setAllPsAttributWithoutId(ps, photographer);
+
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error add photographer", e);
+    }
+    return findByName(photographer.getName());
   }
 
 
@@ -88,6 +126,14 @@ public class PhotographerDAOImpl implements PhotographerDAO {
     }
 
     return photographer;
+  }
+
+  private PreparedStatement setAllPsAttributWithoutId(PreparedStatement ps,
+      PhotographerDTO photographer) throws SQLException {
+    ps.setString(1, photographer.getName());
+    ps.setString(2, photographer.getInstagram()); // TODO Need to Check if when it's null it's working.
+
+    return ps;
   }
 
 }

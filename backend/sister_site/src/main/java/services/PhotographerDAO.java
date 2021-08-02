@@ -10,7 +10,11 @@ public interface PhotographerDAO {
 
   PhotographerDTO findById(int id);
 
+  PhotographerDTO findByName(String name);
+
   List<PhotographerDTO> getAll();
+
+  PhotographerDTO add(PhotographerDTO photographer);
 
 
 
@@ -27,6 +31,10 @@ public interface PhotographerDAO {
 
   static String getPhotographerTableName() {
     return " ambre_fouvez.photographers " + getPhotographerAbbreviation();
+  }
+
+  static String getPhotographerTableNameWithoutAbbreviation() {
+    return " ambre_fouvez.photographers";
   }
 
 }

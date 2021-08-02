@@ -44,7 +44,9 @@ const SidebarPage = () => {
         sidebarPage += `<a id="/login" class="login_icon" href="/login" data-uri="/login"><img src="assets/Images/stage_theater.png" alt="stage_theater"></a>`;
     }else {
         sidebarPage += `<a id="/myprofile" class="nav-item nav-link" href="/myprofile" data-uri="/myprofile">${user.userName}</a>
-        <a id="/logout" class="nav-item nav-link" href="/logout" data-uri="/logout"><i class='fas fa-sign-out-alt'></i> Logout</a>`;
+        <a id="/logout" class="nav-item nav-link" href="/logout" data-uri="/logout"><i class='fas fa-sign-out-alt'></i> Logout</a>
+        <a id="/addPhoto" class="nav-item nav-link" href="/addPhoto" data-uri="/addPhoto">Add a photo</a>
+        <a id="/addPhotographer" class="nav-item nav-link" href="/addPhotographer" data-uri="/addPhotographer">Add a photographer</a>`;
     }
     if (user && user.isBoss) {
         sidebarPage += `<a id="/Boss" class="nav-item nav-link" href="/Boss" data-uri="/myprofile">Boss</a>
@@ -76,6 +78,8 @@ const SidebarPage = () => {
     document.getElementById("/ArtisticCV").addEventListener("click", onNavigate);
     document.getElementById("/demotape").addEventListener("click", onNavigate);
     if (user && user.isBoss) {
+        document.getElementById("/addPhoto").addEventListener("click", onNavigate);
+        document.getElementById("/addPhotographer").addEventListener("click", onNavigate);
         document.getElementById("/logout").addEventListener("click", onNavigate);
         document.getElementById("/myprofile").addEventListener("click", onNavigate);
     }else document.getElementById("/login").addEventListener("click", onNavigate);

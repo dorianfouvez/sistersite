@@ -1,4 +1,4 @@
-import { ALERT_BOX } from "./server.js";
+import { ALERT_BOX, SUCCESS_BOX } from "./server.js";
 
 import NavbarEn from "../Components/en/Navbar.js";
 import SidebarEn from "../Components/en/Sidebar.js";
@@ -93,12 +93,19 @@ const onError = (err) => {
   if(loadingCircle){
     loadingCircle.innerHTML = "";
   }
-  document.querySelector('.loader').remove();
+  if (document.querySelector('.loader')) {
+    document.querySelector('.loader').remove();
+  }
 
   let messageBoard = document.querySelector("#messageBoard");
   if(err.message) ALERT_BOX(messageBoard, err.message);
   else ALERT_BOX(messageBoard, err);
 };
 
+const onSuccess = (msg, messageBoard) => {
+  if(msg.message) SUCCESS_BOX(messageBoard, msg.message);
+  else SUCCESS_BOX(messageBoard, msg);
+}
+
 // named export
-export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars, setBodyWhite, onError };
+export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars, setBodyWhite, onError, onSuccess };

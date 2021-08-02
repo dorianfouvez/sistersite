@@ -11,4 +11,8 @@ public interface PhotographerUCC {
 
   List<PhotographerDTO> getAll();
 
+  PhotographerDTO add(PhotographerDTO photographer);
+
+  boolean nameAlreadyExist(String name);
+
 }

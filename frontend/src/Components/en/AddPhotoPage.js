@@ -5,10 +5,10 @@ import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
 
 const AddPhotoPage = () => {
-    /*const user = getUserSessionData();
+    const user = getUserSessionData();
     if (!user || !user.isBoss) {
         RedirectUrl("/");
-    } else {*/
+    } else {
         fixToBottomFooter();
         let addPhotoPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Add Photo(s)</center></h1></div>
         <form id="addPhotoForm" enctype="multipart/form-data">
@@ -22,7 +22,7 @@ const AddPhotoPage = () => {
         page.innerHTML = addPhotoPage;
         document.getElementById("addPhotoForm").addEventListener("submit", onSubmit);
         document.getElementById("files").addEventListener("change", onUpload);
-    //}
+    }
 };
 
 const onUpload = (e) => {

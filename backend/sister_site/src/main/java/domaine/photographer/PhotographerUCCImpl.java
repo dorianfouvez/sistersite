@@ -23,7 +23,7 @@ public class PhotographerUCCImpl implements PhotographerUCC {
   @Override
   public PhotographerDTO findById(int id) {
     dalservices.startTransaction();
-    PhotographerDTO photographerDTO = photographerDAO.findById(id);
+    PhotographerDTO photographerDTO = this.photographerDAO.findById(id);
     if (photographerDTO == null) {
       dalservices.rollbackTransaction();
       throw new BusinessException("Photographer doesn't exist", Status.BAD_REQUEST);
@@ -35,9 +35,28 @@ public class PhotographerUCCImpl implements PhotographerUCC {
   @Override
   public List<PhotographerDTO> getAll() {
     dalservices.startTransaction();
-    List<PhotographerDTO> photographers = photographerDAO.getAll();
+    List<PhotographerDTO> photographers = this.photographerDAO.getAll();
     dalservices.commitTransaction();
     return photographers;
+  }
+
+  @Override
+  public PhotographerDTO add(PhotographerDTO photographer) {
+    dalservices.startTransaction();
+    PhotographerDTO photographerDTO = this.photographerDAO.add(photographer);
+    dalservices.commitTransaction();
+    return photographerDTO;
+  }
+
+  @Override
+  public boolean nameAlreadyExist(String name) {
+    dalservices.startTransaction();
+    PhotographerDTO photographerDTO = this.photographerDAO.findByName(name);
+    dalservices.commitTransaction();
+    if (photographerDTO == null) {
+      return false;
+    }
+    return true;
   }
 
 }
