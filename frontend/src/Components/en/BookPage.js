@@ -8,7 +8,7 @@ const BookPage = () => {
         RedirectUrl("/");
     }else{
         let bookPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Book</center></h1></div>
-        <span id="loading"></span>`;
+        <div class="loader mx-auto"></div>`;
 
         let page = document.querySelector("#page");
         page.innerHTML = bookPage;

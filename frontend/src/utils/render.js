@@ -93,6 +93,7 @@ const onError = (err) => {
   if(loadingCircle){
     loadingCircle.innerHTML = "";
   }
+  document.querySelector('.loader').remove();
 
   let messageBoard = document.querySelector("#messageBoard");
   if(err.message) ALERT_BOX(messageBoard, err.message);
