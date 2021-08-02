@@ -5,7 +5,6 @@ package api;
 
 import java.util.List;
 import org.glassfish.jersey.server.ContainerRequest;
-import com.fasterxml.jackson.databind.JsonNode;
 import api.filters.Authorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
@@ -61,23 +60,6 @@ public class PhotographerResource {
   public Response getAll(@Context ContainerRequest request) {
     List<PhotographerDTO> photographers = this.photographerUCC.getAll();
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photographers", photographers);
-  }
-
-
-
-  // ******************** Private's Methods ********************
-
-  private void checkPhotographerCredentials(JsonNode json) {
-    if ((!json.hasNonNull("username") || json.get("username").asText().equals(""))
-        && (!json.hasNonNull("password") || json.get("password").asText().equals(""))) {
-      throw new PresentationException("Username and password needed.", Status.BAD_REQUEST);
-    }
-    if (!json.hasNonNull("username") || json.get("username").asText().equals("")) {
-      throw new PresentationException("Username needed.", Status.BAD_REQUEST);
-    }
-    if (!json.hasNonNull("password") || json.get("password").asText().equals("")) {
-      throw new PresentationException("Password needed.", Status.BAD_REQUEST);
-    }
   }
 
 }
