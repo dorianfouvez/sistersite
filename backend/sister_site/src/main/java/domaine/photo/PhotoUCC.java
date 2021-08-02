@@ -14,4 +14,6 @@ public interface PhotoUCC {
 
   List<PhotoDTO> addPhotos(List<PhotoDTO> photos, List<TagPhotoDTO> tagsPhotos);
 
+  List<PhotoDTO> getBook(int tagId);
+
 }

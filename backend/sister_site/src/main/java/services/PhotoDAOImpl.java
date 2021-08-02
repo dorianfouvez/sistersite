@@ -6,6 +6,8 @@ package services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import api.utils.FatalException;
 import domaine.DomaineFactory;
 import domaine.photo.PhotoDTO;
@@ -95,6 +97,29 @@ public class PhotoDAOImpl implements PhotoDAO {
       throw new FatalException("Error delete photo", e);
     }
     return findById(id);
+  }
+
+  @Override
+  public List<PhotoDTO> getBook(int tagId) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
+        "SELECT" + PhotoDAO.getAllPhotoAttributes() + " FROM" + PhotoDAO.getPhotoTableName() + ","
+            + TagPhotoDAO.getTagPhotoTableName() + " WHERE " + TagPhotoDAO.getTagPhotoAbbreviation()
+            + ".photo_id = " + PhotoDAO.getPhotoAbbreviation() + ".id AND "
+            + TagPhotoDAO.getTagPhotoAbbreviation() + ".tag_id = ?");
+    List<PhotoDTO> photos = new ArrayList<PhotoDTO>();
+    try {
+      ps.setInt(1, tagId);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          PhotoDTO photo = createFullFillPhoto(rs);
+          photos.add(photo);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error getBook", e);
+    }
+    return photos;
   }
 
 

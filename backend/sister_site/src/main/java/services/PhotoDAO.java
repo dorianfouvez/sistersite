@@ -3,6 +3,7 @@
  */
 package services;
 
+import java.util.List;
 import domaine.photo.PhotoDTO;
 
 public interface PhotoDAO {
@@ -15,12 +16,14 @@ public interface PhotoDAO {
 
   PhotoDTO delete(int id);
 
+  List<PhotoDTO> getBook(int tagId);
+
 
 
   // ******************** Static's Methods ********************
 
   static String getAllPhotoAttributes() {
-    return getAllPhotoAttributesWithName("p");
+    return getAllPhotoAttributesWithName(getPhotoAbbreviation());
   }
 
   static String getAllPhotoAttributesWithName(String name) {
@@ -28,8 +31,12 @@ public interface PhotoDAO {
         + name + ".photographer," + name + ".sharer, " + name + ".date";
   }
 
+  static String getPhotoAbbreviation() {
+    return "p";
+  }
+
   static String getPhotoTableName() {
-    return getPhotoTableNameWithName("p");
+    return getPhotoTableNameWithName(getPhotoAbbreviation());
   }
 
   static String getPhotoTableNameWithName(String name) {

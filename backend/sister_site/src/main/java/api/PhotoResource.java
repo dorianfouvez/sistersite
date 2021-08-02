@@ -20,6 +20,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.server.ContainerRequest;
+import api.filters.AnonymousOrAuthorize;
 import api.filters.Authorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
@@ -43,6 +44,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -90,6 +92,10 @@ public class PhotoResource {
     List<Integer> makeupArtists = checkAndGetMakeupArtists(request);
     System.out.println("Make-up Artists: " + makeupArtists); // TODO remove
 
+    // TODO Check all the names.
+    List<String> names = checkAndGetNames(request);
+    System.out.println("Names: " + names); // TODO remove
+
     // Check all the photographers.
     List<Integer> photographers = checkAndGetPhotographers(request);
     System.out.println("Photographers: " + photographers); // TODO remove
@@ -106,13 +112,10 @@ public class PhotoResource {
     List<Timestamp> dates = checkAndGetDates(request);
     System.out.println("Dates: " + dates); // TODO remove
 
-    if (makeupArtists.size() != photographers.size() || photographers.size() != sharers.size()
-        || sharers.size() != tags.size() || tags.size() != dates.size()) {
-      throw new PresentationException("Il manque des informations.", Status.BAD_REQUEST);
-    }
-
     // Save all photo include.
     Map<String, List<FormDataBodyPart>> fields = multiPart.getFields();
+    checkIfAllInformationsIsGived(fields, makeupArtists, names, photographers, sharers, tags,
+        dates);
     List<String> paths = new ArrayList<>();
     List<PhotoDTO> photos = new ArrayList<>();
     List<TagPhotoDTO> tagsPhotos = new ArrayList<>();
@@ -120,21 +123,10 @@ public class PhotoResource {
     for (String keyField : fields.keySet()) {
       List<FormDataBodyPart> values = fields.get(keyField);
       for (FormDataBodyPart formDataBodyPart : values) {
-        String fileName = getFilenameOfImageFrom(formDataBodyPart);
-        // System.out.println("Name : " + fileName);
+        String fileName = names.get(i);
         String uploadedFileLocation = Config.getProperty("PhotosPath") + fileName;
-        String newName = getNameOfImageFrom(formDataBodyPart);
-        if (newName != null) {
-          checkName(newName, i + 1);
-          uploadedFileLocation = Config.getProperty("PhotosPath") + newName;
-          fileName = newName;
-        } else {
-          // Never Come here.
-          checkName(fileName, i + 1);
-        }
-        // System.out.println("URL : " + System.getProperty("user.dir") + uploadedFileLocation);
-        System.out.println("FileName: " + fileName + ", New Name: "
-            + getNameOfImageFrom(formDataBodyPart) + "Make-up Artist: " + makeupArtists.get(i)
+        // System.out.println("Name : " + fileName + "\nURL : " + System.getProperty("user.dir") + uploadedFileLocation);
+        System.out.println("FileName: " + fileName + ", Make-up Artist: " + makeupArtists.get(i)
             + ", Photographer: " + photographers.get(i) + ", Sharer: " + sharers.get(i) + ", Tag: "
             + tags.get(i) + ", Date: " + dates.get(i)); // TODO remove
 
@@ -163,6 +155,20 @@ public class PhotoResource {
     AddPhotoInformationDTO addPhotoInformation = this.addPhotoInformationUCC.get();
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("addPhotoInformation",
         addPhotoInformation);
+  }
+
+  @GET
+  @Path("/book/{id}")
+  @AnonymousOrAuthorize
+  public Response getBook(@PathParam("id") int id) {
+    if (id < 1) {
+      throw new PresentationException("This book doesn't exist (Book id cannot be under 1)",
+          Status.BAD_REQUEST);
+    }
+
+    List<PhotoDTO> photos = this.photoUCC.getBook(id);
+    transformAllURLOfThePhotosIntoBase64Image(photos);
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("book", photos);
   }
 
 
@@ -246,9 +252,11 @@ public class PhotoResource {
     List<Timestamp> dates = new ArrayList<Timestamp>();
 
     int numberDate = 1;
+    System.out.println(request.getHeaderString("dates"));
     for (String dateToConvert : request.getHeaderString("dates").split(",")) {
       Timestamp timestamp = null;
-      if (dateToConvert != null && !dateToConvert.equals("")) {
+      System.out.println("Passage");
+      if (dateToConvert != null && !dateToConvert.equals("") && !dateToConvert.equals("null")) {
         checkTimestampPattern("Date of the photo N°" + numberDate, dateToConvert);
         timestamp = Timestamp.valueOf(dateToConvert.replaceFirst("T", " "));
       }
@@ -258,6 +266,23 @@ public class PhotoResource {
     }
 
     return dates;
+  }
+
+  private List<String> checkAndGetNames(ContainerRequest request) {
+    List<String> names = new ArrayList<>();
+    int numberName = 1;
+    for (String name : request.getHeaderString("names").split(",")) {
+      checkName(name, numberName);
+
+      if (names.contains(name)) {
+        throw new PresentationException("You give for the second time the Name \"" + name
+            + "\" (for the photo N°" + numberName + ").", Status.BAD_REQUEST);
+      }
+
+      names.add(name);
+      numberName++;
+    }
+    return names;
   }
 
   private List<Integer> checkAndGetMakeupArtists(ContainerRequest request) {
@@ -364,6 +389,34 @@ public class PhotoResource {
           Status.BAD_REQUEST);
     }
     return this.tagUCC.findById(tagId);
+  }
+
+  private void checkIfAllInformationsIsGived(Map<String, List<FormDataBodyPart>> fields,
+      List<Integer> makeupArtists, List<String> names, List<Integer> photographers,
+      List<Integer> sharers, List<Integer> tags, List<Timestamp> dates) {
+    if (fields.size() != makeupArtists.size()) {
+      throw new PresentationException("Some make-up artist(s) are missing.", Status.BAD_REQUEST);
+    }
+
+    if (fields.size() != names.size()) {
+      throw new PresentationException("Some name(s) are missing.", Status.BAD_REQUEST);
+    }
+
+    if (fields.size() != photographers.size()) {
+      throw new PresentationException("Some photographer(s) are missing.", Status.BAD_REQUEST);
+    }
+
+    if (fields.size() != sharers.size()) {
+      throw new PresentationException("Some sharer(s) are missing.", Status.BAD_REQUEST);
+    }
+
+    if (fields.size() != tags.size()) {
+      throw new PresentationException("Some tag(s) are missing.", Status.BAD_REQUEST);
+    }
+
+    if (fields.size() != dates.size()) {
+      throw new PresentationException("Some date(s) are missing.", Status.BAD_REQUEST);
+    }
   }
 
   private void checkName(String name, int photoNumber) {

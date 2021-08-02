@@ -1,5 +1,5 @@
 import { user_me } from "../..";
-import { fixToBottomFooter, onError } from "../../utils/render";
+import { fixToBottomFooter, onError, unfixToBottomFooter } from "../../utils/render";
 import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
@@ -53,7 +53,7 @@ const onShowImage = (e, makeupArtists, photographers, tags) => {
     for(let i = 0; i < files.length; i++){
         let reader = new FileReader();
         reader.onloadend = function() {//document.getElementById('savedFiles').savedFiles.splice(${hello.savedFiles.length}, 1);
-            let fileName = files[i].name.substr(0, files[i].name.length - 4);
+            let fileName = files[i].name.substr(0, files[i].name.lastIndexOf("."));
             let photoToShow = `<div id="card${hello.savedFiles.length}" class="card_photo">
                 <img id="imgShowed${hello.savedFiles.length}" src="` + reader.result + `" alt="` + fileName + `" />
                 <a id="remove${hello.savedFiles.length}" onClick='
@@ -106,6 +106,8 @@ const onShowImage = (e, makeupArtists, photographers, tags) => {
             </div>`;
 
             document.getElementById('showImg').innerHTML += photoToShow;
+            unfixToBottomFooter();
+            files[i].id = hello.savedFiles.length;
 
             hello.savedFiles.push(files[i]);
         }
@@ -121,18 +123,20 @@ const onSubmit = (e) => {
 
         let photoNames = [];
         let makeupArtists = [];
+        let names = [];
         let photographers = [];
         let sharers = [];
         let tags = [];
         let dates = [];
         console.log(savedFiles);
         for (let i = 0; i < savedFiles.length; i++) {
-            let photoName = document.getElementById("name" + i).value;
-            let photoMakeupArtist = document.getElementById("makeupArtist" + i).value;
-            let photoPhotographer = document.getElementById("photographer" + i).value;
-            let photoSharer = document.getElementById("sharer" + i).value;
-            let photoTag = document.getElementById("tag" + i).value;
-            let photoDate = document.getElementById("date" + i).value;
+            console.log("name" + savedFiles[i].id);
+            let photoName = document.getElementById("name" + savedFiles[i].id).value;
+            let photoMakeupArtist = document.getElementById("makeupArtist" + savedFiles[i].id).value;
+            let photoPhotographer = document.getElementById("photographer" + savedFiles[i].id).value;
+            let photoSharer = document.getElementById("sharer" + savedFiles[i].id).value;
+            let photoTag = document.getElementById("tag" + savedFiles[i].id).value;
+            let photoDate = document.getElementById("date" + savedFiles[i].id).value;
             let extention = savedFiles[i].name.substr(savedFiles[i].name.lastIndexOf("."), savedFiles[i].name.length);
             //console.log(photoName + extention);
             savedFiles[i].photoName = photoName + extention;
@@ -144,16 +148,20 @@ const onSubmit = (e) => {
             
             photoNames.push(photoName + extention);
             makeupArtists.push(photoMakeupArtist);
+            names.push(photoName + extention);
             photographers.push(photoPhotographer);
             sharers.push(photoSharer);
             tags.push(photoTag);
+            if(!photoDate) photoDate = "null";
             dates.push(photoDate);
+            console.log(dates);
         }
 
         // Creation of the formData with all the photos.
         const formData = new FormData();
         for(let i = 0; i < savedFiles.length; i++){
             formData.append(photoNames[i], savedFiles[i]);
+            console.log(photoNames[i], formData.get(photoNames[i]));
         }
 
         let id = getTokenSessionData();
@@ -163,15 +171,17 @@ const onSubmit = (e) => {
             headers: {
                 "Authorization": id,
                 "makeupArtists": makeupArtists,
+                "names": names,
                 "photographers": photographers,
                 "sharers": sharers,
                 "tags": tags,
                 "dates": dates,
+                "test": photoNames[0],
             },
         }).then((response) => {
             if (!response.ok) {
                 return response.text().then((err) => onError(err));
-            } else return response.json().then((data) => console.log(data));
+            } else return response.json().then((data) => RedirectUrl("/addPhoto"));
         });
     }
 };

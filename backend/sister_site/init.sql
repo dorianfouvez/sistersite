@@ -271,6 +271,10 @@ INSERT INTO ambre_fouvez.photographers(
 	id, name, instagram)
 	VALUES (0, 'Anonyme', NULL); ---If Need to write quote, use E'I Don\'t now'---
 
+INSERT INTO ambre_fouvez.photographers(
+	id, name, instagram)
+	VALUES (DEFAULT, 'Justine Hery', '@justinehphotography');
+
 --------------------------------
 -----INSERT make-up artists-----
 --------------------------------
@@ -279,6 +283,10 @@ INSERT INTO ambre_fouvez.makeup_artists(
 	id, name, instagram)
 	VALUES (0, 'No make-up artist', '@ambre.fouvez');
 
+INSERT INTO ambre_fouvez.makeup_artists(
+	id, name, instagram)
+	VALUES (DEFAULT, 'Claire Cothier', '@klairemua');
+
 ------------------------
 -----INSERT photos-----
 ------------------------
@@ -286,6 +294,22 @@ INSERT INTO ambre_fouvez.makeup_artists(
 INSERT INTO ambre_fouvez.photos(
 	id, name, picture, makeup_artist, photographer, sharer, date)
 	VALUES (0, 'Default picture', '/src/photos/defaultPicture.png', 0, 0, -1, NULL);
+
+INSERT INTO ambre_fouvez.photos(
+	id, name, picture, makeup_artist, photographer, sharer, date)
+	VALUES (DEFAULT, 'Photo de profil 1.jpg', '/src/main/resources/photos/Photo de profil 1.jpg', 0, 0, 1, NULL);
+
+INSERT INTO ambre_fouvez.photos(
+	id, name, picture, makeup_artist, photographer, sharer, date)
+	VALUES (DEFAULT, 'Photo de profil 2.jpg', '/src/main/resources/photos/Photo de profil 2.jpg', 0, 0, 1, NULL);
+
+INSERT INTO ambre_fouvez.photos(
+	id, name, picture, makeup_artist, photographer, sharer, date)
+	VALUES (DEFAULT, 'Pique-nique au parc de seaux.jpg', '/src/main/resources/photos/Pique-nique au parc de seaux.jpg', 0, 0, 1, '2021-04-17 15:00:00');
+
+INSERT INTO ambre_fouvez.photos(
+	id, name, picture, makeup_artist, photographer, sharer, date)
+	VALUES (DEFAULT, 'Mariage Chantraine.jpeg', '/src/main/resources/photos/Mariage Chantraine.jpeg', 0, 0, 1, NULL);
 
 ---------------------
 -----INSERT tags-----
@@ -307,9 +331,21 @@ INSERT INTO ambre_fouvez.tags(
 -----INSERT tags_photo-----
 ---------------------------
 
---INSERT INTO ambre_fouvez.tags_photo(
-	--photo_id, tag_id)
-	--VALUES (1, 1);
+INSERT INTO ambre_fouvez.tags_photo(
+	photo_id, tag_id)
+	VALUES (1, 1);
+
+INSERT INTO ambre_fouvez.tags_photo(
+	photo_id, tag_id)
+	VALUES (2, 1);
+
+INSERT INTO ambre_fouvez.tags_photo(
+	photo_id, tag_id)
+	VALUES (3, 1);
+
+INSERT INTO ambre_fouvez.tags_photo(
+	photo_id, tag_id)
+	VALUES (4, 3);
 
 ----------------------
 -----INSERT USERS-----

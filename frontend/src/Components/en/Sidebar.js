@@ -6,7 +6,7 @@ import { RedirectUrl } from "../Router.js";
 let sideBar = document.querySelector("#sideBar");
 
 const SidebarPage = () => {
-    fetch(API_URL + "tags/all", {
+    /*fetch(API_URL + "tags/all", {
         method: "GET",
         headers: {
         "Content-Type": "application/json",
@@ -15,7 +15,7 @@ const SidebarPage = () => {
         if (!response.ok) {
         return response.text().then((err) => onError(err));
         } else return response.json().then((data) => console.log(data));
-    });
+    });*/
     let sidebarPage = `<div id="mySidenav" class="sidenav">
         <a id="closeSidebar" class="closebtn">&times;</a>
         <a id="/" href="/"><i class='fas fa-home'></i> Home</a>
@@ -26,9 +26,9 @@ const SidebarPage = () => {
         </div>
         <a id="book" href="" data-toggle="collapse" data-target="#book_c" class><i class='fas fa-book'></i> Book</a>
         <div id="book_c" class="collapse ml-2">
-            <a id="/bookP" href="/book">Portraits</a>
-            <a id="/bookA" href="/book">Artistic</a>
-            <a id="/bookC" href="/book">Couple</a>
+            <a id="/bookP" name="1" href="/book">Portraits</a>
+            <a id="/bookA" name="2" href="/book">Artistic</a>
+            <a id="/bookC" name="3" href="/book">Couple</a>
         </div>
         <a id="/about" href="/about"><i class='fas fa-address-book'></i> About Me</a>
         <a id="/contactme" href="/contactme"><i class='fas fa-envelope'></i> Contact</a>
@@ -123,13 +123,14 @@ const onChooseBook = (e) => {
     e.preventDefault();
 
     // Set choice_of_book.
-    if (document.activeElement.id === "/bookP") {
-        user_me.choice_of_book = "Portrait";
+    /*if (document.activeElement.id === "/bookP") {
+        user_me.choice_of_book = document.activeElement.name;
     } else if(document.activeElement.id === "/bookA"){
-        user_me.choice_of_book = "Artistique";
+        user_me.choice_of_book = document.activeElement.name;
     } else if(document.activeElement.id === "/bookC") {
-        user_me.choice_of_book = "Couple";
-    }
+        user_me.choice_of_book = document.activeElement.name;
+    }*/
+    user_me.choice_of_book = document.activeElement.name;
 
     closeSidebar();
     RedirectUrl(document.activeElement.id.substr(0, document.activeElement.id.length - 1));

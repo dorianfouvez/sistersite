@@ -68,6 +68,15 @@ public class PhotoUCCImpl implements PhotoUCC {
     return addedPhotos;
   }
 
+  @Override
+  public List<PhotoDTO> getBook(int tagId) {
+    List<PhotoDTO> photos = new ArrayList<PhotoDTO>();
+    dalservices.startTransaction();
+    photos = this.photoDAO.getBook(tagId);
+    dalservices.commitTransaction();
+    return photos;
+  }
+
 
 
   // ******************** Private's Methods ********************

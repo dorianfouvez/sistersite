@@ -5,6 +5,7 @@ package api;
 
 import java.util.List;
 import org.glassfish.jersey.server.ContainerRequest;
+import api.filters.AnonymousOrAuthorize;
 import api.utils.ResponseMaker;
 import domaine.tag.TagDTO;
 import domaine.tag.TagUCC;
@@ -32,6 +33,7 @@ public class TagsResource {
    */
   @GET
   @Path("/all")
+  @AnonymousOrAuthorize
   public Response getAll(@Context ContainerRequest request) {
     List<TagDTO> tags = this.tagUCC.getAll();
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("tags", tags);
