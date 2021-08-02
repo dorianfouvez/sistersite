@@ -142,7 +142,7 @@ public class CurriculumVitaeDAOImpl implements CurriculumVitaeDAO {
           rs.getInt(42), rs.getInt(43), rs.getTimestamp(44));
 
       AddressDTO address = domaineFactory.getAddressDTO();
-      address.fullFillAddress(rs.getInt(16), rs.getString(46), rs.getString(47), rs.getString(86),
+      address.fullFillAddress(rs.getInt(16), rs.getString(46), rs.getString(47), rs.getString(48),
           rs.getString(49), rs.getString(50), rs.getString(51));
 
       ColorDTO hairColor = domaineFactory.getColorDTO();
