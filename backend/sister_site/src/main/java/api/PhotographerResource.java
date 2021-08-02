@@ -34,19 +34,17 @@ public class PhotographerResource {
   /**
    * Add the photographer.
    * 
-   * @param json object containing a name and maybe a instagram.
+   * @param photographer who contains all the information needed.
    * @return a response with a token who contains the photographer.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Authorize
   public Response add(PhotographerDTO photographer) {
-    // checkIfPhotographerNameIsAlreadyExist(photographer);
     if (this.photographerUCC.nameAlreadyExist(photographer.getName())) {
       throw new PresentationException("The Name \"" + photographer.getName() + "\" is already use.",
           Status.BAD_REQUEST);
     }
-    System.out.println(photographer);
     PhotographerDTO newPhotographer = this.photographerUCC.add(photographer);
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photographer", newPhotographer);
   }

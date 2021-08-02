@@ -131,7 +131,7 @@ public class PhotographerDAOImpl implements PhotographerDAO {
   private PreparedStatement setAllPsAttributWithoutId(PreparedStatement ps,
       PhotographerDTO photographer) throws SQLException {
     ps.setString(1, photographer.getName());
-    ps.setString(2, photographer.getInstagram()); // TODO Need to Check if when it's null it's working.
+    ps.setString(2, photographer.getInstagram());
 
     return ps;
   }

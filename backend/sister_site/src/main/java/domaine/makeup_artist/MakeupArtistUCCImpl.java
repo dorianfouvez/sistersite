@@ -40,4 +40,23 @@ public class MakeupArtistUCCImpl implements MakeupArtistUCC {
     return makeupArtists;
   }
 
+  @Override
+  public MakeupArtistDTO add(MakeupArtistDTO makeupArtist) {
+    dalservices.startTransaction();
+    MakeupArtistDTO makeupArtistDTO = this.makeupArtistDAO.add(makeupArtist);
+    dalservices.commitTransaction();
+    return makeupArtistDTO;
+  }
+
+  @Override
+  public boolean nameAlreadyExist(String name) {
+    dalservices.startTransaction();
+    MakeupArtistDTO makeupArtistDTO = this.makeupArtistDAO.findByName(name);
+    dalservices.commitTransaction();
+    if (makeupArtistDTO == null) {
+      return false;
+    }
+    return true;
+  }
+
 }

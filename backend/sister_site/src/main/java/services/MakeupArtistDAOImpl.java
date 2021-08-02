@@ -44,6 +44,27 @@ public class MakeupArtistDAOImpl implements MakeupArtistDAO {
   }
 
   @Override
+  public MakeupArtistDTO findByName(String name) {
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + MakeupArtistDAO.getAllMakeupArtistAttributes() + " FROM"
+            + MakeupArtistDAO.getMakeupArtistTableName() + " WHERE "
+            + MakeupArtistDAO.getMakeupArtistAbbreviation() + ".name = ?");
+    MakeupArtistDTO makeupArtist = null;
+    try {
+      ps.setString(1, name);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          makeupArtist = createFullFillMakeupArtist(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error findByName", e);
+    }
+    return makeupArtist;
+  }
+
+  @Override
   public List<MakeupArtistDTO> getAll() {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + MakeupArtistDAO.getAllMakeupArtistAttributes() + " FROM"
@@ -62,6 +83,22 @@ public class MakeupArtistDAOImpl implements MakeupArtistDAO {
       throw new FatalException("Error getAll makeupArtists", e);
     }
     return makeupArtists;
+  }
+
+  @Override
+  public MakeupArtistDTO add(MakeupArtistDTO makeupArtist) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("INSERT INTO"
+        + MakeupArtistDAO.getMakeupArtistTableNameWithoutAbbreviation() + " VALUES(DEFAULT,?,?)");
+
+    try {
+      ps = setAllPsAttributWithoutId(ps, makeupArtist);
+
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error add make-up artist", e);
+    }
+    return findByName(makeupArtist.getName());
   }
 
 
@@ -88,6 +125,14 @@ public class MakeupArtistDAOImpl implements MakeupArtistDAO {
     }
 
     return makeupArtist;
+  }
+
+  private PreparedStatement setAllPsAttributWithoutId(PreparedStatement ps,
+      MakeupArtistDTO makeupArtist) throws SQLException {
+    ps.setString(1, makeupArtist.getName());
+    ps.setString(2, makeupArtist.getInstagram());
+
+    return ps;
   }
 
 }

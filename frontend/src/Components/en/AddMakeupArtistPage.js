@@ -3,20 +3,20 @@ import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
 
-const AddPhotographerPage = () => {
+const AddMakeupArtistPage = () => {
     const user = getUserSessionData();
     if (!user || !user.isBoss) {
         RedirectUrl("/");
     } else {
         fixToBottomFooter();
-        let addPhotographerPage = `<div class="mt-2 mb-3 pt-5"><h1><center></center></h1></div>
+        let addMakeupArtistPage = `<div class="mt-2 mb-3 pt-5"><h1><center></center></h1></div>
         <div class="d-flex justify-content-center mb-3">
             <div class="card">
                 <div class="card-header">
-                    <h3><center>Add Photographer</center></h3>
+                    <h3><center>Add Make-up Artist</center></h3>
                 </div>
                 <div class="card-body">
-                    <form id="addPhotographerForm">
+                    <form id="addMakeupArtistForm">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -39,9 +39,9 @@ const AddPhotographerPage = () => {
         </div>`;
 
         let page = document.querySelector("#page");
-        page.innerHTML = addPhotographerPage;
+        page.innerHTML = addMakeupArtistPage;
 
-        document.getElementById("addPhotographerForm").addEventListener("submit", onSubmit);
+        document.getElementById("addMakeupArtistForm").addEventListener("submit", onSubmit);
     }
 };
 
@@ -60,16 +60,16 @@ const onSubmit = (e) => {
             instagram = "@" + instagram;
         }
     }
-    let photographer = { "id": -1, "name": name };
+    let makeupArtist = { "id": -1, "name": name };
     if(instagram){
-        photographer = { "id": -1, "name": name, "instagram": instagram };
+        makeupArtist = { "id": -1, "name": name, "instagram": instagram };
     }
-    console.log(photographer);
+    console.log(makeupArtist);
 
     let id = getTokenSessionData();
-        fetch(API_URL + "photographers/", {
+        fetch(API_URL + "makeupArtists/", {
             method: "POST",
-            body: JSON.stringify(photographer),
+            body: JSON.stringify(makeupArtist),
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": id,
@@ -93,7 +93,7 @@ const onData = (data) => {
     let submitButton = document.getElementById('submit');
     submitButton.innerHTML = `<i class="fas fa-save"></i>`;
     submitButton.className = `btn btn-primary mt-3 float-right`;
-    onSuccess("Photographer added", successBoard);
+    onSuccess("Make-up Artist added", successBoard);
 }
 
-export default AddPhotographerPage;
+export default AddMakeupArtistPage;

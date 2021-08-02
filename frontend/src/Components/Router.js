@@ -5,6 +5,7 @@ import HomePage from "./HomePage.js";
 
 // Import for English routes.
 import AboutPage from "./en/AboutPage.js";
+import AddMakeupArtistPage from "./en/AddMakeupArtistPage.js";
 import AddPhotoPage from "./en/AddPhotoPage.js";
 import AddPhotographerPage from "./en/AddPhotographer.js";
 import BookPage from "./en/BookPage.js";
@@ -38,6 +39,7 @@ import { unfixToBottomFooter } from "../utils/render.js";
 const routesEn = {
   "/": HomePage,
   "/about": WorkInProgressPage,
+  "/addMakeupArtist": AddMakeupArtistPage,
   "/addPhoto": AddPhotoPage,
   "/addPhotographer": AddPhotographerPage,
   "/book": BookPage,

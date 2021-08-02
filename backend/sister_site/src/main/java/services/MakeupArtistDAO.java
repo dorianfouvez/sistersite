@@ -10,7 +10,11 @@ public interface MakeupArtistDAO {
 
   MakeupArtistDTO findById(int id);
 
+  MakeupArtistDTO findByName(String name);
+
   List<MakeupArtistDTO> getAll();
+
+  MakeupArtistDTO add(MakeupArtistDTO makeupArtist);
 
 
 
@@ -26,7 +30,11 @@ public interface MakeupArtistDAO {
   }
 
   static String getMakeupArtistTableName() {
-    return " ambre_fouvez.makeup_artists " + getMakeupArtistAbbreviation();
+    return getMakeupArtistTableNameWithoutAbbreviation() + " " + getMakeupArtistAbbreviation();
+  }
+
+  static String getMakeupArtistTableNameWithoutAbbreviation() {
+    return " ambre_fouvez.makeup_artists";
   }
 
 }

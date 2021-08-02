@@ -11,4 +11,8 @@ public interface MakeupArtistUCC {
 
   List<MakeupArtistDTO> getAll();
 
+  MakeupArtistDTO add(MakeupArtistDTO makeupArtist);
+
+  boolean nameAlreadyExist(String name);
+
 }
