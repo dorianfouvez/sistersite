@@ -5,7 +5,6 @@ package api;
 
 import java.util.List;
 import org.glassfish.jersey.server.ContainerRequest;
-import api.filters.Authorize;
 import api.utils.ResponseMaker;
 import domaine.tag.TagDTO;
 import domaine.tag.TagUCC;
@@ -26,14 +25,13 @@ public class TagsResource {
 
 
   /**
-   * Get all the tags. Must be Authorize.
+   * Get all the tags.
    * 
    * @param request header with the token.
    * @return a list of all the tags.
    */
   @GET
   @Path("/all")
-  @Authorize
   public Response getAll(@Context ContainerRequest request) {
     List<TagDTO> tags = this.tagUCC.getAll();
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("tags", tags);

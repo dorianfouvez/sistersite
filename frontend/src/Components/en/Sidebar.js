@@ -1,10 +1,21 @@
 import { user_me } from "../../index.js";
+import { API_URL } from "../../utils/server.js";
 import { getUserSessionData } from "../../utils/session.js";
 import { RedirectUrl } from "../Router.js";
 
 let sideBar = document.querySelector("#sideBar");
 
 const SidebarPage = () => {
+    fetch(API_URL + "tags/all", {
+        method: "GET",
+        headers: {
+        "Content-Type": "application/json",
+        },
+    }).then((response) => {
+        if (!response.ok) {
+        return response.text().then((err) => onError(err));
+        } else return response.json().then((data) => console.log(data));
+    });
     let sidebarPage = `<div id="mySidenav" class="sidenav">
         <a id="closeSidebar" class="closebtn">&times;</a>
         <a id="/" href="/"><i class='fas fa-home'></i> Home</a>
