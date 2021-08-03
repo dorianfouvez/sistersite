@@ -55,9 +55,9 @@ public interface ComplexUserDTO extends BasicUserDTO {
   void fullFillUser(int id, String username, String lastName, String firstName, String email,
       boolean isBoss, Timestamp registrationDate, String password, PhotoDTO profilePicture,
       AddressDTO address, String phoneNumber, String facebook, String instagram, String twitter,
-      String youtube, ColorDTO hairColor, SizeDTO hairSize, ColorDTO eye, int height, int weight,
+      String youtube, ColorDTO hairColor, SizeDTO hairSize, ColorDTO eye, double height, int weight,
       NationalityDTO firstNationality, NationalityDTO secondNationality, int shoeSize,
-      int jacketSize, int pantSize, int chest, char braCup, int waistSize, int hipSize,
-      int neckSize, int headSize);
+      int jacketSize, int pantSize, double chest, char braCup, double waistSize, double hipSize,
+      double neckSize, double headSize);
 
 }

@@ -4,6 +4,7 @@
 package services;
 
 import java.util.List;
+import domaine.photo.ComplexPhotoDTO;
 import domaine.photo.PhotoDTO;
 
 public interface PhotoDAO {
@@ -18,6 +19,10 @@ public interface PhotoDAO {
 
   List<PhotoDTO> getBook(int tagId);
 
+  List<PhotoDTO> getAll(int userId);
+
+  List<ComplexPhotoDTO> getAllFullInfosPhoto(int id);
+
 
 
   // ******************** Static's Methods ********************
@@ -28,7 +33,7 @@ public interface PhotoDAO {
 
   static String getAllPhotoAttributesWithName(String name) {
     return " " + name + ".id, " + name + ".name, " + name + ".picture, " + name + ".makeup_artist, "
-        + name + ".photographer," + name + ".sharer, " + name + ".date";
+        + name + ".photographer, " + name + ".sharer, " + name + ".date";
   }
 
   static String getPhotoAbbreviation() {

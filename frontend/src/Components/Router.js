@@ -17,6 +17,7 @@ import ErrorNavigationPage from "./en/ErrorNavigationPage.js";
 import LoginPage from "./en/LoginPage.js";
 import LogoutComponent from "./en/LogoutComponent.js";
 import NavbarEn from "./en/Navbar.js";
+import PhotosPage from "./en/PhotosPage.js";
 import SidebarEn from "./en/Sidebar.js";
 import UserPage from "./en/UserPage.js";
 import WorkInProgressPage from "./en/WorkInProgressPage.js";
@@ -44,14 +45,15 @@ const routesEn = {
   "/addPhoto": AddPhotoPage,
   "/addPhotographer": AddPhotographerPage,
   "/addTag": AddTagPage,
+  "/ArtisticCV": CVPage,
   "/book": BookPage,
   "/contactme": WorkInProgressPage,
-  "/ArtisticCV": CVPage,
   "/demotape": WorkInProgressPage,
   "/errornavigation": ErrorNavigationPage,
   "/login": LoginPage,
   "/logout": LogoutComponent,
   "/myprofile": UserPage,
+  "/photos": PhotosPage,
 };
 
 const routesFr = {

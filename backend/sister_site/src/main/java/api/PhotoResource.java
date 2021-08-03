@@ -29,6 +29,7 @@ import domaine.makeup_artist.MakeupArtistDTO;
 import domaine.makeup_artist.MakeupArtistUCC;
 import domaine.photo.AddPhotoInformationDTO;
 import domaine.photo.AddPhotoInformationUCC;
+import domaine.photo.ComplexPhotoDTO;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoUCC;
 import domaine.photographer.PhotographerDTO;
@@ -149,6 +150,16 @@ public class PhotoResource {
   }
 
   @GET
+  @Path("/all")
+  @Authorize
+  public Response getAll(@Context ContainerRequest request) {
+    UserDTO currentUser = (UserDTO) request.getProperty("user");
+    List<ComplexPhotoDTO> photos = this.photoUCC.getAll(currentUser.getID());
+    transformAllURLOfTheComplexPhotosIntoBase64Image(photos);
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photos", photos);
+  }
+
+  @GET
   @Path("/addPhotoInformation")
   @Authorize
   public Response addPhotoInformation(@Context ContainerRequest request) {
@@ -211,12 +222,28 @@ public class PhotoResource {
     }
   }
 
+  public static void transformAllURLOfTheComplexPhotosIntoBase64Image(
+      List<ComplexPhotoDTO> photosList) {
+    for (ComplexPhotoDTO photo : photosList) {
+      if (photo != null && photo.getPicture().startsWith("/src")) {
+        transformTheURLOfTheComplexPhotoIntoBase64Image(photo);
+      }
+    }
+  }
+
   /**
    * Transform the url (into Picture) from the photo into a Base64 Image.
    * 
    * @param photo the photo who the picture need to be transform.
    */
   public static void transformTheURLOfThePhotoIntoBase64Image(PhotoDTO photo) {
+    if (photo != null && photo.getPicture().startsWith("/src")) {
+      String encodstring = encodeFileToBase64Binary(photo.getPicture());
+      photo.setPicture(encodstring);
+    }
+  }
+
+  public static void transformTheURLOfTheComplexPhotoIntoBase64Image(ComplexPhotoDTO photo) {
     if (photo != null && photo.getPicture().startsWith("/src")) {
       String encodstring = encodeFileToBase64Binary(photo.getPicture());
       photo.setPicture(encodstring);

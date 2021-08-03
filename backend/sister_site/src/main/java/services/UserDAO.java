@@ -19,15 +19,30 @@ public interface UserDAO {
   // ******************** Static's Methods ********************
 
   static String getAllUserAttributes() {
-    return " u.id, u.username, u.last_name, u.first_name, u.email, u.is_boss, u.registration_date, u.password,"
-        + " u.profile_picture, u.address, u.phone_number, u.facebook, u.instagram, u.twitter, u.youtube,"
-        + " u.hair_color, u.hair_size, u.eye, u.height, u.weight, u.first_nationality, u.second_nationality,"
-        + " u.shoe_size, u.jacket_size, u.pant_size, u.chest, u.bra_cup, u.waist_size, u.hip_size, u.neck_size,"
-        + " u.head_size";
+    return " " + getUserAbbreviation() + ".id, " + getUserAbbreviation() + ".username, "
+        + getUserAbbreviation() + ".last_name, " + getUserAbbreviation() + ".first_name, "
+        + getUserAbbreviation() + ".email, " + getUserAbbreviation() + ".is_boss, "
+        + getUserAbbreviation() + ".registration_date, " + getUserAbbreviation() + ".password, "
+        + getUserAbbreviation() + ".profile_picture, " + getUserAbbreviation() + ".address, "
+        + getUserAbbreviation() + ".phone_number, " + getUserAbbreviation() + ".facebook, "
+        + getUserAbbreviation() + ".instagram, " + getUserAbbreviation() + ".twitter, "
+        + getUserAbbreviation() + ".youtube, " + getUserAbbreviation() + ".hair_color, "
+        + getUserAbbreviation() + ".hair_size, " + getUserAbbreviation() + ".eye, "
+        + getUserAbbreviation() + ".height, " + getUserAbbreviation() + ".weight, "
+        + getUserAbbreviation() + ".first_nationality, " + getUserAbbreviation()
+        + ".second_nationality, " + getUserAbbreviation() + ".shoe_size, " + getUserAbbreviation()
+        + ".jacket_size, " + getUserAbbreviation() + ".pant_size, " + getUserAbbreviation()
+        + ".chest, " + getUserAbbreviation() + ".bra_cup, " + getUserAbbreviation()
+        + ".waist_size, " + getUserAbbreviation() + ".hip_size, " + getUserAbbreviation()
+        + ".neck_size, " + getUserAbbreviation() + ".head_size";
+  }
+
+  static String getUserAbbreviation() {
+    return "u";
   }
 
   static String getUserTableName() {
-    return " ambre_fouvez.users u";
+    return " ambre_fouvez.users " + getUserAbbreviation();
   }
 
 }

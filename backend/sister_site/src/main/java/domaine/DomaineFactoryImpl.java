@@ -25,6 +25,8 @@ import domaine.nationality.NationalityDTO;
 import domaine.nationality.NationalityImpl;
 import domaine.photo.AddPhotoInformationDTO;
 import domaine.photo.AddPhotoInformationImpl;
+import domaine.photo.ComplexPhotoDTO;
+import domaine.photo.ComplexPhotoImpl;
 import domaine.photo.PhotoDTO;
 import domaine.photo.PhotoImpl;
 import domaine.photographer.PhotographerDTO;
@@ -80,6 +82,11 @@ public class DomaineFactoryImpl implements DomaineFactory {
   @Override
   public ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO() {
     return new ComplexCurriculumVitaeImpl();
+  }
+
+  @Override
+  public ComplexPhotoDTO getComplexPhotoDTO() {
+    return new ComplexPhotoImpl();
   }
 
   @Override

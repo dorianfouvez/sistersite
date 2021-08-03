@@ -16,4 +16,6 @@ public interface PhotoUCC {
 
   List<PhotoDTO> getBook(int tagId);
 
+  List<ComplexPhotoDTO> getAll(int userId);
+
 }

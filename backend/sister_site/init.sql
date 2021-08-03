@@ -305,7 +305,7 @@ INSERT INTO ambre_fouvez.photos(
 
 INSERT INTO ambre_fouvez.photos(
 	id, name, picture, makeup_artist, photographer, sharer, date)
-	VALUES (DEFAULT, 'Pique-nique au parc de seaux.jpg', '/src/main/resources/photos/Pique-nique au parc de seaux.jpg', 0, 0, 1, '2021-04-17 15:00:00');
+	VALUES (DEFAULT, 'Pique-nique au parc de seaux.jpg', '/src/main/resources/photos/Pique-nique au parc de seaux.jpg', 1, 1, 1, '2021-04-17 15:00:00');
 
 INSERT INTO ambre_fouvez.photos(
 	id, name, picture, makeup_artist, photographer, sharer, date)

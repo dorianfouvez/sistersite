@@ -14,6 +14,7 @@ import domaine.distinction.DistinctionDTO;
 import domaine.makeup_artist.MakeupArtistDTO;
 import domaine.nationality.NationalityDTO;
 import domaine.photo.AddPhotoInformationDTO;
+import domaine.photo.ComplexPhotoDTO;
 import domaine.photo.PhotoDTO;
 import domaine.photographer.PhotographerDTO;
 import domaine.profession.ProfessionDTO;
@@ -40,6 +41,8 @@ public interface DomaineFactory {
   ComplexCinemaDTO getComplexCinemaDTO();
 
   ComplexCurriculumVitaeDTO getComplexCurriculumVitaeDTO();
+
+  ComplexPhotoDTO getComplexPhotoDTO();
 
   ComplexShortFilmDTO getComplexShortFilmDTO();
 

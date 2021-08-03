@@ -85,9 +85,9 @@ public interface BasicUserDTO {
 
   void setYoutube(String youtube);
 
-  int getHeight();
+  double getHeight();
 
-  void setHeight(int height);
+  void setHeight(double height);
 
   int getWeight();
 
@@ -105,29 +105,29 @@ public interface BasicUserDTO {
 
   void setPantSize(int pantSize);
 
-  int getChest();
+  double getChest();
 
-  void setChest(int chest);
+  void setChest(double chest);
 
   char getBraCup();
 
   void setBraCup(char braCup);
 
-  int getWaistSize();
+  double getWaistSize();
 
-  void setWaistSize(int waistSize);
+  void setWaistSize(double waistSize);
 
-  int getHipSize();
+  double getHipSize();
 
-  void setHipSize(int hipSize);
+  void setHipSize(double hipSize);
 
-  int getNeckSize();
+  double getNeckSize();
 
-  void setNeckSize(int neckSize);
+  void setNeckSize(double neckSize);
 
-  int getHeadSize();
+  double getHeadSize();
 
-  void setHeadSize(int headSize);
+  void setHeadSize(double headSize);
 
   String getPassword();
 

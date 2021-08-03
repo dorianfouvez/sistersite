@@ -55,7 +55,7 @@ public class ComplexUserImpl implements ComplexUser {
   @JsonView(Views.Public.class)
   private ColorDTO eye;
   @JsonView(Views.Public.class)
-  private int height;
+  private double height;
   @JsonView(Views.Public.class)
   private int weight;
   @JsonView(Views.Public.class)
@@ -69,20 +69,22 @@ public class ComplexUserImpl implements ComplexUser {
   @JsonView(Views.Public.class)
   private int pantSize;
   @JsonView(Views.Public.class)
-  private int chest;
+  private double chest;
   @JsonView(Views.Public.class)
   private char braCup;
   @JsonView(Views.Public.class)
-  private int waistSize;
+  private double waistSize;
   @JsonView(Views.Public.class)
-  private int hipSize;
+  private double hipSize;
   @JsonView(Views.Public.class)
-  private int neckSize;
+  private double neckSize;
   @JsonView(Views.Public.class)
-  private int headSize;
+  private double headSize;
 
   @JsonView(Views.Internal.class)
   private String password;
+
+
 
   @Override
   public int getID() {
@@ -165,34 +167,42 @@ public class ComplexUserImpl implements ComplexUser {
     this.registrationDate = registrationDate;
   }
 
+  @Override
   public PhotoDTO getProfilePicture() {
     return profilePicture;
   }
 
+  @Override
   public void setProfilePicture(PhotoDTO profilePicture) {
     this.profilePicture = profilePicture;
   }
 
+  @Override
   public AddressDTO getAddress() {
     return address;
   }
 
+  @Override
   public void setAddress(AddressDTO address) {
     this.address = address;
   }
 
+  @Override
   public String getPhoneNumber() {
     return phoneNumber;
   }
 
+  @Override
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 
+  @Override
   public String getFacebook() {
     return facebook;
   }
 
+  @Override
   public void setFacebook(String facebook) {
     if (facebook != null) {
       PatternChecker.checkFacebookPattern(facebook);
@@ -200,10 +210,12 @@ public class ComplexUserImpl implements ComplexUser {
     this.facebook = facebook;
   }
 
+  @Override
   public String getInstagram() {
     return instagram;
   }
 
+  @Override
   public void setInstagram(String instagram) {
     if (instagram != null) {
       PatternChecker.checkInstagramPattern(instagram);
@@ -211,10 +223,12 @@ public class ComplexUserImpl implements ComplexUser {
     this.instagram = instagram;
   }
 
+  @Override
   public String getTwitter() {
     return twitter;
   }
 
+  @Override
   public void setTwitter(String twitter) {
     if (twitter != null) {
       PatternChecker.checkTwitterPattern(twitter);
@@ -222,10 +236,12 @@ public class ComplexUserImpl implements ComplexUser {
     this.twitter = twitter;
   }
 
+  @Override
   public String getYoutube() {
     return youtube;
   }
 
+  @Override
   public void setYoutube(String youtube) {
     if (youtube != null) {
       PatternChecker.checkYoutubePattern(youtube);
@@ -233,131 +249,163 @@ public class ComplexUserImpl implements ComplexUser {
     this.youtube = youtube;
   }
 
+  @Override
   public ColorDTO getHairColor() {
     return hairColor;
   }
 
+  @Override
   public void setHairColor(ColorDTO hairColor) {
     this.hairColor = hairColor;
   }
 
+  @Override
   public SizeDTO getHairSize() {
     return hairSize;
   }
 
+  @Override
   public void setHairSize(SizeDTO hairSize) {
     this.hairSize = hairSize;
   }
 
+  @Override
   public ColorDTO getEye() {
     return eye;
   }
 
+  @Override
   public void setEye(ColorDTO eye) {
     this.eye = eye;
   }
 
-  public int getHeight() {
+  @Override
+  public double getHeight() {
     return height;
   }
 
-  public void setHeight(int height) {
+  @Override
+  public void setHeight(double height) {
     this.height = height;
   }
 
+  @Override
   public int getWeight() {
     return weight;
   }
 
+  @Override
   public void setWeight(int weight) {
     this.weight = weight;
   }
 
+  @Override
   public NationalityDTO getFirstNationality() {
     return firstNationality;
   }
 
+  @Override
   public void setFirstNationality(NationalityDTO firstNationality) {
     this.firstNationality = firstNationality;
   }
 
+  @Override
   public NationalityDTO getSecondNationality() {
     return secondNationality;
   }
 
+  @Override
   public void setSecondNationality(NationalityDTO secondNationality) {
     this.secondNationality = secondNationality;
   }
 
+  @Override
   public int getShoeSize() {
     return shoeSize;
   }
 
+  @Override
   public void setShoeSize(int shoeSize) {
     this.shoeSize = shoeSize;
   }
 
+  @Override
   public int getJacketSize() {
     return jacketSize;
   }
 
+  @Override
   public void setJacketSize(int jacketSize) {
     this.jacketSize = jacketSize;
   }
 
+  @Override
   public int getPantSize() {
     return pantSize;
   }
 
+  @Override
   public void setPantSize(int pantSize) {
     this.pantSize = pantSize;
   }
 
-  public int getChest() {
+  @Override
+  public double getChest() {
     return chest;
   }
 
-  public void setChest(int chest) {
+  @Override
+  public void setChest(double chest) {
     this.chest = chest;
   }
 
+  @Override
   public char getBraCup() {
     return braCup;
   }
 
+  @Override
   public void setBraCup(char braCup) {
     this.braCup = braCup;
   }
 
-  public int getWaistSize() {
+  @Override
+  public double getWaistSize() {
     return waistSize;
   }
 
-  public void setWaistSize(int waistSize) {
+  @Override
+  public void setWaistSize(double waistSize) {
     this.waistSize = waistSize;
   }
 
-  public int getHipSize() {
+  @Override
+  public double getHipSize() {
     return hipSize;
   }
 
-  public void setHipSize(int hipSize) {
+  @Override
+  public void setHipSize(double hipSize) {
     this.hipSize = hipSize;
   }
 
-  public int getNeckSize() {
+  @Override
+  public double getNeckSize() {
     return neckSize;
   }
 
-  public void setNeckSize(int neckSize) {
+  @Override
+  public void setNeckSize(double neckSize) {
     this.neckSize = neckSize;
   }
 
-  public int getHeadSize() {
+  @Override
+  public double getHeadSize() {
     return headSize;
   }
 
-  public void setHeadSize(int headSize) {
+  @Override
+  public void setHeadSize(double headSize) {
     this.headSize = headSize;
   }
 
@@ -385,10 +433,10 @@ public class ComplexUserImpl implements ComplexUser {
   public void fullFillUser(int id, String username, String lastName, String firstName, String email,
       boolean isBoss, Timestamp registrationDate, String password, PhotoDTO profilePicture,
       AddressDTO address, String phoneNumber, String facebook, String instagram, String twitter,
-      String youtube, ColorDTO hairColor, SizeDTO hairSize, ColorDTO eye, int height, int weight,
+      String youtube, ColorDTO hairColor, SizeDTO hairSize, ColorDTO eye, double height, int weight,
       NationalityDTO firstNationality, NationalityDTO secondNationality, int shoeSize,
-      int jacketSize, int pantSize, int chest, char braCup, int waistSize, int hipSize,
-      int neckSize, int headSize) {
+      int jacketSize, int pantSize, double chest, char braCup, double waistSize, double hipSize,
+      double neckSize, double headSize) {
 
     setID(id);
     setUserName(username);
