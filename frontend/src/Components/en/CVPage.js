@@ -43,11 +43,11 @@ const testCV = (cv) => {
     let user = cv.user;
     let cvPage = `<div class="text-center"><h4 class="mt-2 pt-5">Artistic Curriculum Vitae</h4></div>
     <div class="container">
-        <div class="row">
-            <div class="col" class="cv_first_row" style="background-color:black;height:200px;">
-                <div class="float-left mt-4 ml-5" style="background-color:rgb(0, 255, 225);height:90%;width:32%;">
-                    <div class="d-flex justify-content-center" style="height:100%;" >
-                        <img src="assets/Images/logoAE_v2.png" class="cv_img" alt="Logo">
+        <div id="rowWithBackgroundImg" class="row cv_row">
+            <div class="col" class="cv_first_row">
+                <div class="float-left mt-4 ml-5" style="background-color:rgb(0, 255, 225);height:100%;width:32%;">
+                    <div class="d-flex justify-content-center">
+                        <img id="photoCv1" src="${user.profilePicture.picture}" class="cv_img" alt="${user.profilePicture.name}">
                     </div>
                 </div>
             </div>
@@ -78,7 +78,9 @@ const testCV = (cv) => {
                             <a href="${user.instagram}" class="fa fa_logo_mini fa-instagram"></a> ${user.instagram.substring(26, (user.instagram.length-1))}
                         </p>`;
                     }
-                    if(window.screen.width > 450) cvPage += `<p>${user.email}</p>`;
+                    if(window.screen.width > 450) cvPage += `<p>
+                        <a href="/contactme" class='fas fa-envelope text-white remove_decoration'></a> ${user.email}
+                    </p>`;
                     else {
                         // If mobile.
                         cvPage += `<p>${user.email.replace("@", "@\n")}</p>`;
@@ -138,6 +140,7 @@ const testCV = (cv) => {
     </div>`;
 
     page.innerHTML = cvPage;
+    document.getElementById("rowWithBackgroundImg").style.backgroundImage = `url("${cv.backgroundPicture.picture}")`;
 }
 
 export default CVPage;

@@ -4,6 +4,10 @@
   cursor: help;
 }
 
+.remove_underline {
+  text-decoration: none;
+}
+
 .remove_decoration {
   text-decoration: none;
   color: rgb(0, 185, 0);
@@ -39,10 +43,31 @@ form.decorated label {
 
 
 /*************** CV page ***************/
-.cv_first_row { /*Not Use*/
-  background-color:black !important;
-  height:200px !important;
-  background-image: url("../assets/Images/Bureau_1.png");
+.cv_first_row { /*Not Working*/
+  background-image: url("../assets/Images/Disneyland hotel.jpg") !important;
+}
+
+#photoCv1 {
+  margin-top: 5%;
+  width: 90%;
+  height: max-content;
+  overflow: hidden;
+}
+
+#photoCv2 {
+  width: 100%;
+  height: max-content;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.cv_row {
+  height: 350px;
+  background-color: black;
+  /*background-image: url("../assets/Images/Disneyland hotel.jpg");*/
+  background-repeat: no-repeat;
+  background-attachment: local;
+  background-size: 100% auto;
 }
 
 
@@ -86,16 +111,17 @@ form.decorated label {
   border-radius: 50%;
 }
 
-.image-cropper img.portrait {
+.image-cropper img {
   display: inline;
   margin: 0 auto;
+}
+
+.image-cropper img.portrait {
   height: auto;
   width: 100%;
 }
 
 .image-cropper img.paysage {
-  display: inline;
-  margin: 0 auto;
   height: 100%;
   width: auto;
 }

@@ -32,6 +32,8 @@ public class CurriculumVitaeResource {
     }
 
     ComplexCurriculumVitaeDTO cv = this.curriculumVitaeUCC.getFullCurriculumVitae(id);
+    PhotoResource.transformTheURLOfThePhotoIntoBase64Image(cv.getBackgroundPicture());
+    PhotoResource.transformTheURLOfThePhotoIntoBase64Image(cv.getUser().getProfilePicture());
 
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("cv", cv);
   }

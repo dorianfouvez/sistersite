@@ -217,8 +217,10 @@ public class PhotoResource {
    * @param photo the photo who the picture need to be transform.
    */
   public static void transformTheURLOfThePhotoIntoBase64Image(PhotoDTO photo) {
-    String encodstring = encodeFileToBase64Binary(photo.getPicture());
-    photo.setPicture(encodstring);
+    if (photo != null && photo.getPicture().startsWith("/src")) {
+      String encodstring = encodeFileToBase64Binary(photo.getPicture());
+      photo.setPicture(encodstring);
+    }
   }
 
 

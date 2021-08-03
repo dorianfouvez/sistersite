@@ -293,7 +293,7 @@ INSERT INTO ambre_fouvez.makeup_artists(
 
 INSERT INTO ambre_fouvez.photos(
 	id, name, picture, makeup_artist, photographer, sharer, date)
-	VALUES (0, 'Default picture', '/src/photos/defaultPicture.png', 0, 0, -1, NULL);
+	VALUES (0, 'Default picture', 'assets/Images/logoAE_v2.png', 0, 0, -1, NULL);
 
 INSERT INTO ambre_fouvez.photos(
 	id, name, picture, makeup_artist, photographer, sharer, date)
@@ -364,7 +364,7 @@ INSERT INTO ambre_fouvez.users(
     profile_picture, address, phone_number, facebook, instagram, twitter, youtube, 
     hair_color, hair_size, eye, height, weight, first_nationality, second_nationality, shoe_size, jacket_size, pant_size, chest, bra_cup, waist_size, hip_size, neck_size, head_size)
 	VALUES (DEFAULT, 'ambre', 'Fouvez', 'Ambre', 'ambre.fouvez@gmail.com', TRUE, '2021-05-18 23:55:00', '$2a$10$44L1fxbjQ2Vqtwomy5JBLOktnYbqlEKe28eY18NLvbWwOIb0SZr5K', 
-    0, 1, '06 41 80 14 05', 'https://www.facebook.com/ambre.fouvez', 'https://www.instagram.com/ambre.fouvez/', NULL, NULL, 
+    1, 1, '06 41 80 14 05', 'https://www.facebook.com/ambre.fouvez', 'https://www.instagram.com/ambre.fouvez/', NULL, NULL, 
     1, 3, 2, 168, 50, 1, NULL, 39, 36, 36, 85, 'C', 70, 86, 29.6, 52.5);
 
 ------------------------------
