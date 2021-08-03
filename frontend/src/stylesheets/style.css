@@ -86,11 +86,18 @@ form.decorated label {
   border-radius: 50%;
 }
 
-.image-cropper img {
+.image-cropper img.portrait {
   display: inline;
   margin: 0 auto;
   height: auto;
   width: 100%;
+}
+
+.image-cropper img.paysage {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
 }
 
 .lang_flag {

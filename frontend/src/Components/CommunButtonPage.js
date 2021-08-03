@@ -13,7 +13,7 @@ const LanguagePage = () => {
         </a>-->
         <div class="image-cropper">
             <a id="home" href="/" data-uri="/">
-                <img src="assets/Images/Photo de profil.jpg" alt="Logo"/>
+                <img src="assets/Images/Photo de profil.jpg" alt="Logo" class="portrait"/>
             </a>
         </div>
     </div>
