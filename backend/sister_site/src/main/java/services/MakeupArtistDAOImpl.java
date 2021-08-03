@@ -65,6 +65,27 @@ public class MakeupArtistDAOImpl implements MakeupArtistDAO {
   }
 
   @Override
+  public MakeupArtistDTO findByInstagram(String instagram) {
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + MakeupArtistDAO.getAllMakeupArtistAttributes() + " FROM"
+            + MakeupArtistDAO.getMakeupArtistTableName() + " WHERE "
+            + MakeupArtistDAO.getMakeupArtistAbbreviation() + ".instagram = ?");
+    MakeupArtistDTO makeupArtist = null;
+    try {
+      ps.setString(1, instagram);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          makeupArtist = createFullFillMakeupArtist(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error findByInstagram", e);
+    }
+    return makeupArtist;
+  }
+
+  @Override
   public List<MakeupArtistDTO> getAll() {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + MakeupArtistDAO.getAllMakeupArtistAttributes() + " FROM"

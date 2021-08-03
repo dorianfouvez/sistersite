@@ -44,6 +44,12 @@ public class PhotographerResource {
       throw new PresentationException("The Name \"" + photographer.getName() + "\" is already use.",
           Status.BAD_REQUEST);
     }
+    if (photographer.getInstagram() != null
+        && this.photographerUCC.instagramAlreadyExist(photographer.getInstagram())) {
+      throw new PresentationException(
+          "The Instagram \"" + photographer.getInstagram() + "\" is already use.",
+          Status.BAD_REQUEST);
+    }
     PhotographerDTO newPhotographer = this.photographerUCC.add(photographer);
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photographer", newPhotographer);
   }

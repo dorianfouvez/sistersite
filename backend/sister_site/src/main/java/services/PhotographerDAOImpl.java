@@ -66,6 +66,27 @@ public class PhotographerDAOImpl implements PhotographerDAO {
   }
 
   @Override
+  public PhotographerDTO findByInstagram(String instagram) {
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + PhotographerDAO.getAllPhotographerAttributes() + " FROM"
+            + PhotographerDAO.getPhotographerTableName() + " WHERE "
+            + PhotographerDAO.getPhotographerAbbreviation() + ".instagram = ?");
+    PhotographerDTO photographer = null;
+    try {
+      ps.setString(1, instagram);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          photographer = createFullFillPhotographer(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error findByInstagram", e);
+    }
+    return photographer;
+  }
+
+  @Override
   public List<PhotographerDTO> getAll() {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + PhotographerDAO.getAllPhotographerAttributes() + " FROM"

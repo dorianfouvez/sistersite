@@ -12,6 +12,8 @@ public interface MakeupArtistDAO {
 
   MakeupArtistDTO findByName(String name);
 
+  MakeupArtistDTO findByInstagram(String instagram);
+
   List<MakeupArtistDTO> getAll();
 
   MakeupArtistDTO add(MakeupArtistDTO makeupArtist);

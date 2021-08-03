@@ -12,6 +12,8 @@ public interface PhotographerDAO {
 
   PhotographerDTO findByName(String name);
 
+  PhotographerDTO findByInstagram(String instagram);
+
   List<PhotographerDTO> getAll();
 
   PhotographerDTO add(PhotographerDTO photographer);

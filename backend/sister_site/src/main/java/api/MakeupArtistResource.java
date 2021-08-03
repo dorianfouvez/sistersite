@@ -40,6 +40,12 @@ public class MakeupArtistResource {
       throw new PresentationException("The Name \"" + makeupArtist.getName() + "\" is already use.",
           Status.BAD_REQUEST);
     }
+    if (makeupArtist.getInstagram() != null
+        && this.makeupArtistUCC.instagramAlreadyExist(makeupArtist.getInstagram())) {
+      throw new PresentationException(
+          "The Instagram \"" + makeupArtist.getInstagram() + "\" is already use.",
+          Status.BAD_REQUEST);
+    }
     MakeupArtistDTO newMakeupArtist = this.makeupArtistUCC.add(makeupArtist);
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("makeupArtist", newMakeupArtist);
   }

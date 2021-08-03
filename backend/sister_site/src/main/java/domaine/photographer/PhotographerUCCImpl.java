@@ -59,4 +59,15 @@ public class PhotographerUCCImpl implements PhotographerUCC {
     return true;
   }
 
+  @Override
+  public boolean instagramAlreadyExist(String instagram) {
+    dalservices.startTransaction();
+    PhotographerDTO photographerDTO = this.photographerDAO.findByInstagram(instagram);
+    dalservices.commitTransaction();
+    if (photographerDTO == null) {
+      return false;
+    }
+    return true;
+  }
+
 }

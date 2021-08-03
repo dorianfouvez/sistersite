@@ -31,13 +31,13 @@ CREATE TABLE ambre_fouvez.addresses (
 CREATE TABLE ambre_fouvez.photographers (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL UNIQUE CHECK(name <> '' AND name <> ' '),
-	instagram VARCHAR(50) NULL CHECK(instagram SIMILAR TO '@[\w\.\/\\$é~#èà&=+*-]+')
+	instagram VARCHAR(50) NULL UNIQUE CHECK(instagram SIMILAR TO '@[\w\.\/\\$é~#èà&=+*-]+')
 );
 
 CREATE TABLE ambre_fouvez.makeup_artists (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL UNIQUE CHECK(name <> '' AND name <> ' '),
-	instagram VARCHAR(50) NULL CHECK(instagram SIMILAR TO '@[\w\.\/\\$é~#èà&=+*-]+')
+	instagram VARCHAR(50) NULL UNIQUE CHECK(instagram SIMILAR TO '@[\w\.\/\\$é~#èà&=+*-]+')
 );
 
 CREATE TABLE ambre_fouvez.photos (

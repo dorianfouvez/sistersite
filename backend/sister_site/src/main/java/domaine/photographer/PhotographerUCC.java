@@ -15,4 +15,6 @@ public interface PhotographerUCC {
 
   boolean nameAlreadyExist(String name);
 
+  boolean instagramAlreadyExist(String instagram);
+
 }

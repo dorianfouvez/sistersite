@@ -15,4 +15,6 @@ public interface MakeupArtistUCC {
 
   boolean nameAlreadyExist(String name);
 
+  boolean instagramAlreadyExist(String instagram);
+
 }

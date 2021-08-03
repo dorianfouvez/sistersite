@@ -59,4 +59,15 @@ public class MakeupArtistUCCImpl implements MakeupArtistUCC {
     return true;
   }
 
+  @Override
+  public boolean instagramAlreadyExist(String instagram) {
+    dalservices.startTransaction();
+    MakeupArtistDTO makeupArtistDTO = this.makeupArtistDAO.findByInstagram(instagram);
+    dalservices.commitTransaction();
+    if (makeupArtistDTO == null) {
+      return false;
+    }
+    return true;
+  }
+
 }
