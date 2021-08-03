@@ -82,18 +82,26 @@ const onSubmit = (e) => {
 };
 
 const onErrors = (err) => {
-    let submitButton = document.getElementById('submit');
-    submitButton.innerHTML = `<i class="fas fa-save"></i>`;
-    submitButton.className = `btn btn-primary mt-3 float-right`;
+    clearLoadingButton();
     onError(err);
-}
+};
 
 const onData = (data) => {
+    clearLoadingButton();
+    clearForm();
     let successBoard = document.getElementById('successBoard');
+    onSuccess("Photographer added", successBoard);
+};
+
+const clearLoadingButton = () => {
     let submitButton = document.getElementById('submit');
     submitButton.innerHTML = `<i class="fas fa-save"></i>`;
     submitButton.className = `btn btn-primary mt-3 float-right`;
-    onSuccess("Photographer added", successBoard);
-}
+};
+
+const clearForm = () => {
+    document.getElementById('name').value = "";
+    document.getElementById('instagram').value = "";
+};
 
 export default AddPhotographerPage;
