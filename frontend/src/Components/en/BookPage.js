@@ -38,7 +38,7 @@ const onBook = (book) => {
         <div class="create"><img src="../assets/Images/Disneyland hotel.jpg" class="photo_book" alt="Ambre Fouvez"></div>
         <div class="create"><img src="../assets/Images/thumbnail_IMG_5980.jpg" class="photo_book" alt="Ambre Fouvez"></div>
         <div class="create"><img src="../assets/Images/thumbnail_IMG_5980.jpg" class="photo_book" alt="Ambre Fouvez"></div>
-        <div class="create"><img src="../assets/Images/118835666_3182691398505562_2598143657728591896_n.jpg" class="photo_book" alt="Ambre Fouvez"></div>
+        <div class="create"><img src="../assets/Images/Photo de profil.jpg" class="photo_book" alt="Ambre Fouvez"></div>
         <div class="create"><img src="../assets/Images/thumbnail_IMG_5980.jpg" class="photo_book" alt="Ambre Fouvez"></div>
         <div class="create"><img src="../assets/Images/thumbnail_IMG_5980.jpg" class="photo_book" alt="Ambre Fouvez"></div>
         <div class="create"><img src="../assets/Images/thumbnail_IMG_5980.jpg" class="photo_book" alt="Ambre Fouvez"></div>
@@ -58,7 +58,7 @@ const onBook = (book) => {
             <div><img src="../assets/Images/Disneyland hotel.jpg" alt="Ambre Fouvez"></div>
             <div><img src="../assets/Images/thumbnail_IMG_5980.jpg" alt="Ambre Fouvez"></div>
             <div><img src="../assets/Images/thumbnail_IMG_5980.jpg" alt="Ambre Fouvez"></div>
-            <div><img src="../assets/Images/118835666_3182691398505562_2598143657728591896_n.jpg" alt="Ambre Fouvez"></div>
+            <div><img src="../assets/Images/Photo de profil.jpg" alt="Ambre Fouvez"></div>
             <div><img src="../assets/Images/thumbnail_IMG_5980.jpg" alt="Ambre Fouvez"></div>
             <div><img src="../assets/Images/thumbnail_IMG_5980.jpg" alt="Ambre Fouvez"></div>
             <div><img src="../assets/Images/thumbnail_IMG_5980.jpg" alt="Ambre Fouvez"></div>

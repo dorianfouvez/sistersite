@@ -39,7 +39,7 @@ const CVPage = () => {
 const testCV = (cv) => {
     document.body.style.backgroundColor = "gray";
     unfixToBottomFooter();
-    console.log(cv);
+    //console.log(cv);
     let user = cv.user;
     let cvPage = `<div class="text-center"><h4 class="mt-2 pt-5">Artistic Curriculum Vitae</h4></div>
     <div class="container">

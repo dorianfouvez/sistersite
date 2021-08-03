@@ -128,9 +128,9 @@ const onSubmit = (e) => {
         let sharers = [];
         let tags = [];
         let dates = [];
-        console.log(savedFiles);
+        //console.log(savedFiles);
         for (let i = 0; i < savedFiles.length; i++) {
-            console.log("name" + savedFiles[i].id);
+            //console.log("name" + savedFiles[i].id);
             let photoName = document.getElementById("name" + savedFiles[i].id).value;
             let photoMakeupArtist = document.getElementById("makeupArtist" + savedFiles[i].id).value;
             let photoPhotographer = document.getElementById("photographer" + savedFiles[i].id).value;
@@ -142,8 +142,8 @@ const onSubmit = (e) => {
             savedFiles[i].photoName = photoName + extention;
             savedFiles[i].photographer = photoPhotographer;
             savedFiles[i].sharer = photoSharer;
-            console.log("Photo=[Name: " + photoName + ", Picture: " + savedFiles[i] + ", Photographer: " + photoPhotographer + ", Sharer: " 
-            + photoSharer + ", Tag: " + photoTag + "]", savedFiles[i]);
+            /*console.log("Photo=[Name: " + photoName + ", Picture: " + savedFiles[i] + ", Photographer: " + photoPhotographer + ", Sharer: " 
+            + photoSharer + ", Tag: " + photoTag + "]", savedFiles[i]);*/
             
             
             photoNames.push(photoName + extention);
@@ -154,14 +154,12 @@ const onSubmit = (e) => {
             tags.push(photoTag);
             if(!photoDate) photoDate = "null";
             dates.push(photoDate);
-            console.log(dates);
         }
 
         // Creation of the formData with all the photos.
         const formData = new FormData();
         for(let i = 0; i < savedFiles.length; i++){
             formData.append(photoNames[i], savedFiles[i]);
-            console.log(photoNames[i], formData.get(photoNames[i]));
         }
 
         let id = getTokenSessionData();
