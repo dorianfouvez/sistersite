@@ -43,6 +43,26 @@ public class TagDAOImpl implements TagDAO {
   }
 
   @Override
+  public TagDTO findByLabel(String label) {
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("SELECT" + TagDAO.getAllTagAttributes() + " FROM"
+            + TagDAO.getTagTableName() + " WHERE " + TagDAO.getTagAbbreviation() + ".label = ?");
+    TagDTO tag = null;
+    try {
+      ps.setString(1, label);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          tag = createFullFillTag(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error findByLabel", e);
+    }
+    return tag;
+  }
+
+  @Override
   public List<TagDTO> getAllSortedByLabel() {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + TagDAO.getAllTagAttributes() + " FROM"
@@ -60,6 +80,22 @@ public class TagDAOImpl implements TagDAO {
       throw new FatalException("Error getAll tags", e);
     }
     return tags;
+  }
+
+  @Override
+  public TagDTO add(TagDTO tag) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
+        "INSERT INTO" + TagDAO.getTagTableNameWithoutAbbreviation() + " VALUES(DEFAULT,?)");
+
+    try {
+      ps = setAllPsAttributWithoutId(ps, tag);
+
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error add tag", e);
+    }
+    return findByLabel(tag.getLabel());
   }
 
 
@@ -85,6 +121,13 @@ public class TagDAOImpl implements TagDAO {
     }
 
     return tag;
+  }
+
+  private PreparedStatement setAllPsAttributWithoutId(PreparedStatement ps, TagDTO tag)
+      throws SQLException {
+    ps.setString(1, tag.getLabel());
+
+    return ps;
   }
 
 }

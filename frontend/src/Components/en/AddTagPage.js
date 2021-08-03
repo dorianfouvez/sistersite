@@ -3,32 +3,25 @@ import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
 
-const AddMakeupArtistPage = () => {
+const AddTagPage = () => {
     const user = getUserSessionData();
     if (!user || !user.isBoss) {
         RedirectUrl("/");
     } else {
         fixToBottomFooter();
-        let addMakeupArtistPage = `<div class="mt-2 mb-3 pt-5"><h1><center></center></h1></div>
+        let addTagPage = `<div class="mt-2 mb-3 pt-5"><h1><center></center></h1></div>
         <div class="d-flex justify-content-center mb-3">
             <div class="card">
                 <div class="card-header">
-                    <h3><center>Add Make-up Artist</center></h3>
+                    <h3><center>Add Tag</center></h3>
                 </div>
                 <div class="card-body">
-                    <form id="addMakeupArtistForm">
+                    <form id="addTagForm">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <span class="input-group-text"><i class="fas fa-pen"></i></span>
                             </div>
-                            <input id="name" type="text" name="name" class="form-control" placeholder="Name" required>
-                        </div>
-                        
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i>@</i></span>
-                            </div>
-                            <input id="instagram" type="text" name="instagram" class="form-control" placeholder="Instagram">
+                            <input id="label" type="text" name="label" class="form-control" placeholder="Label" required>
                         </div>
 
                         <button id="submit" type="submit" name="submitPhoto" class="btn btn-primary mt-3 float-right"><i class="fas fa-save"></i></button>
@@ -39,9 +32,9 @@ const AddMakeupArtistPage = () => {
         </div>`;
 
         let page = document.querySelector("#page");
-        page.innerHTML = addMakeupArtistPage;
+        page.innerHTML = addTagPage;
 
-        document.getElementById("addMakeupArtistForm").addEventListener("submit", onSubmit);
+        document.getElementById("addTagForm").addEventListener("submit", onSubmit);
     }
 };
 
@@ -49,24 +42,14 @@ const onSubmit = (e) => {
     e.preventDefault();
     transformButtonIntoLoading();
 
-    let name = document.getElementById('name').value;
-    let instagram = null;
-    if (document.getElementById('instagram')) {
-        instagram = document.getElementById('instagram').value;
-        if(instagram != "" && !instagram.startsWith('@')){
-            instagram = "@" + instagram;
-        }
-    }
-    let makeupArtist = { "id": -1, "name": name };
-    if(instagram){
-        makeupArtist = { "id": -1, "name": name, "instagram": instagram };
-    }
-    console.log(makeupArtist);
+    let label = document.getElementById('label').value;
+    let tag = { "id": -1, "label": label };
+    console.log(tag);
 
     let id = getTokenSessionData();
-        fetch(API_URL + "makeupArtists/", {
+        fetch(API_URL + "tags/", {
             method: "POST",
-            body: JSON.stringify(makeupArtist),
+            body: JSON.stringify(tag),
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": id,
@@ -87,12 +70,11 @@ const onData = (data) => {
     clearLoadingButton();
     clearForm();
     let successBoard = document.getElementById('successBoard');
-    onSuccess("Make-up Artist added", successBoard);
+    onSuccess("Tag added", successBoard);
 };
 
 const clearForm = () => {
-    document.getElementById('name').value = "";
-    document.getElementById('instagram').value = "";
+    document.getElementById('label').value = "";
 };
 
-export default AddMakeupArtistPage;
+export default AddTagPage;

@@ -8,6 +8,7 @@ import AboutPage from "./en/AboutPage.js";
 import AddMakeupArtistPage from "./en/AddMakeupArtistPage.js";
 import AddPhotoPage from "./en/AddPhotoPage.js";
 import AddPhotographerPage from "./en/AddPhotographer.js";
+import AddTagPage from "./en/AddTagPage.js";
 import BookPage from "./en/BookPage.js";
 import ContactPage from "./en/ContactPage.js";
 import CVPage from "./en/CVPage.js";
@@ -42,6 +43,7 @@ const routesEn = {
   "/addMakeupArtist": AddMakeupArtistPage,
   "/addPhoto": AddPhotoPage,
   "/addPhotographer": AddPhotographerPage,
+  "/addTag": AddTagPage,
   "/book": BookPage,
   "/contactme": WorkInProgressPage,
   "/ArtisticCV": CVPage,
@@ -54,8 +56,10 @@ const routesEn = {
 
 const routesFr = {
   "/": HomePage,
+  "/ajoutMaquilleuse": TravauxEnCours,
   "/ajoutPhoto": TravauxEnCours,
   "/ajoutPhotographe": TravauxEnCours,
+  "/ajoutTag": TravauxEnCours,
   "/apropos": TravauxEnCours,
   "/bandedemo": TravauxEnCours,
   "/books": TravauxEnCours,

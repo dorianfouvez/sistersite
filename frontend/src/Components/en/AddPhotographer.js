@@ -1,4 +1,4 @@
-import { fixToBottomFooter, onError, onSuccess } from "../../utils/render";
+import { clearLoadingButton, fixToBottomFooter, onError, onSuccess, transformButtonIntoLoading } from "../../utils/render";
 import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
@@ -47,10 +47,7 @@ const AddPhotographerPage = () => {
 
 const onSubmit = (e) => {
     e.preventDefault();
-    let submitButton = document.getElementById('submit');
-    submitButton.innerHTML = ``;
-    submitButton.className = `loader mt-3 float-right`;
-    console.log(submitButton);
+    transformButtonIntoLoading();
 
     let name = document.getElementById('name').value;
     let instagram = null;
@@ -91,12 +88,6 @@ const onData = (data) => {
     clearForm();
     let successBoard = document.getElementById('successBoard');
     onSuccess("Photographer added", successBoard);
-};
-
-const clearLoadingButton = () => {
-    let submitButton = document.getElementById('submit');
-    submitButton.innerHTML = `<i class="fas fa-save"></i>`;
-    submitButton.className = `btn btn-primary mt-3 float-right`;
 };
 
 const clearForm = () => {

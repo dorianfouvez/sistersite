@@ -105,7 +105,20 @@ const onError = (err) => {
 const onSuccess = (msg, messageBoard) => {
   if(msg.message) SUCCESS_BOX(messageBoard, msg.message);
   else SUCCESS_BOX(messageBoard, msg);
-}
+};
+
+const transformButtonIntoLoading = () => {
+  let submitButton = document.getElementById('submit');
+  submitButton.innerHTML = ``;
+  submitButton.className = `loader mt-3 float-right`;
+};
+
+const clearLoadingButton = () => {
+  let submitButton = document.getElementById('submit');
+  submitButton.innerHTML = `<i class="fas fa-save"></i>`;
+  submitButton.className = `btn btn-primary mt-3 float-right`;
+};
 
 // named export
-export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars, SetEnglishNavigationBars, setBodyWhite, onError, onSuccess };
+export { setLayout, setFooter, unfixToBottomFooter, fixToBottomFooter, SetFrenchNavigationBars,
+  SetEnglishNavigationBars, setBodyWhite, onError, onSuccess, transformButtonIntoLoading, clearLoadingButton };

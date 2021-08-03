@@ -11,4 +11,8 @@ public interface TagUCC {
 
   List<TagDTO> getAll();
 
+  TagDTO add(TagDTO tag);
+
+  boolean labelAlreadyExist(String label);
+
 }

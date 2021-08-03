@@ -52,7 +52,7 @@ CREATE TABLE ambre_fouvez.photos (
 
 CREATE TABLE ambre_fouvez.tags (
 	id SERIAL PRIMARY KEY,
-    label VARCHAR NOT NULL UNIQUE CHECK(label <> '')
+    label VARCHAR NOT NULL UNIQUE CHECK(label <> '' AND label <> ' ')
 );
 
 CREATE TABLE ambre_fouvez.tags_photo (

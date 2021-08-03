@@ -35,9 +35,28 @@ public class TagUCCImpl implements TagUCC {
   @Override
   public List<TagDTO> getAll() {
     dalservices.startTransaction();
-    List<TagDTO> tags = tagDAO.getAllSortedByLabel();
+    List<TagDTO> tags = this.tagDAO.getAllSortedByLabel();
     dalservices.commitTransaction();
     return tags;
+  }
+
+  @Override
+  public TagDTO add(TagDTO tag) {
+    dalservices.startTransaction();
+    TagDTO tagDTO = this.tagDAO.add(tag);
+    dalservices.commitTransaction();
+    return tagDTO;
+  }
+
+  @Override
+  public boolean labelAlreadyExist(String label) {
+    dalservices.startTransaction();
+    TagDTO tagDTO = this.tagDAO.findByLabel(label);
+    dalservices.commitTransaction();
+    if (tagDTO == null) {
+      return false;
+    }
+    return true;
   }
 
 }

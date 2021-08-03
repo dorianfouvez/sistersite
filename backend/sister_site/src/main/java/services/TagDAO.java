@@ -10,14 +10,18 @@ public interface TagDAO {
 
   TagDTO findById(int id);
 
+  TagDTO findByLabel(String label);
+
   List<TagDTO> getAllSortedByLabel();
+
+  TagDTO add(TagDTO tag);
 
 
 
   // ******************** Static's Methods ********************
 
   static String getAllTagAttributes() {
-    return " ta.id, ta.label";
+    return " " + getTagAbbreviation() + ".id, " + getTagAbbreviation() + ".label";
   }
 
   static String getTagAbbreviation() {
@@ -25,7 +29,11 @@ public interface TagDAO {
   }
 
   static String getTagTableName() {
-    return " ambre_fouvez.tags ta";
+    return getTagTableNameWithoutAbbreviation() + " " + getTagAbbreviation();
+  }
+
+  static String getTagTableNameWithoutAbbreviation() {
+    return " ambre_fouvez.tags";
   }
 
 }

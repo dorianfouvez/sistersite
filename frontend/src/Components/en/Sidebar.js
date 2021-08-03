@@ -47,7 +47,8 @@ const SidebarPage = () => {
         <a id="/logout" class="nav-item nav-link" href="/logout" data-uri="/logout"><i class='fas fa-sign-out-alt'></i> Logout</a>
         <a id="/addMakeupArtist" class="nav-item nav-link" href="/addMakeupArtist" data-uri="/addMakeupArtist">Add a make-up artist</a>
         <a id="/addPhoto" class="nav-item nav-link" href="/addPhoto" data-uri="/addPhoto">Add a photo</a>
-        <a id="/addPhotographer" class="nav-item nav-link" href="/addPhotographer" data-uri="/addPhotographer">Add a photographer</a>`;
+        <a id="/addPhotographer" class="nav-item nav-link" href="/addPhotographer" data-uri="/addPhotographer">Add a photographer</a>
+        <a id="/addTag" class="nav-item nav-link" href="/addTag" data-uri="/addTag">Add a tag</a>`;
     }
     if (user && user.isBoss) {
         sidebarPage += `<a id="/Boss" class="nav-item nav-link" href="/Boss" data-uri="/myprofile">Boss</a>
@@ -82,6 +83,7 @@ const SidebarPage = () => {
         document.getElementById("/addMakeupArtist").addEventListener("click", onNavigate);
         document.getElementById("/addPhoto").addEventListener("click", onNavigate);
         document.getElementById("/addPhotographer").addEventListener("click", onNavigate);
+        document.getElementById("/addTag").addEventListener("click", onNavigate);
         document.getElementById("/logout").addEventListener("click", onNavigate);
         document.getElementById("/myprofile").addEventListener("click", onNavigate);
     }else document.getElementById("/login").addEventListener("click", onNavigate);
