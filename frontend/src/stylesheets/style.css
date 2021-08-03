@@ -74,7 +74,23 @@ form.decorated label {
 /*************** Images resizing ***************/
 .logo_size {
   width: 70px;
+  border-radius: 50%;
   /*margin-left: 50px;*/
+}
+
+.image-cropper {
+  width: 70px;
+  height: 70px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.image-cropper img {
+  display: inline;
+  margin: 0 auto;
+  height: auto;
+  width: 100%;
 }
 
 .lang_flag {
