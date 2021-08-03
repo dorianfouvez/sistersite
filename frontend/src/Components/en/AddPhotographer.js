@@ -61,7 +61,6 @@ const onSubmit = (e) => {
     if(instagram){
         photographer = { "id": -1, "name": name, "instagram": instagram };
     }
-    console.log(photographer);
 
     let id = getTokenSessionData();
         fetch(API_URL + "photographers/", {

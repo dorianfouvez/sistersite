@@ -61,7 +61,6 @@ const onSubmit = (e) => {
     if(instagram){
         makeupArtist = { "id": -1, "name": name, "instagram": instagram };
     }
-    console.log(makeupArtist);
 
     let id = getTokenSessionData();
         fetch(API_URL + "makeupArtists/", {

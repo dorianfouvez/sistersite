@@ -44,7 +44,6 @@ const onSubmit = (e) => {
 
     let label = document.getElementById('label').value;
     let tag = { "id": -1, "label": label };
-    console.log(tag);
 
     let id = getTokenSessionData();
         fetch(API_URL + "tags/", {
