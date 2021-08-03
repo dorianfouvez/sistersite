@@ -9,7 +9,7 @@ let routes = {
 const LanguagePage = () => {
     let languagePage = `<div class="float-left mt-1 ml-2">
         <!--<a id="home" class="navbar-brand" href="#" data-uri="/">
-            <img src="assets/Images/Photo de profil.jpg" class="image-cropper" alt="Logo">
+            <img src="assets/Images/Photo de profil.jpg" class="logo_size" alt="Logo">
         </a>-->
         <div class="image-cropper">
             <a id="home" href="/" data-uri="/">
