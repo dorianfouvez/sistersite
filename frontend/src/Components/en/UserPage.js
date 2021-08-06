@@ -1,4 +1,3 @@
-import { fixToBottomFooter } from "../../utils/render.js";
 import { API_URL, ALERT_BOX } from "../../utils/server.js";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session.js";
 import { RedirectUrl } from "../Router.js";
@@ -10,7 +9,6 @@ const UserPage = () => {
     if (!user) {
         RedirectUrl("/");
     } else {
-        fixToBottomFooter();
         page.innerHTML = `<div class="text-center"><h4 class="mt-2 pt-5">My profile</h4></div>
         <div class="loader mx-auto"></div>`;
         let id = getTokenSessionData();

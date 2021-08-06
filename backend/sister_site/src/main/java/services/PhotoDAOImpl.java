@@ -15,6 +15,7 @@ import domaine.makeup_artist.MakeupArtistDTO;
 import domaine.photo.ComplexPhotoDTO;
 import domaine.photo.PhotoDTO;
 import domaine.photographer.PhotographerDTO;
+import domaine.tag.TagDTO;
 import domaine.user.UserDTO;
 import jakarta.inject.Inject;
 
@@ -29,55 +30,12 @@ public class PhotoDAOImpl implements PhotoDAO {
 
 
   @Override
-  public PhotoDTO findById(int id) {
-    PreparedStatement ps =
-        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
-            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE id = ?");
-    PhotoDTO photo = null;
-    try {
-      ps.setInt(1, id);
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          photo = createFullFillPhoto(rs);
-        }
-      }
-    } catch (SQLException e) {
-      ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error findById", e);
-    }
-    return photo;
-  }
-
-  @Override
-  public PhotoDTO findByName(String name) {
-    PreparedStatement ps =
-        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
-            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE name = ?");
-    PhotoDTO photo = domaineFactory.getPhotoDTO();
-    try {
-      ps.setString(1, name);
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          photo = createFullFillPhoto(rs);
-        }
-      }
-    } catch (SQLException e) {
-      ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error findByName", e);
-    }
-    if (photo.getName() == null) {
-      return null;
-    }
-    return photo;
-  }
-
-  @Override
   public PhotoDTO add(PhotoDTO photo) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement("INSERT INTO"
         + PhotoDAO.getPhotoTableNameWithoutAbbreviation() + " VALUES(DEFAULT,?,?,?,?,?,?)");
 
     try {
-      setAllPsAttributNotNull(ps, photo);
+      setAllPsAttributWithoutId(ps, photo);
 
       ps.executeUpdate();
     } catch (SQLException e) {
@@ -105,6 +63,130 @@ public class PhotoDAOImpl implements PhotoDAO {
   }
 
   @Override
+  public PhotoDTO findById(int id) {
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
+            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE id = ?");
+    PhotoDTO photo = null;
+    try {
+      ps.setInt(1, id);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          photo = createFullFillPhoto(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error find photo by id", e);
+    }
+    return photo;
+  }
+
+  @Override
+  public PhotoDTO findByName(String name) {
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
+            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE name = ?");
+    PhotoDTO photo = domaineFactory.getPhotoDTO();
+    try {
+      ps.setString(1, name);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          photo = createFullFillPhoto(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error find photo by name", e);
+    }
+    if (photo.getName() == null) {
+      return null;
+    }
+    return photo;
+  }
+
+  @Override
+  public PhotoDTO findByNameButNotFor(int id, String name) {
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
+            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE name = ? AND id != ?");
+    PhotoDTO photo = domaineFactory.getPhotoDTO();
+    try {
+      ps.setString(1, name);
+      ps.setInt(2, id);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          photo = createFullFillPhoto(rs);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error find photo by name but not for id N°" + id, e);
+    }
+    if (photo.getName() == null) {
+      return null;
+    }
+    return photo;
+  }
+
+  @Override
+  public List<PhotoDTO> getAll(int userId) {
+    PreparedStatement ps =
+        this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
+            + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE " + PhotoDAO.getPhotoAbbreviation()
+            + ".sharer = -1 OR " + PhotoDAO.getPhotoAbbreviation() + ".sharer = ?");
+    List<PhotoDTO> photos = new ArrayList<PhotoDTO>();
+    try {
+      ps.setInt(1, userId);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          PhotoDTO photo = createFullFillPhoto(rs);
+          photos.add(photo);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error get all photos", e);
+    }
+    return photos;
+  }
+
+  @Override
+  public List<ComplexPhotoDTO> getAllFullInfosPhotoFor(int userId) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT"
+        + PhotoDAO.getAllPhotoAttributes() + "," + MakeupArtistDAO.getAllMakeupArtistAttributes()
+        + "," + PhotographerDAO.getAllPhotographerAttributes() + ","
+        + UserDAO.getAllUserAttributes() + "," + TagDAO.getAllTagAttributes() + " FROM"
+        + PhotoDAO.getPhotoTableName() + " JOIN" + MakeupArtistDAO.getMakeupArtistTableName()
+        + " ON " + MakeupArtistDAO.getMakeupArtistAbbreviation() + ".id = "
+        + PhotoDAO.getPhotoAbbreviation() + ".makeup_artist JOIN"
+        + PhotographerDAO.getPhotographerTableName() + " ON "
+        + PhotographerDAO.getPhotographerAbbreviation() + ".id = " + PhotoDAO.getPhotoAbbreviation()
+        + ".photographer JOIN" + UserDAO.getUserTableName() + " ON " + UserDAO.getUserAbbreviation()
+        + ".id = " + PhotoDAO.getPhotoAbbreviation() + ".sharer JOIN"
+        + TagPhotoDAO.getTagPhotoTableName() + " ON " + TagPhotoDAO.getTagPhotoAbbreviation()
+        + ".photo_id = " + PhotoDAO.getPhotoAbbreviation() + ".id JOIN" + TagDAO.getTagTableName()
+        + " ON " + TagDAO.getTagAbbreviation() + ".id = " + TagPhotoDAO.getTagPhotoAbbreviation()
+        + ".tag_id WHERE " + PhotoDAO.getPhotoAbbreviation() + ".sharer = -1 OR "
+        + PhotoDAO.getPhotoAbbreviation() + ".sharer = ? ORDER BY "
+        + PhotoDAO.getPhotoAbbreviation() + ".id");
+    List<ComplexPhotoDTO> photos = new ArrayList<>();
+    try {
+      ps.setInt(1, userId);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          ComplexPhotoDTO photo = createFullFillComplexPhoto(rs);
+          photos.add(photo);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error get all full infos photo for user N°" + userId, e);
+    }
+    return photos;
+  }
+
+  @Override
   public List<PhotoDTO> getBook(int tagId) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
         "SELECT" + PhotoDAO.getAllPhotoAttributes() + " FROM" + PhotoDAO.getPhotoTableName() + ","
@@ -128,86 +210,51 @@ public class PhotoDAOImpl implements PhotoDAO {
   }
 
   @Override
-  public List<PhotoDTO> getAll(int userId) {
+  public boolean isOwnPhoto(UserDTO user, int photoId) {
     PreparedStatement ps =
         this.dalBackendServices.getPreparedStatement("SELECT" + PhotoDAO.getAllPhotoAttributes()
             + " FROM" + PhotoDAO.getPhotoTableName() + " WHERE " + PhotoDAO.getPhotoAbbreviation()
-            + ".sharer = -1 OR " + PhotoDAO.getPhotoAbbreviation() + ".sharer = ?");
-    List<PhotoDTO> photos = new ArrayList<PhotoDTO>();
+            + ".id = ? AND " + PhotoDAO.getPhotoAbbreviation() + ".sharer = ?");
+    PhotoDTO photo = null;
     try {
-      ps.setInt(1, userId);
+      ps.setInt(1, photoId);
+      ps.setInt(2, user.getID());
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          PhotoDTO photo = createFullFillPhoto(rs);
-          photos.add(photo);
+          photo = createFullFillPhoto(rs);
         }
       }
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error getAll", e);
+      throw new FatalException("Error isOwnPhoto", e);
     }
-    return photos;
+    if (photo == null) {
+      return false;
+    }
+    return true;
   }
 
   @Override
-  public List<ComplexPhotoDTO> getAllFullInfosPhoto(int userId) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT"
-        + PhotoDAO.getAllPhotoAttributes() + "," + MakeupArtistDAO.getAllMakeupArtistAttributes()
-        + "," + PhotographerDAO.getAllPhotographerAttributes() + ","
-        + UserDAO.getAllUserAttributes() + " FROM" + PhotoDAO.getPhotoTableName() + " JOIN"
-        + MakeupArtistDAO.getMakeupArtistTableName() + " ON "
-        + MakeupArtistDAO.getMakeupArtistAbbreviation() + ".id = " + PhotoDAO.getPhotoAbbreviation()
-        + ".makeup_artist JOIN" + PhotographerDAO.getPhotographerTableName() + " ON "
-        + PhotographerDAO.getPhotographerAbbreviation() + ".id = " + PhotoDAO.getPhotoAbbreviation()
-        + ".photographer JOIN" + UserDAO.getUserTableName() + " ON " + UserDAO.getUserAbbreviation()
-        + ".id = " + PhotoDAO.getPhotoAbbreviation() + ".sharer WHERE "
-        + PhotoDAO.getPhotoAbbreviation() + ".sharer = -1 OR " + PhotoDAO.getPhotoAbbreviation()
-        + ".sharer = ? ORDER BY " + PhotoDAO.getPhotoAbbreviation() + ".id");
-    List<ComplexPhotoDTO> photos = new ArrayList<>();
+  public PhotoDTO update(PhotoDTO photo) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("UPDATE"
+        + PhotoDAO.getPhotoTableNameWithoutAbbreviation()
+        + " SET name = ?, makeup_artist = ?, photographer = ?, sharer = ?, date = ? WHERE id = ?");
     try {
-      ps.setInt(1, userId);
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          ComplexPhotoDTO photo = createFullFillComplexPhoto(rs);
-          photos.add(photo);
-        }
-      }
+      ps = setAllPsAttributWithoutIdAndPicture(ps, photo);
+      ps.setInt(6, photo.getId());
+
+      ps.executeUpdate();
     } catch (SQLException e) {
+      e.printStackTrace();
       ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error getAllFullInfosPhoto", e);
+      throw new FatalException("Error update photo.", e);
     }
-    return photos;
+    return findById(photo.getId());
   }
 
 
 
   // ******************** Private's Methods ********************
-
-  /**
-   * Create and fully fill a photo from the ResultSet.
-   * 
-   * @param rs ResultSet who contains the photo.
-   * @return the created and fully filled photo.
-   */
-  private PhotoDTO createFullFillPhoto(ResultSet rs) {
-    PhotoDTO photo = domaineFactory.getPhotoDTO();
-
-    try {
-      photo.setId(rs.getInt(1));
-      photo.setName(rs.getString(2));
-      photo.setPicture(rs.getString(3));
-      photo.setMakeupArtist(rs.getInt(4));
-      photo.setPhotographer(rs.getInt(5));
-      photo.setSharer(rs.getInt(6));
-      photo.setDate(rs.getTimestamp(7));
-
-    } catch (SQLException e) {
-      ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error fullFillPhoto", e);
-    }
-
-    return photo;
-  }
 
   private ComplexPhotoDTO createFullFillComplexPhoto(ResultSet rs) {
     ComplexPhotoDTO photo = domaineFactory.getComplexPhotoDTO();
@@ -279,9 +326,42 @@ public class PhotoDAOImpl implements PhotoDAO {
       sharer.setHeadSize(rs.getDouble(44));
       photo.setSharer(sharer);
 
+      List<TagDTO> tags = new ArrayList<>();
+      TagDTO tag = this.domaineFactory.getTagDTO();
+      tag.setId(rs.getInt(45));
+      tag.setLabel(rs.getString(46));
+      tags.add(tag);
+      photo.setTags(tags);
+
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
       throw new FatalException("Error fullFillComplexPhoto", e);
+    }
+
+    return photo;
+  }
+
+  /**
+   * Create and fully fill a photo from the ResultSet.
+   * 
+   * @param rs ResultSet who contains the photo.
+   * @return the created and fully filled photo.
+   */
+  private PhotoDTO createFullFillPhoto(ResultSet rs) {
+    PhotoDTO photo = domaineFactory.getPhotoDTO();
+
+    try {
+      photo.setId(rs.getInt(1));
+      photo.setName(rs.getString(2));
+      photo.setPicture(rs.getString(3));
+      photo.setMakeupArtist(rs.getInt(4));
+      photo.setPhotographer(rs.getInt(5));
+      photo.setSharer(rs.getInt(6));
+      photo.setDate(rs.getTimestamp(7));
+
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error fullFillPhoto", e);
     }
 
     return photo;
@@ -295,14 +375,27 @@ public class PhotoDAOImpl implements PhotoDAO {
    * @return PreparedStatement fully set with the photo'sattributes.
    * @throws SQLException if a error comes when set the PreparedStatement.
    */
-  private PreparedStatement setAllPsAttributNotNull(PreparedStatement ps, PhotoDTO photo)
+  private PreparedStatement setAllPsAttributWithoutId(PreparedStatement ps, PhotoDTO photo)
       throws SQLException {
-    ps.setString(1, photo.getName());
-    ps.setString(2, photo.getPicture());
-    ps.setInt(3, photo.getMakeupArtist());
-    ps.setInt(4, photo.getPhotographer());
-    ps.setInt(5, photo.getSharer());
-    ps.setTimestamp(6, photo.getDate()); // TODO Need to Check if when it's null it's working.
+    int i = 1;
+    ps.setString(i++, photo.getName());
+    ps.setString(i++, photo.getPicture());
+    ps.setInt(i++, photo.getMakeupArtist());
+    ps.setInt(i++, photo.getPhotographer());
+    ps.setInt(i++, photo.getSharer());
+    ps.setTimestamp(i++, photo.getDate());
+
+    return ps;
+  }
+
+  private PreparedStatement setAllPsAttributWithoutIdAndPicture(PreparedStatement ps,
+      PhotoDTO photo) throws SQLException {
+    int i = 1;
+    ps.setString(i++, photo.getName());
+    ps.setInt(i++, photo.getMakeupArtist());
+    ps.setInt(i++, photo.getPhotographer());
+    ps.setInt(i++, photo.getSharer());
+    ps.setTimestamp(i++, photo.getDate());
 
     return ps;
   }

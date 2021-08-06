@@ -4,7 +4,6 @@ By default, all escape sequences in a template literal are ignored.*/
 import { getUserSessionData, setUserSessionData } from "../../utils/session.js";
 import { RedirectUrl } from "../Router.js";
 import { API_URL, ALERT_BOX } from "../../utils/server.js";
-import { fixToBottomFooter } from "../../utils/render";
 
 let remember = false;
 
@@ -49,7 +48,6 @@ let loginPage = `<div class="containerForm mb-3">
 </div>`;
 
 const LoginPage = () => {
-  fixToBottomFooter();
   let page = document.querySelector("#page");
   page.innerHTML = loginPage;
   const user = getUserSessionData();

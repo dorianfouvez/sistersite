@@ -4,9 +4,11 @@
 package domaine.photo;
 
 import java.sql.Timestamp;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import domaine.makeup_artist.MakeupArtistDTO;
 import domaine.photographer.PhotographerDTO;
+import domaine.tag.TagDTO;
 import domaine.user.UserDTO;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,6 +21,7 @@ public class ComplexPhotoImpl implements ComplexPhotoDTO {
   private PhotographerDTO photographer;
   private UserDTO sharer;
   private Timestamp date;
+  private List<TagDTO> tags;
 
   @Override
   public int getId() {
@@ -91,8 +94,18 @@ public class ComplexPhotoImpl implements ComplexPhotoDTO {
   }
 
   @Override
+  public List<TagDTO> getTags() {
+    return this.tags;
+  }
+
+  @Override
+  public void setTags(List<TagDTO> tags) {
+    this.tags = tags;
+  }
+
+  @Override
   public void fullFillPhoto(int id, String name, String picture, MakeupArtistDTO makeupArtist,
-      PhotographerDTO photographer, UserDTO sharer, Timestamp date) {
+      PhotographerDTO photographer, UserDTO sharer, Timestamp date, List<TagDTO> tags) {
     setId(id);
     setName(name);
     setPicture(picture);
@@ -100,13 +113,21 @@ public class ComplexPhotoImpl implements ComplexPhotoDTO {
     setPhotographer(photographer);
     setSharer(sharer);
     setDate(date);
+    setTags(tags);
   }
 
   @Override
   public String toString() {
-    return "ComplexPhotoImpl [id=" + id + ", name=" + name + ", picture=" + picture
-        + ", makeupArtist=" + makeupArtist + ", photographer=" + photographer + ", sharer=" + sharer
-        + ", date=" + date + "]";
+    String result = "ComplexPhotoImpl [id=" + id + ", name=" + name + ", picture=" + picture
+        + ", makeupArtist=" + makeupArtist.toString() + ", photographer=" + photographer.toString()
+        + ", sharer=" + sharer.toString() + ", date=" + date + ", tags=[";
+
+    for (TagDTO tagDTO : tags) {
+      result += tagDTO.toString();
+    }
+
+    result += "]]";
+    return result;
   }
 
   @Override

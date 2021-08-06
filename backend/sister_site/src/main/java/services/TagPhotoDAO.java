@@ -7,9 +7,11 @@ import domaine.tag_photo.TagPhotoDTO;
 
 public interface TagPhotoDAO {
 
+  TagPhotoDTO add(TagPhotoDTO tagPhoto);
+
   TagPhotoDTO findById(int photoId, int tagId);
 
-  TagPhotoDTO add(TagPhotoDTO tagPhoto);
+  TagPhotoDTO update(TagPhotoDTO tagPhoto, int lastTagId);
 
   // ******************** Static's Methods ********************
 

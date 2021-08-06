@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 /* load bootstrap module (JS) */
 import 'bootstrap';
 
-let user_me = { itself: null, lang: null, choice_of_book: null };
+let user_me = { itself: null, lang: null, choice_of_book: null, photo: null };
 
 getLangFromStorage();
 LanguagePage();

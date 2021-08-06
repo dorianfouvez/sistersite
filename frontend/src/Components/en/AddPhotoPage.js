@@ -1,5 +1,5 @@
 import { user_me } from "../..";
-import { fixToBottomFooter, onError, unfixToBottomFooter } from "../../utils/render";
+import { onError } from "../../utils/render";
 import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
@@ -9,7 +9,6 @@ const AddPhotoPage = () => {
     if (!user || !user.isBoss) {
         RedirectUrl("/");
     } else {
-        fixToBottomFooter();
         let addPhotoPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Add Photo(s)</center></h1></div>
         <form id="addPhotoForm" enctype="multipart/form-data">
             <input type="file" id="files" name="files" multiple><span id="loading"></span>
@@ -28,7 +27,7 @@ const AddPhotoPage = () => {
 const onUpload = (e) => {
     document.getElementById("loading").innerHTML = `<div class="loader"></div>`;
     let id = getTokenSessionData();
-    fetch(API_URL + "photos/addPhotoInformation", {
+    fetch(API_URL + "photos/getAddPhotoInformation", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -106,7 +105,6 @@ const onShowImage = (e, makeupArtists, photographers, tags) => {
             </div>`;
 
             document.getElementById('showImg').innerHTML += photoToShow;
-            unfixToBottomFooter();
             files[i].id = hello.savedFiles.length;
 
             hello.savedFiles.push(files[i]);

@@ -19,6 +19,7 @@ import LogoutComponent from "./en/LogoutComponent.js";
 import NavbarEn from "./en/Navbar.js";
 import PhotosPage from "./en/PhotosPage.js";
 import SidebarEn from "./en/Sidebar.js";
+import UpdatePhotoPage from "./en/UpdatePhotoPage.js";
 import UserPage from "./en/UserPage.js";
 import WorkInProgressPage from "./en/WorkInProgressPage.js";
 
@@ -54,6 +55,7 @@ const routesEn = {
   "/logout": LogoutComponent,
   "/myprofile": UserPage,
   "/photos": PhotosPage,
+  "/updatePhoto": UpdatePhotoPage,
 };
 
 const routesFr = {
@@ -70,7 +72,9 @@ const routesFr = {
   "/cv": TravauxEnCours,
   "/deconnection": Deconnection,
   "/erreurnavigation": ErreurNavigationPage,
+  "/modifierPhoto": TravauxEnCours,
   "/moncompte": TravauxEnCours,
+  "/photos": TravauxEnCours,
 };
 
 let navBar = document.querySelector("#navBar");

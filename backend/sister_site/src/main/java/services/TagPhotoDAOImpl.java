@@ -22,6 +22,22 @@ public class TagPhotoDAOImpl implements TagPhotoDAO {
 
 
   @Override
+  public TagPhotoDTO add(TagPhotoDTO tagPhoto) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
+        "INSERT INTO" + TagPhotoDAO.getTagPhotoTableNameWithoutAbbreviation() + " VALUES(?,?)");
+
+    try {
+      ps = this.setAllPsAttributNotNull(ps, tagPhoto);
+
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      ((DalServices) this.dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error add tag photo", e);
+    }
+    return this.findById(tagPhoto.getPhotoId(), tagPhoto.getTagId());
+  }
+
+  @Override
   public TagPhotoDTO findById(int photoId, int tagId) {
     PreparedStatement ps = this.dalBackendServices
         .getPreparedStatement("SELECT" + TagPhotoDAO.getAllTagPhotoAttributes() + " FROM"
@@ -33,30 +49,32 @@ public class TagPhotoDAOImpl implements TagPhotoDAO {
       ps.setInt(2, tagId);
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          photo = createFullFillTagPhoto(rs);
+          photo = this.createFullFillTagPhoto(rs);
         }
       }
     } catch (SQLException e) {
-      ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error findById", e);
+      ((DalServices) this.dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error find tag photo by id", e);
     }
     return photo;
   }
 
   @Override
-  public TagPhotoDTO add(TagPhotoDTO tagPhoto) {
-    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
-        "INSERT INTO" + TagPhotoDAO.getTagPhotoTableNameWithoutAbbreviation() + " VALUES(?,?)");
-
+  public TagPhotoDTO update(TagPhotoDTO tagPhoto, int lastTagId) {
+    PreparedStatement ps = this.dalBackendServices
+        .getPreparedStatement("UPDATE" + TagPhotoDAO.getTagPhotoTableNameWithoutAbbreviation()
+            + " SET photo_id = ?, tag_id = ? WHERE photo_id = ? AND tag_id = ?");
     try {
-      ps = setAllPsAttributNotNull(ps, tagPhoto);
+      ps = this.setAllPsAttributNotNull(ps, tagPhoto);
+      ps.setInt(3, tagPhoto.getPhotoId());
+      ps.setInt(4, lastTagId);
 
       ps.executeUpdate();
     } catch (SQLException e) {
-      ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error add tag photo", e);
+      ((DalServices) this.dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error update tag photo.", e);
     }
-    return findById(tagPhoto.getPhotoId(), tagPhoto.getTagId());
+    return this.findById(tagPhoto.getPhotoId(), tagPhoto.getTagId());
   }
 
 
@@ -72,7 +90,7 @@ public class TagPhotoDAOImpl implements TagPhotoDAO {
 
     } catch (SQLException e) {
       ((DalServices) dalBackendServices).rollbackTransaction();
-      throw new FatalException("Error fullFillTagPhoto", e);
+      throw new FatalException("Error full fill tag photo", e);
     }
 
     return tagPhoto;

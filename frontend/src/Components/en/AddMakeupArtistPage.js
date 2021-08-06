@@ -1,4 +1,4 @@
-import { clearLoadingButton, fixToBottomFooter, onError, onSuccess, transformButtonIntoLoading } from "../../utils/render";
+import { clearLoadingButton, onError, onSuccess, transformButtonIntoLoading } from "../../utils/render";
 import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
@@ -8,7 +8,6 @@ const AddMakeupArtistPage = () => {
     if (!user || !user.isBoss) {
         RedirectUrl("/");
     } else {
-        fixToBottomFooter();
         let addMakeupArtistPage = `<div class="mt-2 mb-3 pt-5"><h1><center></center></h1></div>
         <div class="d-flex justify-content-center mb-3">
             <div class="card">

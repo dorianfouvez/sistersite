@@ -44,8 +44,10 @@ import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -76,6 +78,72 @@ public class PhotoResource {
 
   @Inject
   private UserUCC userUCC;
+
+
+
+  @GET
+  @Path("/getAddPhotoInformation")
+  @Authorize
+  public Response getAddPhotoInformation(@Context ContainerRequest request) {
+    AddPhotoInformationDTO addPhotoInformation = this.addPhotoInformationUCC.get();
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("addPhotoInformation",
+        addPhotoInformation);
+  }
+
+  @GET
+  @Path("/all")
+  @Authorize
+  public Response getAllFor(@Context ContainerRequest request) {
+    UserDTO currentUser = (UserDTO) request.getProperty("user");
+    List<ComplexPhotoDTO> photos = this.photoUCC.getAllFor(currentUser.getID());
+    transformAllURLOfTheComplexPhotosIntoBase64Image(photos);
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photos", photos);
+  }
+
+  @GET
+  @Path("/book/{id}")
+  @AnonymousOrAuthorize
+  public Response getBook(@PathParam("id") int id) {
+    if (id < 1) {
+      throw new PresentationException("This book doesn't exist (Book id cannot be under 1)",
+          Status.BAD_REQUEST);
+    }
+
+    List<PhotoDTO> photos = this.photoUCC.getBook(id);
+    transformAllURLOfThePhotosIntoBase64Image(photos);
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("book", photos);
+  }
+
+  /**
+   * update a photo.
+   * 
+   * @param request contains headers.
+   * @param json object containing all necessary information about the photo to update.
+   * @return the photo updated.
+   */
+  @PUT
+  @Authorize
+  public Response update(@Context ContainerRequestContext requestContext,
+      @Context ContainerRequest request, PhotoDTO photo) {
+    UserDTO currentUser = (UserDTO) request.getProperty("user");
+    this.photoUCC.findById(photo.getId());
+    if (this.photoUCC.nameAlreadyExistButNotFor(photo.getId(), photo.getName())) {
+      throw new PresentationException("The Name \"" + photo.getName() + "\" is already use.",
+          Status.BAD_REQUEST);
+    }
+
+    TagPhotoDTO tagPhoto = this.createFullFillTagPhoto(photo.getId(),
+        Integer.valueOf(requestContext.getHeaderString("tag_photo")));
+
+    int lastTagId = Integer.valueOf(requestContext.getHeaderString("lastTagId"));
+    System.out.println(photo);
+    System.out.println(tagPhoto);
+    System.out.println(lastTagId);
+    PhotoDTO updatePhoto = this.photoUCC.update(photo, tagPhoto, lastTagId, currentUser);
+    transformTheURLOfThePhotoIntoBase64Image(updatePhoto);
+
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photo", updatePhoto);
+  }
 
   /**
    * save all the photos from FormDataMultipart given and link it to the photograph and the tag. Must be Authorize.
@@ -149,39 +217,6 @@ public class PhotoResource {
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photos", paths);
   }
 
-  @GET
-  @Path("/all")
-  @Authorize
-  public Response getAll(@Context ContainerRequest request) {
-    UserDTO currentUser = (UserDTO) request.getProperty("user");
-    List<ComplexPhotoDTO> photos = this.photoUCC.getAll(currentUser.getID());
-    transformAllURLOfTheComplexPhotosIntoBase64Image(photos);
-    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photos", photos);
-  }
-
-  @GET
-  @Path("/addPhotoInformation")
-  @Authorize
-  public Response addPhotoInformation(@Context ContainerRequest request) {
-    AddPhotoInformationDTO addPhotoInformation = this.addPhotoInformationUCC.get();
-    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("addPhotoInformation",
-        addPhotoInformation);
-  }
-
-  @GET
-  @Path("/book/{id}")
-  @AnonymousOrAuthorize
-  public Response getBook(@PathParam("id") int id) {
-    if (id < 1) {
-      throw new PresentationException("This book doesn't exist (Book id cannot be under 1)",
-          Status.BAD_REQUEST);
-    }
-
-    List<PhotoDTO> photos = this.photoUCC.getBook(id);
-    transformAllURLOfThePhotosIntoBase64Image(photos);
-    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("book", photos);
-  }
-
 
 
   // ******************** Public static's Methods ********************
@@ -209,6 +244,15 @@ public class PhotoResource {
     return "data:image/png;base64," + encodedfile;
   }
 
+  public static void transformAllURLOfTheComplexPhotosIntoBase64Image(
+      List<ComplexPhotoDTO> photosList) {
+    for (ComplexPhotoDTO photo : photosList) {
+      if (photo != null && photo.getPicture().startsWith("/src")) {
+        transformTheURLOfTheComplexPhotoIntoBase64Image(photo);
+      }
+    }
+  }
+
   /**
    * Transform the url (into Picture) from all the pictures into a Base64 Image.
    * 
@@ -222,12 +266,10 @@ public class PhotoResource {
     }
   }
 
-  public static void transformAllURLOfTheComplexPhotosIntoBase64Image(
-      List<ComplexPhotoDTO> photosList) {
-    for (ComplexPhotoDTO photo : photosList) {
-      if (photo != null && photo.getPicture().startsWith("/src")) {
-        transformTheURLOfTheComplexPhotoIntoBase64Image(photo);
-      }
+  public static void transformTheURLOfTheComplexPhotoIntoBase64Image(ComplexPhotoDTO photo) {
+    if (photo != null && photo.getPicture().startsWith("/src")) {
+      String encodstring = encodeFileToBase64Binary(photo.getPicture());
+      photo.setPicture(encodstring);
     }
   }
 
@@ -243,38 +285,17 @@ public class PhotoResource {
     }
   }
 
-  public static void transformTheURLOfTheComplexPhotoIntoBase64Image(ComplexPhotoDTO photo) {
-    if (photo != null && photo.getPicture().startsWith("/src")) {
-      String encodstring = encodeFileToBase64Binary(photo.getPicture());
-      photo.setPicture(encodstring);
-    }
-  }
-
 
 
   // ******************** Private's Methods ********************// ******************** Private's Methods ********************
 
-  private TagPhotoDTO createFullFillTagPhoto(int photoId, int tagId) {
-    TagPhotoDTO tagPhotoDTO = this.domaineFactory.getTagPhotoDTO();
-
-    tagPhotoDTO.setPhotoId(photoId);
-    tagPhotoDTO.setTagId(tagId);
-
-    return tagPhotoDTO;
-  }
-
-  private PhotoDTO createPhotoDTOWith(String picture, String name, int makeupArtist,
-      int photographer, int sharer, Timestamp date) {
-    PhotoDTO photo = domaineFactory.getPhotoDTO();
-
-    photo.setName(name);
-    photo.setPicture(picture);
-    photo.setMakeupArtist(makeupArtist);
-    photo.setPhotographer(photographer);
-    photo.setSharer(sharer);
-    photo.setDate(date);
-
-    return photo;
+  private Timestamp convertIntoTimestampIfNotNull(String dateToConvert, String messageIfError) {
+    Timestamp timestamp = null;
+    if (dateToConvert != null && !dateToConvert.equals("") && !dateToConvert.equals("null")) {
+      checkTimestampPattern(messageIfError, dateToConvert);
+      timestamp = Timestamp.valueOf(dateToConvert.replaceFirst("T", " "));
+    }
+    return timestamp;
   }
 
   private List<Timestamp> checkAndGetDates(ContainerRequest request) {
@@ -283,18 +304,37 @@ public class PhotoResource {
     int numberDate = 1;
     System.out.println(request.getHeaderString("dates"));
     for (String dateToConvert : request.getHeaderString("dates").split(",")) {
-      Timestamp timestamp = null;
-      System.out.println("Passage");
-      if (dateToConvert != null && !dateToConvert.equals("") && !dateToConvert.equals("null")) {
-        checkTimestampPattern("Date of the photo N°" + numberDate, dateToConvert);
-        timestamp = Timestamp.valueOf(dateToConvert.replaceFirst("T", " "));
-      }
+      Timestamp timestamp =
+          convertIntoTimestampIfNotNull(dateToConvert, "Date of the photo N°" + numberDate);
 
       dates.add(timestamp);
       numberDate++;
     }
 
     return dates;
+  }
+
+  private MakeupArtistDTO checkAndGetMakeupArtistId(int makeupArtistId, int numberMakeupArtist) {
+    if (makeupArtistId < 0) {
+      throw new PresentationException(
+          "Make-up artist of the photo N°" + numberMakeupArtist + " doesn't exist",
+          Status.BAD_REQUEST);
+    }
+    return this.makeupArtistUCC.findById(makeupArtistId);
+  }
+
+  private List<Integer> checkAndGetMakeupArtists(ContainerRequest request) {
+    List<Integer> makeupArtists = new ArrayList<Integer>();
+    int numberMakeupArtist = 1;
+    for (String integerToConvert : request.getHeaderString("makeupArtists").split(",")) {
+      int makeupArtistId = Integer.valueOf(integerToConvert);
+
+      MakeupArtistDTO makeupArtist = checkAndGetMakeupArtistId(makeupArtistId, numberMakeupArtist);
+
+      makeupArtists.add(makeupArtist.getId());
+      numberMakeupArtist++;
+    }
+    return makeupArtists;
   }
 
   private List<String> checkAndGetNames(ContainerRequest request) {
@@ -314,27 +354,13 @@ public class PhotoResource {
     return names;
   }
 
-  private List<Integer> checkAndGetMakeupArtists(ContainerRequest request) {
-    List<Integer> makeupArtists = new ArrayList<Integer>();
-    int numberMakeupArtist = 1;
-    for (String integerToConvert : request.getHeaderString("makeupArtists").split(",")) {
-      int makeupArtistId = Integer.valueOf(integerToConvert);
-
-      MakeupArtistDTO makeupArtist = checkAndGetMakeupArtistId(makeupArtistId, numberMakeupArtist);
-
-      makeupArtists.add(makeupArtist.getId());
-      numberMakeupArtist++;
-    }
-    return makeupArtists;
-  }
-
-  private MakeupArtistDTO checkAndGetMakeupArtistId(int makeupArtistId, int numberMakeupArtist) {
-    if (makeupArtistId < 0) {
+  private PhotographerDTO checkAndGetPhotographerId(int photographerId, int numberPhotographer) {
+    if (photographerId < 0) {
       throw new PresentationException(
-          "Make-up artist of the photo N°" + numberMakeupArtist + " doesn't exist",
+          "Photographer of the photo N°" + numberPhotographer + " doesn't exist",
           Status.BAD_REQUEST);
     }
-    return this.makeupArtistUCC.findById(makeupArtistId);
+    return this.photographerUCC.findById(photographerId);
   }
 
   private List<Integer> checkAndGetPhotographers(ContainerRequest request) {
@@ -349,29 +375,6 @@ public class PhotoResource {
       numberPhotographer++;
     }
     return photographers;
-  }
-
-  private PhotographerDTO checkAndGetPhotographerId(int photographerId, int numberPhotographer) {
-    if (photographerId < 0) {
-      throw new PresentationException(
-          "Photographer of the photo N°" + numberPhotographer + " doesn't exist",
-          Status.BAD_REQUEST);
-    }
-    return this.photographerUCC.findById(photographerId);
-  }
-
-  private List<Integer> checkAndGetSharers(ContainerRequest request) {
-    List<Integer> sharers = new ArrayList<Integer>();
-    int numberSharer = 1;
-    for (String integerToConvert : request.getHeaderString("sharers").split(",")) {
-      int sharerId = Integer.valueOf(integerToConvert);
-
-      sharerId = checkAndGetSharerIdIfIsCorrect(sharerId, numberSharer, request);
-
-      sharers.add(sharerId);
-      numberSharer++;
-    }
-    return sharers;
   }
 
   /**
@@ -398,6 +401,28 @@ public class PhotoResource {
         Status.BAD_REQUEST);
   }
 
+  private List<Integer> checkAndGetSharers(ContainerRequest request) {
+    List<Integer> sharers = new ArrayList<Integer>();
+    int numberSharer = 1;
+    for (String integerToConvert : request.getHeaderString("sharers").split(",")) {
+      int sharerId = Integer.valueOf(integerToConvert);
+
+      sharerId = checkAndGetSharerIdIfIsCorrect(sharerId, numberSharer, request);
+
+      sharers.add(sharerId);
+      numberSharer++;
+    }
+    return sharers;
+  }
+
+  private TagDTO checkAndGetTagIdIfIsCorrect(int tagId, int photoNumber) {
+    if (tagId < 1) {
+      throw new PresentationException("Tag of the photo N°" + photoNumber + " doesn't exist",
+          Status.BAD_REQUEST);
+    }
+    return this.tagUCC.findById(tagId);
+  }
+
   private List<Integer> checkAndGetTags(ContainerRequest request) {
     List<Integer> tags = new ArrayList<Integer>();
     int numberTag = 1;
@@ -410,14 +435,6 @@ public class PhotoResource {
       numberTag++;
     }
     return tags;
-  }
-
-  private TagDTO checkAndGetTagIdIfIsCorrect(int tagId, int photoNumber) {
-    if (tagId < 1) {
-      throw new PresentationException("Tag of the photo N°" + photoNumber + " doesn't exist",
-          Status.BAD_REQUEST);
-    }
-    return this.tagUCC.findById(tagId);
   }
 
   private void checkIfAllInformationsIsGived(Map<String, List<FormDataBodyPart>> fields,
@@ -465,6 +482,29 @@ public class PhotoResource {
       throw new PresentationException(name + " is not matching a Timestamp pattern.",
           Status.BAD_REQUEST);
     }
+  }
+
+  private TagPhotoDTO createFullFillTagPhoto(int photoId, int tagId) {
+    TagPhotoDTO tagPhotoDTO = this.domaineFactory.getTagPhotoDTO();
+
+    tagPhotoDTO.setPhotoId(photoId);
+    tagPhotoDTO.setTagId(tagId);
+
+    return tagPhotoDTO;
+  }
+
+  private PhotoDTO createPhotoDTOWith(String picture, String name, int makeupArtist,
+      int photographer, int sharer, Timestamp date) {
+    PhotoDTO photo = domaineFactory.getPhotoDTO();
+
+    photo.setName(name);
+    photo.setPicture(picture);
+    photo.setMakeupArtist(makeupArtist);
+    photo.setPhotographer(photographer);
+    photo.setSharer(sharer);
+    photo.setDate(date);
+
+    return photo;
   }
 
   /**

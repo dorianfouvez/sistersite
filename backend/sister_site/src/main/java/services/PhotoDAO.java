@@ -6,22 +6,29 @@ package services;
 import java.util.List;
 import domaine.photo.ComplexPhotoDTO;
 import domaine.photo.PhotoDTO;
+import domaine.user.UserDTO;
 
 public interface PhotoDAO {
-
-  PhotoDTO findById(int id);
-
-  PhotoDTO findByName(String name);
 
   PhotoDTO add(PhotoDTO photo);
 
   PhotoDTO delete(int id);
 
-  List<PhotoDTO> getBook(int tagId);
+  PhotoDTO findById(int id);
+
+  PhotoDTO findByName(String name);
+
+  PhotoDTO findByNameButNotFor(int id, String name);
 
   List<PhotoDTO> getAll(int userId);
 
-  List<ComplexPhotoDTO> getAllFullInfosPhoto(int id);
+  List<ComplexPhotoDTO> getAllFullInfosPhotoFor(int id);
+
+  List<PhotoDTO> getBook(int tagId);
+
+  boolean isOwnPhoto(UserDTO user, int photoId);
+
+  PhotoDTO update(PhotoDTO photo);
 
 
 

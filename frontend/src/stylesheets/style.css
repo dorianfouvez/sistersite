@@ -31,6 +31,16 @@
   cursor: pointer;
 }
 
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -66px;
+  padding-bottom: 66px;
+}
+
 
 
 /*************** AddPhotographer form ***************/
