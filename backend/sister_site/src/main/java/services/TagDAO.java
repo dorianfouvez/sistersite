@@ -8,13 +8,13 @@ import domaine.tag.TagDTO;
 
 public interface TagDAO {
 
+  TagDTO add(TagDTO tag);
+
   TagDTO findById(int id);
 
   TagDTO findByLabel(String label);
 
   List<TagDTO> getAllSortedByLabel();
-
-  TagDTO add(TagDTO tag);
 
 
 

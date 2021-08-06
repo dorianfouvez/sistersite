@@ -11,6 +11,8 @@ public interface PhotoUCC {
 
   List<PhotoDTO> addPhotos(List<PhotoDTO> photos, List<TagPhotoDTO> tagsPhotos);
 
+  PhotoDTO delete(int id, UserDTO user);
+
   PhotoDTO findById(int id);
 
   List<ComplexPhotoDTO> getAllFor(int userId);

@@ -5,7 +5,9 @@ package domaine.photo;
 
 import java.util.ArrayList;
 import java.util.List;
+import api.PhotoResource;
 import api.utils.BusinessException;
+import api.utils.FatalException;
 import domaine.tag_photo.TagPhotoDTO;
 import domaine.user.UserDTO;
 import jakarta.inject.Inject;
@@ -30,6 +32,7 @@ public class PhotoUCCImpl implements PhotoUCC {
   @Override
   public List<PhotoDTO> addPhotos(List<PhotoDTO> photos, List<TagPhotoDTO> tagsPhotos) {
     if (photos.size() != tagsPhotos.size()) {
+      PhotoResource.deleteAllThePhotos(photos);
       throw new BusinessException("There is not the same amout of photo and tags",
           Status.BAD_REQUEST);
     }
@@ -37,13 +40,35 @@ public class PhotoUCCImpl implements PhotoUCC {
     this.dalservices.startTransaction();
     List<PhotoDTO> addedPhotos = new ArrayList<>();
     for (int i = 0; i < photos.size(); i++) {
-      PhotoDTO newPhoto = this.addPhoto(photos.get(i), i + 1);
-      this.addTagPhoto(tagsPhotos.get(i), newPhoto, i);
-      addedPhotos.add(newPhoto);
+      try {
+        PhotoDTO newPhoto = this.addPhoto(photos.get(i), i + 1);
+        this.addTagPhoto(tagsPhotos.get(i), newPhoto, i);
+        addedPhotos.add(newPhoto);
+      } catch (BusinessException e) {
+        PhotoResource.deleteAllThePhotos(photos);
+        throw e;
+      } catch (FatalException e) {
+        PhotoResource.deleteAllThePhotos(photos);
+        throw e;
+      }
     }
     this.dalservices.commitTransaction();
     // throw new UnsupportedOperationException("Not implemented yet!");
     return addedPhotos;
+  }
+
+  @Override
+  public PhotoDTO delete(int id, UserDTO user) {
+    this.dalservices.startTransaction();
+    if (!this.photoDAO.isOwnPhoto(user, id) || !user.isBoss()) {
+      this.dalservices.rollbackTransaction();
+      throw new BusinessException("You can't delete this photo", Status.BAD_REQUEST);
+    }
+
+    deleteTagPhoto(id);
+    PhotoDTO deletedPhoto = deletePhoto(id);
+    this.dalservices.commitTransaction();
+    return deletedPhoto;
   }
 
   @Override
@@ -107,7 +132,7 @@ public class PhotoUCCImpl implements PhotoUCC {
     }
 
     PhotoDTO photoDTO = this.updatePhoto(photo);
-    TagPhotoDTO tagPhotoDTO = this.updateTagPhoto(tagPhoto, lastTagId);
+    this.updateTagPhoto(tagPhoto, lastTagId);
     this.dalservices.commitTransaction();
     return photoDTO;
   }
@@ -142,6 +167,24 @@ public class PhotoUCCImpl implements PhotoUCC {
       }
     }
     return newTagPhoto;
+  }
+
+  private PhotoDTO deletePhoto(int id) {
+    PhotoDTO deletedPhoto = this.photoDAO.findById(id);
+    if (this.photoDAO.delete(id) != null) {
+      this.dalservices.rollbackTransaction();
+      throw new BusinessException("Photo doesn't delete", Status.BAD_REQUEST);
+    }
+    return deletedPhoto;
+  }
+
+  private List<TagPhotoDTO> deleteTagPhoto(int photoId) {
+    List<TagPhotoDTO> tags = this.tagPhotoDAO.findAllFor(photoId);
+    if (!this.tagPhotoDAO.deleteAllFor(photoId).isEmpty()) {
+      this.dalservices.rollbackTransaction();
+      throw new BusinessException("All tag linked to the photo doesn't delete", Status.BAD_REQUEST);
+    }
+    return tags;
   }
 
   private PhotoDTO updatePhoto(PhotoDTO photo) {

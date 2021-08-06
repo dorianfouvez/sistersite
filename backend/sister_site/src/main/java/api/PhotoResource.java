@@ -42,6 +42,7 @@ import domaine.user.UserUCC;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -80,6 +81,29 @@ public class PhotoResource {
   private UserUCC userUCC;
 
 
+
+  /**
+   * delete the photo with the id given.
+   * 
+   * @param request header with the token.
+   * @param id the id of the photo.
+   * @return deletedPhoto if delete is did.
+   */
+  @DELETE
+  @Path("/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Authorize
+  public Response delete(@Context ContainerRequest request, @PathParam("id") int id) {
+    if (id < 0) {
+      throw new PresentationException("Photo id cannot be under 0", Status.BAD_REQUEST);
+    }
+
+    UserDTO currentUser = (UserDTO) request.getProperty("user");
+
+    PhotoDTO deletedPhoto = this.photoUCC.delete(id, currentUser);
+    deleteThePhotoInTheLocation(getServerPathFrom(deletedPhoto.getPicture()));
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("photo", deletedPhoto);
+  }
 
   @GET
   @Path("/getAddPhotoInformation")
@@ -126,7 +150,7 @@ public class PhotoResource {
   public Response update(@Context ContainerRequestContext requestContext,
       @Context ContainerRequest request, PhotoDTO photo) {
     UserDTO currentUser = (UserDTO) request.getProperty("user");
-    this.photoUCC.findById(photo.getId());
+    PhotoDTO oldPhoto = this.photoUCC.findById(photo.getId());
     if (this.photoUCC.nameAlreadyExistButNotFor(photo.getId(), photo.getName())) {
       throw new PresentationException("The Name \"" + photo.getName() + "\" is already use.",
           Status.BAD_REQUEST);
@@ -135,10 +159,14 @@ public class PhotoResource {
     TagPhotoDTO tagPhoto = this.createFullFillTagPhoto(photo.getId(),
         Integer.valueOf(requestContext.getHeaderString("tag_photo")));
 
+    boolean asRename = renameThePhotoInTheLocation(getServerPathFrom(oldPhoto.getPicture()),
+        this.getServerPath(photo.getName()));
+    if (asRename) {
+      photo.setPicture(getLocalPath(photo.getName()));
+    } else {
+      photo.setPicture(oldPhoto.getPicture());
+    }
     int lastTagId = Integer.valueOf(requestContext.getHeaderString("lastTagId"));
-    System.out.println(photo);
-    System.out.println(tagPhoto);
-    System.out.println(lastTagId);
     PhotoDTO updatePhoto = this.photoUCC.update(photo, tagPhoto, lastTagId, currentUser);
     transformTheURLOfThePhotoIntoBase64Image(updatePhoto);
 
@@ -159,27 +187,21 @@ public class PhotoResource {
       final FormDataMultiPart multiPart) {
     // Check all the make-up artists.
     List<Integer> makeupArtists = checkAndGetMakeupArtists(request);
-    System.out.println("Make-up Artists: " + makeupArtists); // TODO remove
 
-    // TODO Check all the names.
+    // Check all the names.
     List<String> names = checkAndGetNames(request);
-    System.out.println("Names: " + names); // TODO remove
 
     // Check all the photographers.
     List<Integer> photographers = checkAndGetPhotographers(request);
-    System.out.println("Photographers: " + photographers); // TODO remove
 
     // Check all the sharers.
     List<Integer> sharers = checkAndGetSharers(request);
-    System.out.println("Sharers: " + sharers); // TODO remove
 
     // Check all the tags.
     List<Integer> tags = checkAndGetTags(request);
-    System.out.println("Tags: " + tags); // TODO remove
 
     // Check all the dates.
     List<Timestamp> dates = checkAndGetDates(request);
-    System.out.println("Dates: " + dates); // TODO remove
 
     // Save all photo include.
     Map<String, List<FormDataBodyPart>> fields = multiPart.getFields();
@@ -193,15 +215,11 @@ public class PhotoResource {
       List<FormDataBodyPart> values = fields.get(keyField);
       for (FormDataBodyPart formDataBodyPart : values) {
         String fileName = names.get(i);
-        String uploadedFileLocation = Config.getProperty("PhotosPath") + fileName;
-        // System.out.println("Name : " + fileName + "\nURL : " + System.getProperty("user.dir") + uploadedFileLocation);
-        System.out.println("FileName: " + fileName + ", Make-up Artist: " + makeupArtists.get(i)
-            + ", Photographer: " + photographers.get(i) + ", Sharer: " + sharers.get(i) + ", Tag: "
-            + tags.get(i) + ", Date: " + dates.get(i)); // TODO remove
+        String uploadedFileLocation = this.getLocalPath(fileName);
 
         // Save it.
         saveThePhotoInTheLocation(formDataBodyPart.getValueAs(InputStream.class),
-            System.getProperty("user.dir") + uploadedFileLocation);
+            this.getServerPath(fileName));
         photos.add(createPhotoDTOWith(uploadedFileLocation, fileName, makeupArtists.get(i),
             photographers.get(i), sharers.get(i), dates.get(i)));
         tagsPhotos.add(createFullFillTagPhoto(-1, tags.get(i)));
@@ -220,6 +238,19 @@ public class PhotoResource {
 
 
   // ******************** Public static's Methods ********************
+
+  public static void deleteAllThePhotos(List<PhotoDTO> photos) {
+    for (PhotoDTO photo : photos) {
+      deleteThePhotoInTheLocation(getServerPathFrom(photo.getPicture()));
+    }
+  }
+
+  public static void deleteThePhotoInTheLocation(String pathPhotoToDelete) {
+    File f = new File(pathPhotoToDelete);
+    if (!f.delete()) {
+      throw new PresentationException("Failed to delete the file", Status.BAD_REQUEST);
+    }
+  }
 
   /**
    * Return a Image into a Base64 at the location given.
@@ -242,6 +273,10 @@ public class PhotoResource {
     }
 
     return "data:image/png;base64," + encodedfile;
+  }
+
+  public static String getServerPathFrom(String localPath) {
+    return System.getProperty("user.dir") + localPath;
   }
 
   public static void transformAllURLOfTheComplexPhotosIntoBase64Image(
@@ -518,6 +553,10 @@ public class PhotoResource {
     return filename.substring(11, filename.length() - 1);
   }
 
+  private String getLocalPath(String filename) {
+    return Config.getProperty("PhotosPath") + filename;
+  }
+
   /**
    * return the name of a image from a FormDataBodyPart.
    * 
@@ -527,6 +566,34 @@ public class PhotoResource {
   private String getNameOfImageFrom(FormDataBodyPart formDataBodyPart) {
     String filename = formDataBodyPart.getHeaders().get("Content-Disposition").get(0).split(";")[1];
     return filename.substring(7, filename.length() - 1);
+  }
+
+  private String getServerPath(String filename) {
+    return System.getProperty("user.dir") + this.getLocalPath(filename);
+  }
+
+  private boolean renameThePhotoInTheLocation(String oldName, String newName) {
+    if (oldName.equals(newName)) {
+      return false;
+    }
+
+    File file = new File(oldName);
+    File file2 = new File(newName);
+
+    if (file2.exists()) {
+      throw new PresentationException("IO Exception: the new name is already use.",
+          Status.BAD_REQUEST);
+    }
+
+    // Rename file (or directory)
+    boolean success = file.renameTo(file2);
+
+    if (!success) {
+      // File was not successfully renamed
+      throw new PresentationException("Error when rename", Status.BAD_REQUEST);
+    }
+
+    return true;
   }
 
   /**

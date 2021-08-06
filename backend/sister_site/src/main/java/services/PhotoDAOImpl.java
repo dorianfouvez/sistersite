@@ -48,8 +48,8 @@ public class PhotoDAOImpl implements PhotoDAO {
 
   @Override
   public PhotoDTO delete(int id) {
-    PreparedStatement ps = this.dalBackendServices
-        .getPreparedStatement("DELETE FROM" + PhotoDAO.getPhotoTableName() + " WHERE id = ?");
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement(
+        "DELETE FROM" + PhotoDAO.getPhotoTableNameWithoutAbbreviation() + " WHERE id = ?");
 
     try {
       ps.setInt(1, id);
@@ -238,10 +238,10 @@ public class PhotoDAOImpl implements PhotoDAO {
   public PhotoDTO update(PhotoDTO photo) {
     PreparedStatement ps = this.dalBackendServices.getPreparedStatement("UPDATE"
         + PhotoDAO.getPhotoTableNameWithoutAbbreviation()
-        + " SET name = ?, makeup_artist = ?, photographer = ?, sharer = ?, date = ? WHERE id = ?");
+        + " SET name = ?, picture = ?, makeup_artist = ?, photographer = ?, sharer = ?, date = ? WHERE id = ?");
     try {
-      ps = setAllPsAttributWithoutIdAndPicture(ps, photo);
-      ps.setInt(6, photo.getId());
+      ps = setAllPsAttributWithoutId(ps, photo);
+      ps.setInt(7, photo.getId());
 
       ps.executeUpdate();
     } catch (SQLException e) {
@@ -380,18 +380,6 @@ public class PhotoDAOImpl implements PhotoDAO {
     int i = 1;
     ps.setString(i++, photo.getName());
     ps.setString(i++, photo.getPicture());
-    ps.setInt(i++, photo.getMakeupArtist());
-    ps.setInt(i++, photo.getPhotographer());
-    ps.setInt(i++, photo.getSharer());
-    ps.setTimestamp(i++, photo.getDate());
-
-    return ps;
-  }
-
-  private PreparedStatement setAllPsAttributWithoutIdAndPicture(PreparedStatement ps,
-      PhotoDTO photo) throws SQLException {
-    int i = 1;
-    ps.setString(i++, photo.getName());
     ps.setInt(i++, photo.getMakeupArtist());
     ps.setInt(i++, photo.getPhotographer());
     ps.setInt(i++, photo.getSharer());

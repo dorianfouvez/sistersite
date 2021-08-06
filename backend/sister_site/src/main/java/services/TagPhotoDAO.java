@@ -3,11 +3,16 @@
  */
 package services;
 
+import java.util.List;
 import domaine.tag_photo.TagPhotoDTO;
 
 public interface TagPhotoDAO {
 
   TagPhotoDTO add(TagPhotoDTO tagPhoto);
+
+  List<TagPhotoDTO> deleteAllFor(int photoId);
+
+  List<TagPhotoDTO> findAllFor(int photoId);
 
   TagPhotoDTO findById(int photoId, int tagId);
 

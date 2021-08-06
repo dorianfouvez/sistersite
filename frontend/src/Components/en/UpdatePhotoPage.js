@@ -16,7 +16,7 @@ const UpdatePhotoPage = () => {
         page.innerHTML = photoPage;
 
         if(!user_me.photo){
-            onError("There is no photo.");
+            onError("No photo selected.");
         }else{
             let id = getTokenSessionData();
             fetch(API_URL + "photos/getAddPhotoInformation", {
@@ -37,7 +37,8 @@ const UpdatePhotoPage = () => {
 };
 
 const onShowPhoto = (photo, makeupArtists, photographers, tags) => {
-    let photoPage = `<form id="updatePhoto">
+    let photoPage = `<span id="id01" class="modal"></span>
+    <form id="updatePhoto">
         <div class="d-flex justify-content-center mb-2">
             <img id="photo" src="${photo.picture}" alt="${photo.name}" style="width:200px;"/><br>
         </div>
@@ -108,9 +109,14 @@ const onShowPhoto = (photo, makeupArtists, photographers, tags) => {
 
         <input id="photoId" type="hidden" value="${photo.id}">
 
-        <button type="submit" name="submitPhoto" class="btn btn-primary mt-2 mb-2">
-            <i class="fas fa-save"></i>
-        </button>
+        <div class="float-right">
+            <button id="submit" type="submit" name="updatePhoto" class="btn btn-primary mt-2">
+                <i class="fas fa-save"></i>
+            </button>
+            <button id="delete" type="submit" name="deletePhoto" class="btn btn-danger mt-2">
+                <i class='fas fa-trash-alt'></i>
+            </button>
+        </div>
     </form>`;
 
     let page = document.getElementById("photosPage");
@@ -120,6 +126,23 @@ const onShowPhoto = (photo, makeupArtists, photographers, tags) => {
 
 const onSubmit = (e) => {
     e.preventDefault();
+    if(document.activeElement.name === "updatePhoto"){
+        onSubmitUpdate(e);
+    }else if(document.activeElement.name === "deletePhoto"){
+        onModal(e);
+    }
+}
+
+const onSubmitUpdate = (e) => {
+    e.preventDefault();
+
+    document.getElementById("delete").disabled = true;
+
+    let submitButton = document.getElementById("submit");
+    submitButton.disabled = true;
+    submitButton.innerHTML = ``;
+    submitButton.className = `loader`;
+
     let photoId = document.getElementById("photoId").value;
     let photoDate = document.getElementById("date").value;
     if(!photoDate) photoDate = "null";
@@ -140,11 +163,9 @@ const onSubmit = (e) => {
         "makeupArtist": makeupArtistId,
         "name": photoName,
         "photographer": photographerId,
-        /*"picture": photoPicture,*/
+        /*"picture": photoName,*/
         "sharer": sharerId,
-    }
-    
-    console.log(photo);
+    };
     
     let id = getTokenSessionData();
     fetch(API_URL + "photos", {
@@ -159,7 +180,7 @@ const onSubmit = (e) => {
     })
     .then((response) => {
     if (!response.ok) {
-        return response.text().then((err) => onError(err));
+        return response.text().then((err) => reactivateButton(err));
     }
     else
         return response.json().then((data) => onUpdate(data));
@@ -171,6 +192,95 @@ const onUpdate = (data) => {
     onSuccess("Photo updated", messageBoard);
     RedirectUrl("/photos");
 };
+
+const onModal = (e) => {
+    e.preventDefault();
+
+    let modalContent = `<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+    <form id="modalForm" class="modal-content">
+        <div class="container">
+            <h1>Delete Account</h1>
+            <p>Are you sure you want to delete this photo?</p>
+        
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                <button id="deletePhoto" type="submit" name="deletePhoto" class="deletebtn">Delete</button>
+            </div>
+        </div>
+    </form>`;
+    let modal = document.getElementById("id01");
+    modal.innerHTML = modalContent;
+
+    document.getElementById("modalForm").addEventListener("submit", onSubmitDelete);
+    
+    modal.style.display = 'block';
+    window.onclick = function(event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+    };
+}
+
+const test = (e) => {
+    e.preventDefault();
+    console.log(document.activeElement, e.target);
+    document.getElementById("id01").style.display = "none";
+
+    document.getElementById("submit").disabled = true;
+
+    let submitButton = document.getElementById('delete');
+    submitButton.disabled = true;
+    submitButton.innerHTML = ``;
+    submitButton.className = `loader loader_red`;
+}
+
+const onSubmitDelete = (e) => {
+    e.preventDefault();
+    document.getElementById("id01").style.display = "none";
+    document.getElementById("submit").disabled = true;
+    let submitButton = document.getElementById('delete');
+    submitButton.disabled = true;
+    submitButton.innerHTML = ``;
+    submitButton.className = `loader loader_red`;
+
+    let photoId = document.getElementById("photoId").value;
+
+    let id = getTokenSessionData();
+    fetch(API_URL + "photos/" + photoId, {
+      method: "DELETE",  
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": id,
+      },
+    })
+    .then((response) => {
+    if (!response.ok) {
+        return response.text().then((err) => reactivateButton(err));
+    }
+    else
+        return response.json().then((data) => onDelete(data));
+    });
+};
+
+const onDelete = (data) => {
+    let messageBoard = document.querySelector("#messageBoard");
+    onSuccess("Photo deleted", messageBoard);
+    RedirectUrl("/photos");
+};
+
+const reactivateButton = (err) => {
+    let submitButton = document.getElementById("submit");
+    submitButton.disabled = false;
+    submitButton.innerHTML = `<i class="fas fa-save"></i>`;
+    submitButton.className = `btn btn-primary mt-2`;
+
+    let deleteButton = document.getElementById("delete");
+    deleteButton.disabled = false;
+    deleteButton.innerHTML = `<i class='fas fa-trash-alt'></i>`;
+    deleteButton.className = `btn btn-danger mt-2`;
+
+    onError(err);
+}
 
 const createTimeStamp = (dateString) => {
     let Timestamp = new Date(dateString);

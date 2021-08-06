@@ -6,6 +6,8 @@ package services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import api.utils.FatalException;
 import domaine.DomaineFactory;
 import domaine.tag_photo.TagPhotoDTO;
@@ -35,6 +37,43 @@ public class TagPhotoDAOImpl implements TagPhotoDAO {
       throw new FatalException("Error add tag photo", e);
     }
     return this.findById(tagPhoto.getPhotoId(), tagPhoto.getTagId());
+  }
+
+  @Override
+  public List<TagPhotoDTO> deleteAllFor(int photoId) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("DELETE FROM"
+        + TagPhotoDAO.getTagPhotoTableNameWithoutAbbreviation() + " WHERE photo_id = ?");
+
+    try {
+      ps.setInt(1, photoId);
+
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      ((DalServices) dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error delete tag photo", e);
+    }
+    return findAllFor(photoId);
+  }
+
+  @Override
+  public List<TagPhotoDTO> findAllFor(int photoId) {
+    PreparedStatement ps = this.dalBackendServices.getPreparedStatement("SELECT"
+        + TagPhotoDAO.getAllTagPhotoAttributes() + " FROM" + TagPhotoDAO.getTagPhotoTableName()
+        + " WHERE " + TagPhotoDAO.getTagPhotoAbbreviation() + ".photo_id = ?");
+    List<TagPhotoDTO> photos = new ArrayList<>();
+    try {
+      ps.setInt(1, photoId);
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          TagPhotoDTO photo = this.createFullFillTagPhoto(rs);
+          photos.add(photo);
+        }
+      }
+    } catch (SQLException e) {
+      ((DalServices) this.dalBackendServices).rollbackTransaction();
+      throw new FatalException("Error find all tag photo by photo id", e);
+    }
+    return photos;
   }
 
   @Override
