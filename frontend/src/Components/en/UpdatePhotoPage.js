@@ -131,7 +131,7 @@ const onSubmit = (e) => {
     }else if(document.activeElement.name === "deletePhoto"){
         onModal(e);
     }
-}
+};
 
 const onSubmitUpdate = (e) => {
     e.preventDefault();
@@ -199,7 +199,7 @@ const onModal = (e) => {
     let modalContent = `<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
     <form id="modalForm" class="modal-content">
         <div class="container">
-            <h1>Delete Account</h1>
+            <h1>Delete Photo</h1>
             <p>Are you sure you want to delete this photo?</p>
         
             <div class="clearfix">
@@ -219,20 +219,7 @@ const onModal = (e) => {
           modal.style.display = "none";
         }
     };
-}
-
-const test = (e) => {
-    e.preventDefault();
-    console.log(document.activeElement, e.target);
-    document.getElementById("id01").style.display = "none";
-
-    document.getElementById("submit").disabled = true;
-
-    let submitButton = document.getElementById('delete');
-    submitButton.disabled = true;
-    submitButton.innerHTML = ``;
-    submitButton.className = `loader loader_red`;
-}
+};
 
 const onSubmitDelete = (e) => {
     e.preventDefault();
@@ -280,7 +267,7 @@ const reactivateButton = (err) => {
     deleteButton.className = `btn btn-danger mt-2`;
 
     onError(err);
-}
+};
 
 const createTimeStamp = (dateString) => {
     let Timestamp = new Date(dateString);

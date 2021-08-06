@@ -42,7 +42,6 @@ public class PhotoDAOImpl implements PhotoDAO {
       ((DalServices) dalBackendServices).rollbackTransaction();
       throw new FatalException("Error add photo", e);
     }
-    // System.out.println(photo.getName());
     return findByName(photo.getName());
   }
 

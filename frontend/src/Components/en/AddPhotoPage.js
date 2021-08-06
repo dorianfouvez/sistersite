@@ -1,5 +1,5 @@
 import { user_me } from "../..";
-import { onError } from "../../utils/render";
+import { onError, onSuccess } from "../../utils/render";
 import { API_URL } from "../../utils/server";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session";
 import { RedirectUrl } from "../Router";
@@ -126,9 +126,7 @@ const onSubmit = (e) => {
         let sharers = [];
         let tags = [];
         let dates = [];
-        //console.log(savedFiles);
         for (let i = 0; i < savedFiles.length; i++) {
-            //console.log("name" + savedFiles[i].id);
             let photoName = document.getElementById("name" + savedFiles[i].id).value;
             let photoMakeupArtist = document.getElementById("makeupArtist" + savedFiles[i].id).value;
             let photoPhotographer = document.getElementById("photographer" + savedFiles[i].id).value;
@@ -136,13 +134,9 @@ const onSubmit = (e) => {
             let photoTag = document.getElementById("tag" + savedFiles[i].id).value;
             let photoDate = document.getElementById("date" + savedFiles[i].id).value;
             let extention = savedFiles[i].name.substr(savedFiles[i].name.lastIndexOf("."), savedFiles[i].name.length);
-            //console.log(photoName + extention);
             savedFiles[i].photoName = photoName + extention;
             savedFiles[i].photographer = photoPhotographer;
-            savedFiles[i].sharer = photoSharer;
-            /*console.log("Photo=[Name: " + photoName + ", Picture: " + savedFiles[i] + ", Photographer: " + photoPhotographer + ", Sharer: " 
-            + photoSharer + ", Tag: " + photoTag + "]", savedFiles[i]);*/
-            
+            savedFiles[i].sharer = photoSharer;            
             
             photoNames.push(photoName + extention);
             makeupArtists.push(photoMakeupArtist);
@@ -177,9 +171,15 @@ const onSubmit = (e) => {
         }).then((response) => {
             if (!response.ok) {
                 return response.text().then((err) => onError(err));
-            } else return response.json().then((data) => RedirectUrl("/addPhoto"));
+            } else return response.json().then((data) => onAdd(data));
         });
     }
+};
+
+const onAdd = (data) => {
+    let messageBoard = document.querySelector("#messageBoard");
+    onSuccess("Photo added", messageBoard);
+    RedirectUrl("/photos");
 };
 
 export default AddPhotoPage;

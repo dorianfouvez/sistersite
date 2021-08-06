@@ -337,7 +337,6 @@ public class PhotoResource {
     List<Timestamp> dates = new ArrayList<Timestamp>();
 
     int numberDate = 1;
-    System.out.println(request.getHeaderString("dates"));
     for (String dateToConvert : request.getHeaderString("dates").split(",")) {
       Timestamp timestamp =
           convertIntoTimestampIfNotNull(dateToConvert, "Date of the photo N°" + numberDate);
