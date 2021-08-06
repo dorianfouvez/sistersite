@@ -4,6 +4,7 @@
 package services;
 
 import java.util.List;
+import domaine.user.ComplexUserDTO;
 import domaine.user.UserDTO;
 
 public interface UserDAO {
@@ -11,6 +12,8 @@ public interface UserDAO {
   UserDTO findById(int id);
 
   UserDTO findByUserName(String username);
+
+  ComplexUserDTO findComplexById(int id);
 
   List<UserDTO> getAll();
 

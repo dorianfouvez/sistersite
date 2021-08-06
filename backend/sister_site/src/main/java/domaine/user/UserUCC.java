@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface UserUCC {
 
-  UserDTO login(String username, String password);
-
   UserDTO findById(int id);
 
+  ComplexUserDTO findComplexUserById(int id);
+
   List<UserDTO> getAll();
+
+  UserDTO login(String username, String password);
 
 }
 

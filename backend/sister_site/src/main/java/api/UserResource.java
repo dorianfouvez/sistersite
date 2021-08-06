@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import api.filters.Authorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
+import domaine.user.ComplexUserDTO;
 import domaine.user.UserDTO;
 import domaine.user.UserUCC;
 import jakarta.inject.Inject;
@@ -26,24 +27,18 @@ import jakarta.ws.rs.core.Response.Status;
 public class UserResource {
 
   @Inject
-  private UserUCC userUcc;
+  private UserUCC userUCC;
 
 
 
-  /**
-   * Login the user if exists or send error message.
-   * 
-   * @param json object containing a username and a password.
-   * @return a response with a token who contains the user if it exists in the database and matches the password.
-   */
-  @POST
-  @Path("/login")
-  @Consumes(MediaType.APPLICATION_JSON)
-  public Response login(JsonNode json) {
-    checkLoginCredentials(json);
+  @GET
+  @Path("/complex")
+  @Authorize
+  public Response getComplexUser(@Context ContainerRequest request) {
+    UserDTO currentUser = (UserDTO) request.getProperty("user");
 
-    UserDTO user = this.userUcc.login(json.get("username").asText(), json.get("password").asText());
-    return ResponseMaker.createResponseWithToken(user);
+    ComplexUserDTO complexUser = this.userUCC.findComplexUserById(currentUser.getID());
+    return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("user", complexUser);
   }
 
   /**
@@ -58,6 +53,22 @@ public class UserResource {
   public Response getUser(@Context ContainerRequest request) {
     UserDTO currentUser = (UserDTO) request.getProperty("user");
     return ResponseMaker.createResponseWithToken(currentUser);
+  }
+
+  /**
+   * Login the user if exists or send error message.
+   * 
+   * @param json object containing a username and a password.
+   * @return a response with a token who contains the user if it exists in the database and matches the password.
+   */
+  @POST
+  @Path("/login")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response login(JsonNode json) {
+    checkLoginCredentials(json);
+
+    UserDTO user = this.userUCC.login(json.get("username").asText(), json.get("password").asText());
+    return ResponseMaker.createResponseWithToken(user);
   }
 
 

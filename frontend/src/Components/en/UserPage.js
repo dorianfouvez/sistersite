@@ -16,11 +16,11 @@ const UserPage = () => {
             method: "GET",
             headers: {
             "Content-Type": "application/json",
-            Authorization: id,
+            "Authorization": id,
             },
         }).then((response) => {
             if (!response.ok) {
-            return response.text().then((err) => onError(err));
+                return response.text().then((err) => onError(err));
             } else return response.json().then((data) => onUser(data));
         });
     }
@@ -33,6 +33,8 @@ const onUser = (data) => {
         onError(err);
     }
 
+    console.log(data);
+
     // Need to fetch for address, color, size, photo and nationality.
     let user = data.user;
 
@@ -40,7 +42,7 @@ const onUser = (data) => {
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
         <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>
-        <div class="float-right mr-2"><button id="addPhoto" class="btn btn-primary">Add a photo</button></div>
+        <div class="float-right"><button id="complex" class="btn btn-primary">Complex</button></div>
         <div class="row">
             <div class="col-sm-2 bg-danger">
                 <div class="card img-fluid remove_card_background">
@@ -205,8 +207,25 @@ const onUser = (data) => {
 
     page.innerHTML = userPage;
     document.getElementById("cv").addEventListener('click', onSeeCV);
-    document.getElementById("addPhoto").addEventListener('click', onAddPhoto);
+    document.getElementById("complex").addEventListener('click', onComplex);
 };
+
+const onComplex = (e) => {
+    e.preventDefault();
+
+    let id = getTokenSessionData();
+    fetch(API_URL + "users/complex", {
+        method: "GET",
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": id,
+        },
+    }).then((response) => {
+        if (!response.ok) {
+            return response.text().then((err) => onError(err));
+        } else return response.json().then((data) => console.log(data));
+    });
+}
 
 const onSeeCV = (e) => {
     e.preventDefault();
@@ -224,11 +243,6 @@ const onSeeCV = (e) => {
             return response.text().then((err) => onError(err));
         } else return response.json().then((data) => console.log(data.cv));
     });
-};
-
-const onAddPhoto = (e) => {
-    e.preventDefault();
-    RedirectUrl("/addPhoto");
 };
 
 const onError = (err) => {

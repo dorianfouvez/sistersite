@@ -59,4 +59,14 @@ public interface PhotoDAO {
     return " ambre_fouvez.photos";
   }
 
+  static String getUserPhotoJoint() {
+    return " JOIN" + PhotoDAO.getPhotoTableName() + " ON " + UserDAO.getUserAbbreviation()
+        + ".profile_picture = " + PhotoDAO.getPhotoAbbreviation() + ".id";
+  }
+
+  static String getUserPhotoJointWithName(String name) {
+    return " JOIN" + PhotoDAO.getPhotoTableNameWithName(name) + " ON "
+        + UserDAO.getUserAbbreviation() + ".profile_picture = " + name + ".id";
+  }
+
 }

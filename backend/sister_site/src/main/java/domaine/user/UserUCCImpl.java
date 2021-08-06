@@ -33,6 +33,18 @@ public class UserUCCImpl implements UserUCC {
   }
 
   @Override
+  public ComplexUserDTO findComplexUserById(int id) {
+    dalservices.startTransaction();
+    ComplexUserDTO user = this.userDao.findComplexById(id);
+    if (user == null) {
+      dalservices.rollbackTransaction();
+      throw new BusinessException("Complex user doesn't exist", Status.BAD_REQUEST);
+    }
+    dalservices.commitTransaction();
+    return user;
+  }
+
+  @Override
   public List<UserDTO> getAll() {
     dalservices.startTransaction();
     List<UserDTO> list = userDao.getAll();
