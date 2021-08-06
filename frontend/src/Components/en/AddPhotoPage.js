@@ -9,7 +9,7 @@ const AddPhotoPage = () => {
     if (!user || !user.isBoss) {
         RedirectUrl("/");
     } else {
-        let addPhotoPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Add Photo(s)</center></h1></div>
+        let addPhotoPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h1>Add Photo(s)</h1></div>
         <form id="addPhotoForm" enctype="multipart/form-data">
             <input type="file" id="files" name="files" multiple><span id="loading"></span>
             <input id="savedFiles" type="file" hidden multiple>

@@ -7,7 +7,7 @@ const BookPage = () => {
     if(!user_me || !user_me.choice_of_book){
         RedirectUrl("/");
     }else{
-        let bookPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Book</center></h1></div>
+        let bookPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h1>Book</h1></div>
         <div class="loader mx-auto"></div>`;
 
         let page = document.querySelector("#page");
@@ -26,7 +26,7 @@ const BookPage = () => {
 };
 
 const onBook = (book) => {
-    let bookPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Book</center></h1></div>
+    let bookPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h1>Book</h1></div>
     <div class="row">`;
     book.forEach(photo => {
         bookPage += `<div class="create"><img id="photo${photo.id}" src="${photo.picture}" class="photo_book" alt="${photo.name}"></div>`;

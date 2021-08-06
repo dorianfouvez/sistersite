@@ -8,7 +8,7 @@ const AddTagPage = () => {
     if (!user || !user.isBoss) {
         RedirectUrl("/");
     } else {
-        let addTagPage = `<div class="mt-2 mb-3 pt-5"><h1><center></center></h1></div>
+        let addTagPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h1></h1></div>
         <div class="d-flex justify-content-center mb-3">
             <div class="card">
                 <div class="card-header">

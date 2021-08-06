@@ -1,5 +1,5 @@
 const ErrorNavigationPage = (err) => {
-    let errorPage = `<h4 class="text-dark text-center pt-5">Error Navigation</h4>
+    let errorPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>Error Navigation</h4></div>
         <div class="text-center text-danger">`;
     if (!err) errorPage += `<p>There was an error.</p>`;
     else if (!err.message) errorPage += `<p>${err}</p>`;

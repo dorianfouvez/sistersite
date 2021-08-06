@@ -11,7 +11,7 @@ const PhotosPage = () => {
     if (!user) {
         RedirectUrl("/");
     } else {
-        let photosPage = `<div class="mt-2 mb-3 pt-5"><h1><center>Photos</center></h1></div>
+        let photosPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h1>Photos</h1></div>
         <div id="photosPage"><div class="loader mx-auto"></div></div>`;
         let page = document.querySelector("#page");
         page.innerHTML = photosPage;

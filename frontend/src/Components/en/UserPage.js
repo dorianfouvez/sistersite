@@ -9,7 +9,7 @@ const UserPage = () => {
     if (!user) {
         RedirectUrl("/");
     } else {
-        page.innerHTML = `<div class="text-center"><h4 class="mt-2 pt-5">My profile</h4></div>
+        page.innerHTML = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>My profile</h4></div>
         <div class="loader mx-auto"></div>`;
         let id = getTokenSessionData();
         fetch(API_URL + "users/me", {
@@ -36,8 +36,7 @@ const onUser = (data) => {
     // Need to fetch for address, color, size, photo and nationality.
     let user = data.user;
 
-    let userPage = `<div class="text-center">`;
-    userPage += `<h4 class="mt-2 pt-5">My profile</h4>
+    let userPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>My profile</h4></div>
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
         <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>

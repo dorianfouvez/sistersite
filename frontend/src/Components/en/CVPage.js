@@ -5,7 +5,7 @@ import { getTokenSessionData } from "../../utils/session.js";
 let page = document.querySelector("#page");
 
 const CVPage = () => {
-    page.innerHTML = `<div class="text-center"><h4 class="mt-2 pt-5">Artistic Curriculum Vitae</h4></div>
+    page.innerHTML = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>Artistic Curriculum Vitae</h4></div>
     <div class="loader mx-auto"></div>`;
 
     let id = getTokenSessionData();
@@ -39,7 +39,7 @@ const testCV = (cv) => {
     document.body.style.backgroundColor = "gray";
     //console.log(cv);
     let user = cv.user;
-    let cvPage = `<div class="text-center"><h4 class="mt-2 pt-5">Artistic Curriculum Vitae</h4></div>
+    let cvPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>Artistic Curriculum Vitae</h4></div>
     <div class="container">
         <div id="rowWithBackgroundImg" class="row cv_row">
             <div class="col" class="cv_first_row">
