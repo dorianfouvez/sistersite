@@ -86,7 +86,6 @@ public class UserDAOImpl implements UserDAO {
       ((DalServices) this.dalBackendServices).rollbackTransaction();
       throw new FatalException(e.getMessage(), e);
     }
-    System.out.println("UserDAO:\n" + user);
     return user;
   }
 

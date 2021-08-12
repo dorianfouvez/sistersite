@@ -1,8 +1,11 @@
+import { user_me } from "../../index.js";
 import { API_URL, ALERT_BOX } from "../../utils/server.js";
 import { getTokenSessionData, getUserSessionData } from "../../utils/session.js";
 import { RedirectUrl } from "../Router.js";
+import UpdateUserPage from "./UpdateUserPage.js";
 
 let page = document.querySelector("#page");
+let me = null;
 
 const UserPage = () => {
     const user = getUserSessionData();
@@ -12,7 +15,7 @@ const UserPage = () => {
         page.innerHTML = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>My profile</h4></div>
         <div class="loader mx-auto"></div>`;
         let id = getTokenSessionData();
-        fetch(API_URL + "users/me", {
+        fetch(API_URL + "users/complex", {
             method: "GET",
             headers: {
             "Content-Type": "application/json",
@@ -33,20 +36,28 @@ const onUser = (data) => {
         onError(err);
     }
 
+    me = data;
     console.log(data);
 
-    // Need to fetch for address, color, size, photo and nationality.
+    // Need to fetch All address, All color, All size, All photo and All nationality.
     let user = data.user;
+    let photo = user.profilePicture;
+    let address = user.address;
+    let hairColor = user.hairColor;
+    let hairSize = user.hairSize;
+    let eye = user.eye;
+    let firstNationality = user.firstNationality;
+    let secondNationality = user.secondNationality;
 
     let userPage = `<div class="d-flex justify-content-center mt-2 mb-3 pt-5"><h4>My profile</h4></div>
     <input type="hidden" id="id_user" value="${user.id}">
     <div class="container mt-5">
         <div class="float-right"><button id="cv" class="btn btn-primary">See my cv</button></div>
-        <div class="float-right"><button id="complex" class="btn btn-primary">Complex</button></div>
+        <div class="float-right"><button id="complex" class="btn btn-primary mr-2">Complex</button></div>
         <div class="row">
             <div class="col-sm-2 bg-danger">
                 <div class="card img-fluid remove_card_background">
-                    <img src="assets/Images/logoAE_v2.png" class="card-img-top logo_size" alt="Logo">
+                    <img src="${photo.picture}" class="card-img-top logo_size" alt="${photo.name}">
                     <div class="card-img-overlay">
                         <div class="float-right">
                             <a id="fr" href="#" class="remove_decoration">
@@ -72,15 +83,19 @@ const onUser = (data) => {
         </div>
         <div class="row">
             <div><u><b>Address :</b></u> `;
-            if(user.address) userPage += `${user.address}`;
-            else userPage += `undefined`;
+            if(address){
+                userPage += `<input type="hidden" value="${address.id}">
+                ${address.country}, ${address.postcode} ${address.commune}, 
+                ${address.street} ${address.buildingNumber}`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
             <div><u><b>Facebook :</b></u> `;
-            if(user.facebook) userPage += `${user.facebook}
-            <a href="${user.facebook}" class="fa fa_logo_mini fa-facebook"></a>`;
-            else userPage += `undefined`;
+            if(user.facebook){ 
+                userPage += `${user.facebook} 
+                <a href="${user.facebook}" class="fa fa_logo_mini fa-facebook"></a>`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
@@ -106,20 +121,26 @@ const onUser = (data) => {
         </div>
         <div class="row">
             <div><u><b>Hair color :</b></u> `;
-            if(user.hairColor) userPage += `${user.hairColor}`;
-            else userPage += `undefined`;
+            if(hairColor){
+                userPage += `<input type="hidden" value="${hairColor.id}">
+                ${hairColor.color}`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
             <div><u><b>Hair size :</b></u> `;
-            if(user.hairSize) userPage += `${user.hairSize}`;
-            else userPage += `undefined`;
+            if(hairSize){ 
+                userPage += `<input type="hidden" value="${hairSize.id}">
+                ${hairSize.size}`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
             <div><u><b>Eye :</b></u> `;
-            if(user.eye) userPage += `${user.eye}`;
-            else userPage += `undefined`;
+            if(eye){
+                userPage += `<input type="hidden" value="${eye.id}">
+                ${eye.color}`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
@@ -136,14 +157,18 @@ const onUser = (data) => {
         </div>
         <div class="row">
             <div><u><b>First nationality :</b></u> `;
-            if(user.firstNationality) userPage += `${user.firstNationality}`;
-            else userPage += `undefined`;
+            if(firstNationality){
+                userPage += `<input type="hidden" value="${firstNationality.id}">
+                ${firstNationality.nationality}`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
             <div><u><b>Second nationality :</b></u> `;
-            if(user.secondNationality) userPage += `${user.secondNationality}`;
-            else userPage += `undefined`;
+            if(secondNationality){
+                userPage += `<input type="hidden" value="${secondNationality.id}">
+                ${secondNationality.nationality}`;
+            } else userPage += `undefined`;
             userPage += `</div>
         </div>
         <div class="row">
@@ -212,19 +237,9 @@ const onUser = (data) => {
 
 const onComplex = (e) => {
     e.preventDefault();
+    user_me.itself = me;
 
-    let id = getTokenSessionData();
-    fetch(API_URL + "users/complex", {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        "Authorization": id,
-        },
-    }).then((response) => {
-        if (!response.ok) {
-            return response.text().then((err) => onError(err));
-        } else return response.json().then((data) => console.log(data));
-    });
+    UpdateUserPage(me);
 }
 
 const onSeeCV = (e) => {

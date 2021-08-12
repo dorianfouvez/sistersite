@@ -38,6 +38,7 @@ public class UserResource {
     UserDTO currentUser = (UserDTO) request.getProperty("user");
 
     ComplexUserDTO complexUser = this.userUCC.findComplexUserById(currentUser.getID());
+    PhotoResource.transformTheURLOfThePhotoIntoBase64Image(complexUser.getProfilePicture());
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("user", complexUser);
   }
 
