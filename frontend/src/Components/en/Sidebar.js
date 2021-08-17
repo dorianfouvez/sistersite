@@ -22,7 +22,7 @@ const SidebarPage = () => {
         <a id="comedienne" href="" data-toggle="collapse" data-target="#comedienne_c" class><i class='fas fa-film'></i> Actress</a>
         <div id="comedienne_c" class="collapse ml-2">
             <a id="/ArtisticCV" href="/ArtisticCV">Artistic CV</a>
-            <a id="/demotape" href="/demotape">Demo Tape</a>
+            <a id="/demotape" href="/demotape" class="isDisabled">Demo Tape</a>
         </div>
         <a id="book" href="" data-toggle="collapse" data-target="#book_c" class><i class='fas fa-book'></i> Book</a>
         <div id="book_c" class="collapse ml-2">
@@ -78,7 +78,7 @@ const SidebarPage = () => {
     document.getElementById("/bookC").addEventListener("click", onChooseBook);
     document.getElementById("/contactme").addEventListener("click", onNavigate);
     document.getElementById("/ArtisticCV").addEventListener("click", onNavigate);
-    document.getElementById("/demotape").addEventListener("click", onNavigate);
+    //document.getElementById("/demotape").addEventListener("click", onNavigate);
     if (user && user.isBoss) {
         document.getElementById("/addMakeupArtist").addEventListener("click", onNavigate);
         document.getElementById("/addPhotographer").addEventListener("click", onNavigate);

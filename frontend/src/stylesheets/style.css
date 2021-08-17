@@ -41,6 +41,20 @@ html, body {
   padding-bottom: 66px;
 }
 
+.isDisabled {
+  color: gray;
+  cursor: default;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.isDisabled:hover  {
+  color: gray !important;
+  cursor: default;
+  opacity: 0.5 !important;
+  text-decoration: none;
+}
+
 
 
 /*************** AddPhotographer form ***************/
