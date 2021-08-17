@@ -5,6 +5,7 @@ package api;
 
 import org.glassfish.jersey.server.ContainerRequest;
 import com.fasterxml.jackson.databind.JsonNode;
+import api.filters.AnonymousOrAuthorize;
 import api.filters.Authorize;
 import api.utils.PresentationException;
 import api.utils.ResponseMaker;
@@ -40,6 +41,18 @@ public class UserResource {
     ComplexUserDTO complexUser = this.userUCC.findComplexUserById(currentUser.getID());
     PhotoResource.transformTheURLOfThePhotoIntoBase64Image(complexUser.getProfilePicture());
     return ResponseMaker.createResponseWithObjectNodeWith1PutPOJO("user", complexUser);
+  }
+
+  @GET
+  @Path("/contactInformation")
+  @AnonymousOrAuthorize
+  public Response getContactInformation() {
+    UserDTO ambre = this.userUCC.findById(1);
+    if (ambre.getUserName() == null) {
+      throw new PresentationException("Error find contact Information.", Status.BAD_REQUEST);
+    }
+    return ResponseMaker.createResponseWithObjectNodeWith2PutPOJO("email", ambre.getEmail(),
+        "phone", ambre.getPhoneNumber());
   }
 
   /**

@@ -62,18 +62,18 @@ const onSubmit = (e) => {
     }
 
     let id = getTokenSessionData();
-        fetch(API_URL + "makeupArtists/", {
-            method: "POST",
-            body: JSON.stringify(makeupArtist),
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": id,
-            },
-        }).then((response) => {
-            if (!response.ok) {
-                return response.text().then((err) => onErrors(err));
-            } else return response.json().then((data) => onData(data));
-        });
+    fetch(API_URL + "makeupArtists/", {
+        method: "POST",
+        body: JSON.stringify(makeupArtist),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": id,
+        },
+    }).then((response) => {
+        if (!response.ok) {
+            return response.text().then((err) => onErrors(err));
+        } else return response.json().then((data) => onData(data));
+    });
 };
 
 const onErrors = (err) => {

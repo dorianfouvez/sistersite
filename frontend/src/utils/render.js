@@ -111,12 +111,14 @@ const transformButtonIntoLoading = () => {
   let submitButton = document.getElementById('submit');
   submitButton.innerHTML = ``;
   submitButton.className = `loader mt-3 float-right`;
+  submitButton.disabled = true;
 };
 
 const clearLoadingButton = () => {
   let submitButton = document.getElementById('submit');
   submitButton.innerHTML = `<i class="fas fa-save"></i>`;
   submitButton.className = `btn btn-primary mt-3 float-right`;
+  submitButton.disabled = false;
 };
 
 // named export

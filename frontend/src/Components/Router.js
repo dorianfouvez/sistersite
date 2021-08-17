@@ -48,7 +48,7 @@ const routesEn = {
   "/addTag": AddTagPage,
   "/ArtisticCV": CVPage,
   "/book": BookPage,
-  "/contactme": WorkInProgressPage,
+  "/contactme": ContactPage,
   "/demotape": WorkInProgressPage,
   "/errornavigation": ErrorNavigationPage,
   "/login": LoginPage,
