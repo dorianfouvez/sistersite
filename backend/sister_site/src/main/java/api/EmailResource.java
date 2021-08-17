@@ -307,8 +307,7 @@ public class EmailResource {
         InternetAddress from = new InternetAddress(this.from);
         Message message = new MimeMessage(session);
         message.setFrom(from);
-        message.addRecipients(Message.RecipientType.TO,
-            InternetAddress.parse("clabi-tarsal@hotmail.com")); // Can use multiples emails Ex: "to_username_a@gmail.com, to_username_b@yahoo.com".
+        message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(this.to)); // Can use multiples emails Ex: "to_username_a@gmail.com, to_username_b@yahoo.com".
         message.setReplyTo(InternetAddress.parse(this.from));
         message.setSubject(this.subject);
         message.setContent(this.getEmailHeader() + Escaper.deleteTagsHtml(this.body),
